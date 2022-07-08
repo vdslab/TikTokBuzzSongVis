@@ -1,1 +1,3 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# 始め方
+モジュールのインストール `npm ci`
+起動 `npm run dev`

@@ -1,4 +1,4 @@
-import RadarChart from "../charts/radarChart";
+import RadarChart from "../charts/RadarChart";
 
 const songData = {
   id: "7ABfyynRwOeKPNGRs3VXtR",

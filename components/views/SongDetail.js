@@ -1,4 +1,6 @@
 import RadarChart from "../charts/RadarChart";
+import LyricsScoreChart from "../charts/LyricsScoreChart";
+import WordCloud from "../charts/WordCloud";
 
 const songData = {
   id: "7ABfyynRwOeKPNGRs3VXtR",
@@ -100,10 +102,16 @@ export default function SongDetail({ songId }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       <div style={{ display: "flex", padding: "1rem 0" }}>
-        <RadarChart feature={songData.music_feature} />
-        <div>wordCloud?</div>
+        <div style={{ padding: "1rem" }}>
+          <RadarChart feature={songData.music_feature} />
+        </div>
+        <div style={{ padding: "1rem" }}>
+          <WordCloud feature={songData.word_cloud_data} />
+        </div>
       </div>
-      <div>other</div>
+      <div style={{ padding: "1rem" }}>
+        <LyricsScoreChart feature={songData.lyrics_feature} />
+      </div>
     </div>
   );
 }

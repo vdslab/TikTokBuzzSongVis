@@ -1,3 +1,3 @@
-export default function RadarChart() {
+export default function RadarChart({ feature }) {
   return <div>rader charts</div>;
 }

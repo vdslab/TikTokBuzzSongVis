@@ -13,9 +13,10 @@ export default function LyricsScoreChart({ feature }) {
   const Xscale = d3
     .scaleLinear()
     .domain([0, feature.lyrics_list.length - 1])
-    .range([0, width]);
+    .range([0, width])
+    .nice();
 
-  const Yscale = d3.scaleLinear().domain([0, 100]).range([0, height]);
+  const Yscale = d3.scaleLinear().domain([0, 100]).range([0, height]).nice();
 
   const lines = feature.lyrics_list.map((section, idx) => {
     return {

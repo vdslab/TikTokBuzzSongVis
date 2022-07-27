@@ -5,8 +5,8 @@ import {
   Box,
   Toolbar,
   Typography,
-  Button,
-  IconButton,
+  // Button,
+  // IconButton,
 } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/menu";

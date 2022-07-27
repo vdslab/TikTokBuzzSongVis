@@ -1,3 +1,16 @@
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+} from "@material-ui/core";
+
+// import "./BuzzSongs.css";
+
 const buzzSongList = [
   {
     id: "7ABfyynRwOeKPNGRs3VXtR",
@@ -44,24 +57,39 @@ const buzzSongList = [
 export default function BuzzSongs({ setSelectedSongId }) {
   //TODO:データベースからリストの取得
   return (
-    <div>
-      <div>buzzSongsView title</div>
+    <Box component="main">
+      <div>buzzSongsView</div>
       {buzzSongList.map((data, idx) => {
         return (
           <div key={idx}>
-            <div
-              onClick={() => {
-                setSelectedSongId(data.id);
-                console.log("click");
+            <List
+              className="songlist"
+              style={{
+                display: "flex",
+                alignItems: "flexStart",
+                position: "relative",
+                flexDirection: "column",
+                boxSizing: "borderBox",
+                textAlign: "left",
+                justifyContents: "flexStart",
               }}
             >
-              {data.title}
-            </div>
-            <div>{data.artist}</div>
-            <audio controls src={data.preview_url}></audio>
+              <ListItem>
+                <div
+                  onClick={() => {
+                    setSelectedSongId(data.id);
+                    console.log("click");
+                  }}
+                >
+                  {data.title}
+                </div>
+                <div>{data.artist}</div>
+                <audio controls src={data.preview_url}></audio>
+              </ListItem>
+            </List>
           </div>
         );
       })}
-    </div>
+    </Box>
   );
 }

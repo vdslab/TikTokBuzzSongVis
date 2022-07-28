@@ -30,7 +30,9 @@ export default function SongDetail({ songId }) {
       </div>
       <div style={{ display: "flex", padding: "1rem 0" }}>
         <div style={{ padding: "1rem", width: "50%" }}>
-          <RadarChart feature={songData.music_feature} />
+          {songData.music_feature && (
+            <RadarChart feature={songData.music_feature} />
+          )}
         </div>
         <div style={{ padding: "1rem" }}>
           <WordCloud feature={songData.lyrics_feature?.word_cloud_data} />

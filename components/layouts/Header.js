@@ -1,17 +1,7 @@
 import * as React from "react";
+import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-} from "@material-ui/core";
-
-import MenuIcon from "@material-ui/icons/menu";
-
-export default function ButtonAppBar() {
+export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

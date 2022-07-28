@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, List, ListItem } from "@material-ui/core";
+import style from "./BuzzSongs.module.css";
 
 export default function BuzzSongs({ setSelectedSongId }) {
   const [date, setDate] = useState([]);
@@ -35,16 +36,17 @@ export default function BuzzSongs({ setSelectedSongId }) {
         return (
           <div key={idx}>
             <List
-              className="songlist"
-              style={{
-                display: "flex",
-                alignItems: "flexStart",
-                position: "relative",
-                flexDirection: "column",
-                boxSizing: "borderBox",
-                textAlign: "left",
-                justifyContents: "flexStart",
-              }}
+              className={style.songlist}
+              // className="songlist"
+              // style={{
+              //   display: "flex",
+              //   alignItems: "flexStart",
+              //   position: "relative",
+              //   flexDirection: "column",
+              //   boxSizing: "borderBox",
+              //   textAlign: "left",
+              //   justifyContents: "flexStart",
+              // }}
             >
               <ListItem>
                 <div

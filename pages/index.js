@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "../components/layouts/Header";
 import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
-// import "../components/views/BuzzSongs.css";
 
 export default function Home() {
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -10,7 +9,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="contents" style={{ display: "flex", padding: "1rem" }}>
+      <div style={{ display: "flex", padding: "1rem" }}>
         <BuzzSongs
           selectedSongId={selectedSongId}
           setSelectedSongId={setSelectedSongId}

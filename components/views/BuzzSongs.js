@@ -53,10 +53,10 @@ export default function BuzzSongs({ setSelectedSongId }) {
                     console.log("click");
                   }}
                 >
-                  {data.title}
+                  {data.detail.title}
                 </div>
-                <div>{data.artist}</div>
-                <audio controls src={data.preview_url}></audio>
+                <div>{data.detail.artist}</div>
+                <audio controls src={data.detail.preview_url}></audio>
               </ListItem>
             </List>
           </div>

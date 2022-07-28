@@ -1,7 +1,0 @@
-.songlist {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  text-align: left;
-  align-items: flex-start;
-}

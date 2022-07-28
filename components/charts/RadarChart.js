@@ -1,26 +1,13 @@
-import React from "react";
-// import { useState } from "react";
-
-// function Tooltip({ clientX, clientY, show, feature, value }) {
-//   if (feature === "instrumentalness") {
-//     clientX -= 220;
-//   }
-//   return (
-//     <div>
-//       {show && (
-//         <div id="tooltip" style={{ top: `${clientY}px`, left: `${clientX}px` }}>
-//           {feature}:{value}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
+import React, { useState } from "react";
 
 function RaderChart({ feature }) {
+  const [show, setShow] = useState(false);
+  const [info, setInfo] = useState({});
+
   if (!feature) {
     return <div></div>;
   }
-  console.log(feature);
+
   const featureFeature = [
     "acousticness",
     "danceability",
@@ -31,11 +18,6 @@ function RaderChart({ feature }) {
     "speechiness",
     "valence",
   ];
-
-  // const [clientX, setClientX] = useState(0);
-  // const [clientY, setClientY] = useState(0);
-  // const [show, setShow] = useState(false);
-  // const [info, setInfo] = useState({});
 
   // レーダーチャートのデータ作成
   const len = featureFeature.length;
@@ -116,19 +98,13 @@ function RaderChart({ feature }) {
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
 
-  // function onHover(e) {
-  //   const clientX = e.pageX;
-  //   const clientY = e.pageY - 200;
-  //   setShow(true);
-  //   setClientX(clientX);
-  //   setClientY(clientY);
-  // }
+  function onHover(e) {
+    setShow(true);
+  }
 
-  // function changeInfo(feature, value) {
-  //   setInfo({ feature: feature, value: value });
-  // }
-
-  console.log("scorePoint", scorePoint);
+  function changeInfo(feature, value) {
+    setInfo({ feature: feature, value: value });
+  }
 
   return (
     <div>
@@ -173,12 +149,12 @@ function RaderChart({ feature }) {
                     id={p.name + " " + p.value}
                     stroke="lightgray"
                     strokeWidth="0.5"
-                    // onMouseMove={(e) => {
-                    //   onHover(e);
-                    // }}
-                    // onMouseLeave={() => {
-                    //   setShow(false);
-                    // }}
+                    onMouseMove={(e) => {
+                      onHover(e);
+                    }}
+                    onMouseLeave={() => {
+                      setShow(false);
+                    }}
                   />
                 ) : (
                   <g>
@@ -231,26 +207,51 @@ function RaderChart({ feature }) {
                   fillOpacity={0.6}
                   stroke="#485fc7"
                   strokeWidth={0.5}
-                  // onMouseMove={(e) => {
-                  //   onHover(e);
-                  //   changeInfo(p.name, p.value);
-                  // }}
-                  // onMouseLeave={() => {
-                  //   setShow(false);
-                  // }}
+                  onMouseMove={(e) => {
+                    onHover(e);
+                    changeInfo(p.name, p.value);
+                  }}
+                  onMouseLeave={() => {
+                    setShow(false);
+                  }}
                 />
               </g>
             );
           })}
+          <g>
+            {scorePoint.map((p, i) => {
+              return (
+                <g key={i}>
+                  {show && info.feature === p.name && (
+                    <g>
+                      <rect
+                        x={p.x - 25 / 2}
+                        y={p.y - 15}
+                        width="25"
+                        height="10"
+                        fill="#ffdbfb"
+                        fillOpacity={1.0}
+                      />
+
+                      <text
+                        id={p.name + " " + p.value}
+                        x={p.x}
+                        y={p.y - 10}
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fontSize="5"
+                        style={{ userSelect: "none" }}
+                      >
+                        {p.value}
+                      </text>
+                    </g>
+                  )}
+                </g>
+              );
+            })}
+          </g>
         </g>
       </svg>
-      {/* <Tooltip
-        clientX={clientX}
-        clientY={clientY}
-        show={show}
-        feature={info.feature}
-        value={info.value}
-      /> */}
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function SongDetail({ songId }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       <div style={{ display: "flex", padding: "1rem 0" }}>
-        <div style={{ padding: "1rem" }}>
+        <div style={{ padding: "1rem", width: "50%" }}>
           <RadarChart feature={songData.music_feature} />
         </div>
         <div style={{ padding: "1rem" }}>

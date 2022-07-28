@@ -10,11 +10,15 @@ export default function Home() {
     <div>
       <Header />
       <div style={{ display: "flex", padding: "1rem" }}>
-        <BuzzSongs
-          selectedSongId={selectedSongId}
-          setSelectedSongId={setSelectedSongId}
-        />
-        <SongDetail songId={selectedSongId} />
+        <div>
+          <BuzzSongs
+            selectedSongId={selectedSongId}
+            setSelectedSongId={setSelectedSongId}
+          />
+        </div>
+        <div style={{ width: "50%" }}>
+          <SongDetail songId={selectedSongId} />
+        </div>
       </div>
     </div>
   );

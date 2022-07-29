@@ -10,7 +10,23 @@ const featureFeature = [
   "valence",
 ];
 
+const keyDictEng = {
+  0: "C",
+  1: "#C/♭D",
+  2: "D",
+  3: "#D/♭E",
+  4: "E",
+  5: "F",
+  6: "#F/♭G",
+  7: "G",
+  8: "#G/♭A",
+  9: "A",
+  10: "#A/♭B",
+  11: "B",
+};
+
 function RaderChart({ feature }) {
+  console.log(feature);
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});
 
@@ -21,8 +37,8 @@ function RaderChart({ feature }) {
   const margin = {
     left: 50,
     right: 10,
-    top: 75,
-    bottom: 20,
+    top: 10,
+    bottom: 10,
   };
   const contentWidth = 300;
   const contentHeight = 300;
@@ -114,7 +130,21 @@ function RaderChart({ feature }) {
 
   return (
     <div>
-      RaderChart
+      音楽特徴量
+      <div style={{ fontSize: "0.75rem", padding: "0.75rem 0" }}>
+        <div style={{ display: "flex" }}>
+          <div style={{ paddingRight: "0.75rem" }}>
+            テンポ：{Math.floor(feature.tempo)}
+          </div>
+          <div style={{ paddingRight: "0.75rem" }}>
+            拍子：{feature.time_signature}
+          </div>
+          <div>
+            調：{keyDictEng[feature.key]}
+            {feature?.mode == 0 ? "minor" : "major"}
+          </div>
+        </div>
+      </div>
       <svg
         viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
         style={{ border: "solid 0px" }}

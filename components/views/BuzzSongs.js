@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, List, ListItem } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
+import { ParallelCoordinates } from "../charts/ParallelCoordinates";
 
 export default function BuzzSongs({ setSelectedSongId }) {
   const [date, setDate] = useState([]);
@@ -32,38 +33,43 @@ export default function BuzzSongs({ setSelectedSongId }) {
   return (
     <Box component="main">
       <div>buzzSongsView</div>
-      {buzzSongList.map((data, idx) => {
-        return (
-          <div key={idx}>
-            <List
-              className={style.songlist}
-              // className="songlist"
-              // style={{
-              //   display: "flex",
-              //   alignItems: "flexStart",
-              //   position: "relative",
-              //   flexDirection: "column",
-              //   boxSizing: "borderBox",
-              //   textAlign: "left",
-              //   justifyContents: "flexStart",
-              // }}
-            >
-              <ListItem>
-                <div
-                  onClick={() => {
-                    setSelectedSongId(data.id);
-                    console.log("click");
-                  }}
-                >
-                  {data.detail.title}
-                </div>
-                <div>{data.detail.artist}</div>
-                <audio controls src={data.detail.preview_url}></audio>
-              </ListItem>
-            </List>
-          </div>
-        );
-      })}
+      <div>
+        {buzzSongList.map((data, idx) => {
+          return (
+            <div key={idx}>
+              <List
+                className={style.songlist}
+                // className="songlist"
+                // style={{
+                //   display: "flex",
+                //   alignItems: "flexStart",
+                //   position: "relative",
+                //   flexDirection: "column",
+                //   boxSizing: "borderBox",
+                //   textAlign: "left",
+                //   justifyContents: "flexStart",
+                // }}
+              >
+                <ListItem>
+                  <div
+                    onClick={() => {
+                      setSelectedSongId(data.id);
+                      console.log("click");
+                    }}
+                  >
+                    {data.detail.title}
+                  </div>
+                  <div>{data.detail.artist}</div>
+                  <audio controls src={data.detail.preview_url}></audio>
+                </ListItem>
+              </List>
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        <ParallelCoordinates songList={buzzSongList} />
+      </div>
     </Box>
   );
 }

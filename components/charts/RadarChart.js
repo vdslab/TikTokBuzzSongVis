@@ -26,7 +26,6 @@ const keyDictEng = {
 };
 
 function RaderChart({ feature }) {
-  console.log(feature);
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});
 

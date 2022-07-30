@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { useMemo } from "react";
 
 const feature = [
   "acousticness",
@@ -19,7 +20,6 @@ const feature = [
 ];
 
 export function ParallelCoordinates({ songList }) {
-  console.log(songList);
   const margin = {
     left: 10,
     right: 10,
@@ -33,94 +33,98 @@ export function ParallelCoordinates({ songList }) {
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
 
-  const xTickScale = d3
-    .scalePoint()
-    .range([0, contentWidth])
-    .padding(1)
-    .domain(feature);
+  const makeLinePath = d3
+    .line()
+    .x(({ x }) => x)
+    .y(({ y }) => y);
 
   const colorScale = d3
     .scaleLinear()
     .domain([0, 100])
     .range(["#FF00FF", "#00FFFF"]);
 
-  //HACK
-  const yTickScale = {};
-  const yTicks = {};
-  for (const i in feature) {
-    yTickScale[feature[i]] = d3
-      .scaleLinear()
-      .domain(
-        d3.extent(
-          songList.map((song) => {
-            if (
-              feature[i] !== "total_positive_score" &&
-              feature[i] !== "total_rhyme_score" &&
-              song.detail.music_feature !== null
-            ) {
-              return song.detail?.music_feature[feature[i]];
-            } else if (song.detail.lyrics_feature !== null) {
-              return song.detail?.lyrics_feature[feature[i]];
-            }
-          })
+  const xTickScale = d3
+    .scalePoint()
+    .range([0, contentWidth])
+    .padding(1)
+    .domain(feature);
+
+  const chart = useMemo(() => {
+    //HACK
+    const yTickScale = {};
+    const yTicks = {};
+    for (const i in feature) {
+      yTickScale[feature[i]] = d3
+        .scaleLinear()
+        .domain(
+          d3.extent(
+            songList.map((song) => {
+              if (
+                feature[i] !== "total_positive_score" &&
+                feature[i] !== "total_rhyme_score" &&
+                song.detail.music_feature !== null
+              ) {
+                return song.detail?.music_feature[feature[i]];
+              } else if (song.detail.lyrics_feature !== null) {
+                return song.detail?.lyrics_feature[feature[i]];
+              }
+            })
+          )
         )
-      )
-      .range([parallelHeigth, 0])
-      .nice();
+        .range([parallelHeigth, 0])
+        .nice();
 
-    //FIXME:数が合わない
-    yTicks[feature[i]] = yTickScale[feature[i]].ticks(10).map((d) => {
-      if (feature[i] === "duration_ms") {
-        return { label: d / 1000, y: yTickScale[feature[i]](d) };
-      }
-      return { label: d, y: yTickScale[feature[i]](d) };
-    });
-  }
+      //FIXME:数が合わない
+      yTicks[feature[i]] = yTickScale[feature[i]].ticks(10).map((d) => {
+        if (feature[i] === "duration_ms") {
+          return { label: d / 1000, y: yTickScale[feature[i]](d) };
+        }
+        return { label: d, y: yTickScale[feature[i]](d) };
+      });
+    }
 
-  //HACK
-  const lines = [];
-  for (const song of songList) {
-    const fs = song.detail.music_feature;
-    fs["total_positive_score"] =
-      song.detail.lyrics_feature?.total_positive_score;
-    fs["total_rhyme_score"] = song.detail.lyrics_feature?.total_rhyme_score;
+    //HACK
+    const lines = [];
+    for (const song of songList) {
+      const fs = song.detail.music_feature;
+      fs["total_positive_score"] =
+        song.detail.lyrics_feature?.total_positive_score;
+      fs["total_rhyme_score"] = song.detail.lyrics_feature?.total_rhyme_score;
 
-    const items = feature.map((f) => {
-      // undefどうしよう問題
-      if (f === "total_positive_score" || f === "total_rhyme_score") {
-        if (song.detail.lyrics_feature?.total_positive_score) {
-          return {
-            x: xTickScale(f),
-            y: yTickScale[f](song.detail.lyrics_feature[f]),
-          };
-        } else if (song.detail.lyrics_feature?.total_rhyme_score) {
-          return {
-            x: xTickScale(f),
-            y: yTickScale[f](song.detail.lyrics_feature[f]),
-          };
+      const items = feature.map((f) => {
+        // undefどうしよう問題
+        if (f === "total_positive_score" || f === "total_rhyme_score") {
+          if (song.detail.lyrics_feature?.total_positive_score) {
+            return {
+              x: xTickScale(f),
+              y: yTickScale[f](song.detail.lyrics_feature[f]),
+            };
+          } else if (song.detail.lyrics_feature?.total_rhyme_score) {
+            return {
+              x: xTickScale(f),
+              y: yTickScale[f](song.detail.lyrics_feature[f]),
+            };
+          } else {
+            return {
+              x: xTickScale(f),
+              y: 0,
+            };
+          }
         } else {
           return {
             x: xTickScale(f),
-            y: 0,
+            y: yTickScale[f](song.detail.music_feature[f]),
           };
         }
-      } else {
-        return {
-          x: xTickScale(f),
-          y: yTickScale[f](song.detail.music_feature[f]),
-        };
-      }
-    });
+      });
 
-    lines.push({ point: items, color: colorScale(song.rank) });
-  }
-
-  const makeLinePath = d3
-    .line()
-    .x(({ x }) => x)
-    .y(({ y }) => y);
-
-  console.log(yTicks);
+      lines.push({ point: items, color: colorScale(song.rank) });
+    }
+    return {
+      lines: lines,
+      yTicks: yTicks,
+    };
+  }, [songList, xTickScale, parallelHeigth, colorScale]);
 
   return (
     <div>
@@ -160,7 +164,7 @@ export function ParallelCoordinates({ songList }) {
                     </text>
                   </g>
                   <g>
-                    {yTicks[f].map((tick) => {
+                    {chart.yTicks[f].map((tick) => {
                       return (
                         <g key={tick.y}>
                           <line
@@ -188,7 +192,7 @@ export function ParallelCoordinates({ songList }) {
               );
             })}
           </g>
-          {lines.map((l, i) => {
+          {chart.lines.map((l, i) => {
             return (
               <g key={i}>
                 <path

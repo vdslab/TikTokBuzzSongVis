@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const feature = [
   "acousticness",
@@ -19,10 +19,16 @@ const feature = [
   // "total_rhyme_score",
 ];
 
+function isFullWidthChar(str) {
+  return str.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/);
+}
+
 export function ParallelCoordinates({ songList }) {
+  const [selectedId, setSelectedId] = useState("");
+
   const margin = {
-    left: 10,
-    right: 10,
+    left: 0,
+    right: 30,
     top: 30,
     bottom: 15,
   };
@@ -118,7 +124,19 @@ export function ParallelCoordinates({ songList }) {
         }
       });
 
-      lines.push({ point: items, color: colorScale(song.rank) });
+      let title = song.detail.title;
+      if (isFullWidthChar(title) && title.length > 7) {
+        title = title.slice(0, 7) + "...";
+      } else if (title.length > 15) {
+        title = title.slice(0, 15) + "...";
+      }
+
+      lines.push({
+        point: items,
+        color: colorScale(song.rank),
+        id: song["id"],
+        title: title,
+      });
     }
     return {
       lines: lines,
@@ -175,7 +193,7 @@ export function ParallelCoordinates({ songList }) {
                             stroke={"black"}
                           />
                           <text
-                            x={xTickScale(f) - 20}
+                            x={xTickScale(f) - 25}
                             y={tick.y}
                             textAnchor="middle"
                             dominantBaseline="central"
@@ -199,9 +217,40 @@ export function ParallelCoordinates({ songList }) {
                   d={makeLinePath(l.point)}
                   fill="none"
                   stroke={l.color}
-                  strokeWidth="2"
-                  opacity="0.5"
+                  strokeWidth="3"
+                  opacity={
+                    selectedId === "" ? 0.5 : selectedId === l.id ? 1.0 : 0.2
+                  }
+                  onMouseMove={(e) => {
+                    setSelectedId(l.id);
+                  }}
+                  onMouseLeave={() => {
+                    setSelectedId("");
+                  }}
                 />
+                {selectedId !== "" && selectedId === l.id && (
+                  <g>
+                    <rect
+                      x={contentWidth - 50 + 5}
+                      y={l.point[l.point.length - 1].y - 15 / 2}
+                      width="75"
+                      height="15"
+                      // fill="#ffdbfb"
+                      fill={l.color}
+                      fillOpacity={0.5}
+                    />
+                    <text
+                      x={contentWidth - 50 + 5}
+                      y={l.point[l.point.length - 1].y}
+                      textAnchor="start"
+                      dominantBaseline="central"
+                      fontSize="10"
+                      style={{ userSelect: "none" }}
+                    >
+                      {l.title}
+                    </text>
+                  </g>
+                )}
               </g>
             );
           })}

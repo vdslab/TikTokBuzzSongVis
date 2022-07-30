@@ -39,6 +39,11 @@ export function ParallelCoordinates({ songList }) {
     .padding(1)
     .domain(feature);
 
+  const colorScale = d3
+    .scaleLinear()
+    .domain([0, 100])
+    .range(["#FF00FF", "#00FFFF"]);
+
   //HACK
   const yTickScale = {};
   const yTicks = {};
@@ -107,7 +112,7 @@ export function ParallelCoordinates({ songList }) {
       }
     });
 
-    lines.push(items);
+    lines.push({ point: items, color: colorScale(song.rank) });
   }
 
   const makeLinePath = d3
@@ -188,9 +193,9 @@ export function ParallelCoordinates({ songList }) {
             return (
               <g key={i}>
                 <path
-                  d={makeLinePath(l)}
+                  d={makeLinePath(l.point)}
                   fill="none"
-                  stroke={"red"}
+                  stroke={l.color}
                   strokeWidth="2"
                   opacity="0.5"
                 />

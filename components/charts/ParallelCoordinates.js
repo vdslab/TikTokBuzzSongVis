@@ -142,11 +142,10 @@ export function ParallelCoordinates({ songList }) {
                     y2={parallelHeigth}
                     stroke={"black"}
                   />
-                  {/* TODO:微調整 */}
                   <g
-                    transform={`translate(0,0) rotate(-40, ${xTickScale(
+                    transform={`rotate(-40, ${xTickScale(
                       f
-                    )},${parallelHeigth})`}
+                    )},${parallelHeigth})translate(-10,5)`}
                   >
                     <text
                       id={i}

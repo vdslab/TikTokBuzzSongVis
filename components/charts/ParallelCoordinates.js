@@ -14,8 +14,8 @@ const feature = [
   "tempo",
   "time_signature",
   "valence",
-  "total_positive_score",
-  "total_rhyme_score",
+  // "total_positive_score",
+  // "total_rhyme_score",
 ];
 
 export function ParallelCoordinates({ songList }) {
@@ -39,6 +39,7 @@ export function ParallelCoordinates({ songList }) {
     .padding(1)
     .domain(feature);
 
+  //HACK
   const yTickScale = {};
   const yTicks = {};
   for (const i in feature) {
@@ -70,6 +71,49 @@ export function ParallelCoordinates({ songList }) {
       return { label: d, y: yTickScale[feature[i]](d) };
     });
   }
+
+  //HACK
+  const lines = [];
+  for (const song of songList) {
+    const fs = song.detail.music_feature;
+    fs["total_positive_score"] =
+      song.detail.lyrics_feature?.total_positive_score;
+    fs["total_rhyme_score"] = song.detail.lyrics_feature?.total_rhyme_score;
+
+    const items = feature.map((f) => {
+      // undefどうしよう問題
+      if (f === "total_positive_score" || f === "total_rhyme_score") {
+        if (song.detail.lyrics_feature?.total_positive_score) {
+          return {
+            x: xTickScale(f),
+            y: yTickScale[f](song.detail.lyrics_feature[f]),
+          };
+        } else if (song.detail.lyrics_feature?.total_rhyme_score) {
+          return {
+            x: xTickScale(f),
+            y: yTickScale[f](song.detail.lyrics_feature[f]),
+          };
+        } else {
+          return {
+            x: xTickScale(f),
+            y: 0,
+          };
+        }
+      } else {
+        return {
+          x: xTickScale(f),
+          y: yTickScale[f](song.detail.music_feature[f]),
+        };
+      }
+    });
+
+    lines.push(items);
+  }
+
+  const makeLinePath = d3
+    .line()
+    .x(({ x }) => x)
+    .y(({ y }) => y);
 
   console.log(yTicks);
 
@@ -140,6 +184,20 @@ export function ParallelCoordinates({ songList }) {
               );
             })}
           </g>
+          {lines.map((l, i) => {
+            return (
+              <g key={i}>
+                <path
+                  d={makeLinePath(l)}
+                  fill="none"
+                  stroke={"red"}
+                  strokeWidth="2"
+                  opacity="0.5"
+                />
+              </g>
+            );
+          })}
+          <g></g>
         </svg>
       </div>
     </div>

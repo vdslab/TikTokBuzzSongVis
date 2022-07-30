@@ -21,14 +21,14 @@ const feature = [
 export function ParallelCoordinates({ songList }) {
   console.log(songList);
   const margin = {
-    left: 30,
-    right: 0,
+    left: 10,
+    right: 10,
     top: 30,
-    bottom: 0,
+    bottom: 15,
   };
   const contentWidth = 600;
   const contentHeight = 400;
-  const parallelHeigth = contentHeight * 0.8;
+  const parallelHeigth = contentHeight * 0.9;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;

@@ -50,6 +50,14 @@ export default function LyricsScoreChart({ feature }) {
       };
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
+
+    xTicks: feature.lyrics_list.map((section, idx) => ({
+      offset: 8,
+      fontSize: 7,
+      section,
+      x: Xscale(idx),
+    })),
+    yTicks: Yscale.ticks(100).map((d) => ({ section: `${d}`, y: Yscale(d) })),
   };
 
   console.log(rhymeLine);

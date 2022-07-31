@@ -1,6 +1,6 @@
 import RadarChart from "../charts/RadarChart";
 import LyricsScoreChart from "../charts/LyricsScoreChart";
-import WordCloud from "../charts/WordCloud";
+import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 
 export default function SongDetail({ songId }) {
@@ -35,7 +35,7 @@ export default function SongDetail({ songId }) {
           )}
         </div>
         <div style={{ padding: "1rem" }}>
-          <WordCloud feature={songData.lyrics_feature?.word_cloud_data} />
+          <WordCloudChart feature={songData.lyrics_feature?.word_cloud_data} />
         </div>
       </div>
       <div style={{ padding: "1rem" }}>

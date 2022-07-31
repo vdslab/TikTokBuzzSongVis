@@ -72,7 +72,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
             </div>
           );
         })}
-      </div> */}
+      </div>
       {buzzSongList.length > 0 && (
         <div>
           <ParallelCoordinates songList={buzzSongList} />

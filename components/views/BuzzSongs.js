@@ -25,6 +25,12 @@ export default function BuzzSongs({ setSelectedSongId }) {
         });
         // TODO:rank->title順での並び替え（現状ではrankでのみ）
         const data = await buzzSongsRes.json();
+        // JSONをobjに
+        for (const song of data) {
+          song.detail.music_feature = JSON.parse(song.detail.music_feature);
+          song.detail.lyrics_feature = JSON.parse(song.detail.lyrics_feature);
+          song.detail.genres = JSON.parse(song.detail.genres);
+        }
         setBuzzSongList(data);
       }
     })();
@@ -67,9 +73,11 @@ export default function BuzzSongs({ setSelectedSongId }) {
           );
         })}
       </div>
-      <div>
-        <ParallelCoordinates songList={buzzSongList} />
-      </div>
+      {buzzSongList.length > 0 && (
+        <div>
+          <ParallelCoordinates songList={buzzSongList} />
+        </div>
+      )}
     </Box>
   );
 }

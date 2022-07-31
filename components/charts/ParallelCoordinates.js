@@ -38,16 +38,18 @@ export function ParallelCoordinates({ songList }) {
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
+  const graphPadding = 30;
 
   const makeLinePath = d3
     .line()
     .x(({ x }) => x)
     .y(({ y }) => y);
 
+  // TINK:最低最大をrankに合わせるかどうか
   const colorScale = d3
     .scaleLinear()
     .domain([0, 100])
-    .range(["#FF00FF", "#00FFFF"]);
+    .range(["#00FFFF", "#FF00FF"]);
 
   const xTickScale = d3
     .scalePoint()
@@ -77,7 +79,7 @@ export function ParallelCoordinates({ songList }) {
             })
           )
         )
-        .range([parallelHeigth, 0])
+        .range([parallelHeigth, graphPadding])
         .nice();
 
       //FIXME:数が合わない
@@ -150,8 +152,71 @@ export function ParallelCoordinates({ songList }) {
       <div>
         <svg
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-          style={{ border: "solid 1px" }}
+          style={{ border: "solid 0px" }}
         >
+          {/* レジェンド */}
+          <g transform={`translate(${contentWidth - 150}, -5)`}>
+            <text
+              x={10}
+              y={0}
+              textAnchor="start"
+              dominantBaseline="central"
+              fontSize="12.5"
+              style={{ userSelect: "none" }}
+            >
+              score
+            </text>
+            <text
+              x={50}
+              y={15}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize="10"
+              style={{ userSelect: "none" }}
+            >
+              0
+            </text>
+            <text
+              x={150}
+              y={15}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize="10"
+              style={{ userSelect: "none" }}
+            >
+              100
+            </text>
+            <linearGradient id="gradient">
+              <stop offset="0%" stopColor={colorScale(0)} />
+              <stop offset="5%" stopColor={colorScale(5)} />
+              <stop offset="10%" stopColor={colorScale(10)} />
+              <stop offset="15%" stopColor={colorScale(15)} />
+              <stop offset="20%" stopColor={colorScale(20)} />
+              <stop offset="25%" stopColor={colorScale(25)} />
+              <stop offset="30%" stopColor={colorScale(30)} />
+              <stop offset="35%" stopColor={colorScale(35)} />
+              <stop offset="40%" stopColor={colorScale(40)} />
+              <stop offset="45%" stopColor={colorScale(45)} />
+              <stop offset="50%" stopColor={colorScale(50)} />
+              <stop offset="55%" stopColor={colorScale(55)} />
+              <stop offset="60%" stopColor={colorScale(60)} />
+              <stop offset="65%" stopColor={colorScale(65)} />
+              <stop offset="70%" stopColor={colorScale(70)} />
+              <stop offset="75%" stopColor={colorScale(75)} />
+              <stop offset="80%" stopColor={colorScale(80)} />
+              <stop offset="85%" stopColor={colorScale(85)} />
+              <stop offset="90%" stopColor={colorScale(90)} />
+              <stop offset="95%" stopColor={colorScale(95)} />
+              <stop offset="100%" stopColor={colorScale(100)} />
+            </linearGradient>
+            <rect
+              x={50}
+              y={0 - 15 / 2}
+              width="100"
+              height="15"
+              fill="url('#gradient')"
+            />
+          </g>
           {/** 軸 */}
           <g>
             {feature.map((f, i) => {
@@ -159,7 +224,7 @@ export function ParallelCoordinates({ songList }) {
                 <g key={i}>
                   <line
                     x1={xTickScale(f)}
-                    y1={0}
+                    y1={graphPadding}
                     x2={xTickScale(f)}
                     y2={parallelHeigth}
                     stroke={"black"}
@@ -210,51 +275,52 @@ export function ParallelCoordinates({ songList }) {
               );
             })}
           </g>
-          {chart.lines.map((l, i) => {
-            return (
-              <g key={i}>
-                <path
-                  d={makeLinePath(l.point)}
-                  fill="none"
-                  stroke={l.color}
-                  strokeWidth="3"
-                  opacity={
-                    selectedId === "" ? 0.5 : selectedId === l.id ? 1.0 : 0.2
-                  }
-                  onMouseMove={(e) => {
-                    setSelectedId(l.id);
-                  }}
-                  onMouseLeave={() => {
-                    setSelectedId("");
-                  }}
-                />
-                {selectedId !== "" && selectedId === l.id && (
-                  <g>
-                    <rect
-                      x={contentWidth - 50 + 5}
-                      y={l.point[l.point.length - 1].y - 15 / 2}
-                      width="75"
-                      height="15"
-                      // fill="#ffdbfb"
-                      fill={l.color}
-                      fillOpacity={0.5}
-                    />
-                    <text
-                      x={contentWidth - 50 + 5}
-                      y={l.point[l.point.length - 1].y}
-                      textAnchor="start"
-                      dominantBaseline="central"
-                      fontSize="10"
-                      style={{ userSelect: "none" }}
-                    >
-                      {l.title}
-                    </text>
-                  </g>
-                )}
-              </g>
-            );
-          })}
-          <g></g>
+          {/* パス */}
+          <g>
+            {chart.lines.map((l, i) => {
+              return (
+                <g key={i}>
+                  <path
+                    d={makeLinePath(l.point)}
+                    fill="none"
+                    stroke={l.color}
+                    strokeWidth="3"
+                    opacity={
+                      selectedId === "" ? 0.5 : selectedId === l.id ? 1.0 : 0.2
+                    }
+                    onMouseMove={(e) => {
+                      setSelectedId(l.id);
+                    }}
+                    onMouseLeave={() => {
+                      setSelectedId("");
+                    }}
+                  />
+                  {selectedId !== "" && selectedId === l.id && (
+                    <g>
+                      <rect
+                        x={contentWidth - 50 + 5}
+                        y={l.point[l.point.length - 1].y - 15 / 2}
+                        width="75"
+                        height="15"
+                        fill={l.color}
+                        fillOpacity={0.5}
+                      />
+                      <text
+                        x={contentWidth - 50 + 5}
+                        y={l.point[l.point.length - 1].y}
+                        textAnchor="start"
+                        dominantBaseline="central"
+                        fontSize="10"
+                        style={{ userSelect: "none" }}
+                      >
+                        {l.title}
+                      </text>
+                    </g>
+                  )}
+                </g>
+              );
+            })}
+          </g>
         </svg>
       </div>
     </div>

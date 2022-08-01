@@ -1,8 +1,9 @@
 import * as d3 from "d3";
-/* import { color } from "d3"; */
+import React, { useState } from "react";
 export default function LyricsScoreChart({ feature }) {
-  console.log(feature);
-  const strokeColor = "#888";
+  const [show, setShow] = useState(false);
+  const [info, setInfo] = useState({});
+  /*   console.log(feature); */
   const x = 0;
 
   const margin = {
@@ -66,6 +67,7 @@ export default function LyricsScoreChart({ feature }) {
     label: "ポジティブ度",
     color: "pink",
     pointColor: "#ff00ff",
+    pointFill: "#fff0f5",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -78,6 +80,7 @@ export default function LyricsScoreChart({ feature }) {
     label: "韻踏み度",
     color: "#00bfff",
     pointColor: "blue",
+    pointFill: "#f0ffff",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -90,7 +93,17 @@ export default function LyricsScoreChart({ feature }) {
   console.log(rhymeLine);
 
   const lines2 = [positiveLine, rhymeLine];
+
+  function onHover(e) {
+    setShow(true);
+  }
+
+  function changeInfo(labelName, index) {
+    setInfo({ labelName: labelName, index: index });
+  }
   console.log(lines2);
+  console.log(show);
+  console.log(info);
   return (
     <div>
       <div>LyricsScoreChart</div>
@@ -167,13 +180,46 @@ export default function LyricsScoreChart({ feature }) {
                 {item.points.map((p, j) => {
                   /* console.log(i + "" + j); */
                   return (
-                    <circle
-                      key={i + "" + j}
-                      cx={p.x}
-                      cy={p.y}
-                      r="5"
-                      fill={item.pointColor}
-                    ></circle>
+                    <g key={i + "" + j}>
+                      <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r="5"
+                        fill={item.pointColor}
+                        onMouseMove={(e) => {
+                          onHover(e);
+                          changeInfo(item.label, j);
+                        }}
+                        onMouseLeave={() => {
+                          setShow(false);
+                        }}
+                      ></circle>
+                      {show === true &&
+                        info.labelName === item.label &&
+                        info.index === j && (
+                          <g>
+                            <rect
+                              x={p.x + 10}
+                              y={p.y - 35}
+                              width="75"
+                              height="20"
+                              stroke={item.pointColor}
+                              fill={item.pointFill}
+                              fillOpacity={0.5}
+                            />
+                            <text
+                              x={p.x + 10}
+                              y={p.y - 25}
+                              textAnchor="start"
+                              dominantBaseline="central"
+                              fontSize="10"
+                              style={{ userSelect: "none" }}
+                            >
+                              {item.label}:{item.scores[j]}
+                            </text>
+                          </g>
+                        )}
+                    </g>
                   );
                 })}
               </g>

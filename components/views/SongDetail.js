@@ -35,7 +35,13 @@ export default function SongDetail({ songId }) {
           )}
         </div>
         <div style={{ padding: "1rem" }}>
-          <WordCloudChart feature={songData.lyrics_feature?.word_cloud_data} />
+          {songData.lyrics_feature?.word_cloud_data &&
+            Object.keys(songData.lyrics_feature?.word_cloud_data).length >
+              0 && (
+              <WordCloudChart
+                feature={songData.lyrics_feature?.word_cloud_data}
+              />
+            )}
         </div>
       </div>
       <div style={{ padding: "1rem" }}>

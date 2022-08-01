@@ -8,8 +8,7 @@ export default async function (req, res) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-hasura-admin-secret":
-          "6PNFERlyk62gf0o1kEmN2gBg4Iu0W83ywE72UqrtiXMBA3DFOkAVd4nh09e6KnyV",
+        "x-hasura-admin-secret": process.env.X_HASURA_ADMIN_SECRET,
       },
     }
   );

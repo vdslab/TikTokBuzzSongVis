@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import React, { useState } from "react";
+import { useMemo } from "react";
 export default function LyricsScoreChart({ feature }) {
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});
@@ -41,7 +42,7 @@ export default function LyricsScoreChart({ feature }) {
       x: Xscale(d),
     };
   });
-  console.log(xTicks);
+  /* console.log(xTicks); */
 
   const yTicks = Yscale.ticks(10).map((d) => {
     return {
@@ -49,20 +50,7 @@ export default function LyricsScoreChart({ feature }) {
       y: Yscale(d),
     };
   });
-  console.log(yTicks);
-
-  const lines = feature.lyrics_list.map((section, idx) => {
-    return {
-      x: Xscale(idx),
-      rhymeY: Yscale(section.rhyme_score),
-      positiveY: Yscale(section.positive_score),
-      color: "#0000",
-      rhymeScore: section.rhyme_score,
-      positiveScore: section.positive_score,
-    };
-  });
-  console.log(lines);
-
+  /* console.log(yTicks); */
   const positiveLine = {
     label: "ポジティブ度",
     color: "pink",
@@ -90,7 +78,7 @@ export default function LyricsScoreChart({ feature }) {
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
   };
 
-  console.log(rhymeLine);
+  /* console.log(rhymeLine); */
 
   const lines2 = [positiveLine, rhymeLine];
 
@@ -184,7 +172,7 @@ export default function LyricsScoreChart({ feature }) {
                       <circle
                         cx={p.x}
                         cy={p.y}
-                        r="5"
+                        r="7"
                         fill={item.pointColor}
                         onMouseMove={(e) => {
                           onHover(e);
@@ -225,7 +213,7 @@ export default function LyricsScoreChart({ feature }) {
               </g>
             );
           })}
-          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#ff00ff"></circle>
+          <circle cx={contentWidth + 35} cy="-3" r="7" fill="#ff00ff"></circle>
           <text
             x={contentWidth + 43}
             y="-3"
@@ -237,7 +225,7 @@ export default function LyricsScoreChart({ feature }) {
           >
             ポジティブ度
           </text>
-          <circle cx={contentWidth + 35} cy="13" r="5" fill="#00bfff"></circle>
+          <circle cx={contentWidth + 35} cy="13" r="7" fill="#00bfff"></circle>
           <text
             x={contentWidth + 43}
             y="13"

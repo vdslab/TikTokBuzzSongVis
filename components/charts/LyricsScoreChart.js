@@ -1,10 +1,22 @@
 import * as d3 from "d3";
+/* import { color } from "d3"; */
 export default function LyricsScoreChart({ feature }) {
   console.log(feature);
   const strokeColor = "#888";
   const x = 0;
-  const width = 600;
-  const height = 450;
+
+  const margin = {
+    left: 50,
+    right: 60,
+    top: 10,
+    bottom: 50,
+  };
+  const contentWidth = 600;
+  const contentHeight = 450;
+
+  const svgWidth = margin.left + margin.right + contentWidth;
+  const svgHeight = margin.top + margin.bottom + contentHeight;
+
   const line = d3
     .line()
     .x(({ x }) => x)
@@ -13,10 +25,30 @@ export default function LyricsScoreChart({ feature }) {
   const Xscale = d3
     .scaleLinear()
     .domain([0, feature.lyrics_list.length - 1])
-    .range([0, width])
+    .range([0, contentWidth])
     .nice();
 
-  const Yscale = d3.scaleLinear().domain([0, 100]).range([0, height]).nice();
+  const Yscale = d3
+    .scaleLinear()
+    .domain([0, 100])
+    .range([contentHeight, 0])
+    .nice();
+
+  const xTicks = Xscale.ticks(feature.lyrics_list.length - 1).map((d) => {
+    return {
+      label: "section" + (d + 1),
+      x: Xscale(d),
+    };
+  });
+  console.log(xTicks);
+
+  const yTicks = Yscale.ticks(10).map((d) => {
+    return {
+      label: d,
+      y: Yscale(d),
+    };
+  });
+  console.log(yTicks);
 
   const lines = feature.lyrics_list.map((section, idx) => {
     return {
@@ -28,10 +60,12 @@ export default function LyricsScoreChart({ feature }) {
       positiveScore: section.positive_score,
     };
   });
+  console.log(lines);
 
   const positiveLine = {
     label: "ポジティブ度",
     color: "pink",
+    pointColor: "#ff00ff",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -42,7 +76,8 @@ export default function LyricsScoreChart({ feature }) {
   };
   const rhymeLine = {
     label: "韻踏み度",
-    color: "green",
+    color: "#00bfff",
+    pointColor: "blue",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -50,14 +85,6 @@ export default function LyricsScoreChart({ feature }) {
       };
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
-
-    xTicks: feature.lyrics_list.map((section, idx) => ({
-      offset: 8,
-      fontSize: 7,
-      section,
-      x: Xscale(idx),
-    })),
-    yTicks: Yscale.ticks(100).map((d) => ({ section: `${d}`, y: Yscale(d) })),
   };
 
   console.log(rhymeLine);
@@ -67,12 +94,64 @@ export default function LyricsScoreChart({ feature }) {
   return (
     <div>
       <div>LyricsScoreChart</div>
-      <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
+      <svg
+        viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+        style={{
+          border: "solid 0.1px",
+          borderColor: "#BBBBBB",
+        }}
+      >
         <g stroke="black" strokeWidth="1">
-          <line x1="0" y1="0" x2="0" y2="400"></line>
-          <line x1="0" y1="0" x2={width} y2="0"></line>
-          <line x1={width} y1="0" x2={width} y2="400"></line>
-          <line x1="0" y1="400" x2={width} y2="400"></line>
+          <line x1="0" y1="0" x2="0" y2={contentHeight}></line>
+          <line
+            x1="0"
+            y1={contentHeight}
+            x2={contentWidth}
+            y2={contentHeight}
+          ></line>
+        </g>
+        <g>
+          {xTicks.map((tick) => {
+            return (
+              <g key={tick.x}>
+                <line
+                  x1={tick.x}
+                  y1={contentHeight - 10}
+                  x2={tick.x}
+                  y2={contentHeight + 10}
+                  stroke={"black"}
+                />
+                <text
+                  x={tick.x}
+                  y={contentHeight + 20}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize="10"
+                  style={{ userSelect: "none" }}
+                >
+                  {tick.label}
+                </text>
+              </g>
+            );
+          })}
+
+          {yTicks.map((tick) => {
+            return (
+              <g key={tick.y}>
+                <line x1="-5" y1={tick.y} x2="5" y2={tick.y} stroke={"black"} />
+                <text
+                  x="-15"
+                  y={tick.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize="10"
+                  style={{ userSelect: "none" }}
+                >
+                  {tick.label}
+                </text>
+              </g>
+            );
+          })}
         </g>
         <g>
           {lines2.map((item, i) => {
@@ -81,7 +160,7 @@ export default function LyricsScoreChart({ feature }) {
                 <path
                   d={line(item.points)}
                   fill="none"
-                  stroke="blue"
+                  stroke={item.color}
                   strokeWidth="2"
                   opacity="0.8"
                 />
@@ -93,7 +172,7 @@ export default function LyricsScoreChart({ feature }) {
                       cx={p.x}
                       cy={p.y}
                       r="5"
-                      fill="red"
+                      fill={item.pointColor}
                     ></circle>
                   );
                 })}

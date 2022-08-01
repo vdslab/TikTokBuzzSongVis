@@ -45,7 +45,9 @@ export default function SongDetail({ songId }) {
         </div>
       </div>
       <div style={{ padding: "1rem" }}>
-        <LyricsScoreChart feature={songData.lyrics_feature} />
+        {songData.lyrics_feature && (
+          <LyricsScoreChart feature={songData.lyrics_feature} />
+        )}
       </div>
     </div>
   );

@@ -1,67 +1,91 @@
-const buzzSongList = [
-  {
-    id: "7ABfyynRwOeKPNGRs3VXtR",
-    title: "陽キャJKに憧れる陰キャJKの歌",
-    artist: "音莉飴",
-    genres: ["japanese teen pop", "jirai kei"],
-    preview_url:
-      "https://p.scdn.co/mp3-preview/3f9c2088a5c9854c4d1d53662eb9fe554cb3bf42?cid=774b29d4f13844c495f206cafdad9c86",
-  },
-  {
-    id: "0ai7K2rYiFvCOBCEdC9Qfm",
-    title: "Let's Get Eat (feat. KOTETSU)",
-    artist: "T-STONE",
-    genres: ["album rock", "british invasion", "classic rock", "rock"],
-    preview_url:
-      "https://p.scdn.co/mp3-preview/4e38c9b4e18faa6eecf3a70f7e7deb387d51c0eb?cid=774b29d4f13844c495f206cafdad9c86",
-  },
-  {
-    id: "7sRYDTjWTX00fd9BCOflLo",
-    title: "ホワイトキス",
-    artist: "鈴木鈴木",
-    genres: ["japanese classical performance"],
-    preview_url:
-      "https://p.scdn.co/mp3-preview/4e38c9b4e18faa6eecf3a70f7e7deb387d51c0eb?cid=774b29d4f13844c495f206cafdad9c86",
-  },
-  {
-    id: "6qn31XzTa6YKXs5FZpAPgP",
-    title: "常緑",
-    artist: "Chippoke Ohashi",
-    genres: ["j-pop", "japanese alternative pop"],
-    preview_url:
-      "https://p.scdn.co/mp3-preview/414c5cba2ccf21cacc70c9926651336505d5aad2?cid=774b29d4f13844c495f206cafdad9c86",
-  },
-  {
-    id: "5x67EAHDrso2bSXy5HWx0j",
-    title: "勝たんしか症候群",
-    artist: "たかやん",
-    genres: ["men chika"],
-    preview_url:
-      "https://p.scdn.co/mp3-preview/5a29324dfe29980bb415ebd525752c3de9eddf62?cid=774b29d4f13844c495f206cafdad9c86",
-  },
-];
+import { useEffect, useState } from "react";
+import { Box, List, ListItem } from "@material-ui/core";
+import style from "./BuzzSongs.module.css";
+import { ParallelCoordinates } from "../charts/ParallelCoordinates";
+// import Image from "next/image";
 
 export default function BuzzSongs({ setSelectedSongId }) {
-  //TODO:データベースからリストの取得
+  const [date, setDate] = useState([]);
+  const [buzzSongList, setBuzzSongList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const dateRes = await fetch("/api/date");
+      const data = await dateRes.json();
+      setDate(data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (date.length > 0) {
+        const buzzSongsRes = await fetch("api/buzz_songs", {
+          method: "POST",
+          // TODO:ここの引数のdateをユーザーが変更できるように
+          body: JSON.stringify(date[0]),
+        });
+        // TODO:rank->title順での並び替え（現状ではrankでのみ）
+        const data = await buzzSongsRes.json();
+        // JSONをobjに
+        for (const song of data) {
+          song.detail.music_feature = JSON.parse(song.detail.music_feature);
+          song.detail.lyrics_feature = JSON.parse(song.detail.lyrics_feature);
+          song.detail.genres = JSON.parse(song.detail.genres);
+        }
+        setBuzzSongList(data);
+      }
+    })();
+  }, [date]);
+
   return (
-    <div>
-      <div>buzzSongsView title</div>
-      {buzzSongList.map((data, idx) => {
-        return (
-          <div key={idx}>
-            <div
-              onClick={() => {
-                setSelectedSongId(data.id);
-                console.log("click");
-              }}
-            >
-              {data.title}
+    <Box component="main">
+      <div>buzzSongsView</div>
+      <div>
+        {buzzSongList.map((data, idx) => {
+          return (
+            <div key={idx}>
+              <List
+                className={style.songlist}
+                // className="songlist"
+                // style={{
+                //   display: "flex",
+                //   alignItems: "flexStart",
+                //   position: "relative",
+                //   flexDirection: "column",
+                //   boxSizing: "borderBox",
+                //   textAlign: "left",
+                //   justifyContents: "flexStart",
+                // }}
+              >
+                <ListItem>
+                  {/* TODO:Imageタグに置き換える */}
+                  <img
+                    src={data.detail.img_url}
+                    style={{ width: "50px", height: "50px" }}
+                    alt=""
+                  ></img>
+                  {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
+                  <div
+                    onClick={() => {
+                      setSelectedSongId(data.id);
+                      console.log("click");
+                    }}
+                  >
+                    {data.detail.title}
+                  </div>
+                  <div>{data.detail.artist}</div>
+                  <audio controls src={data.detail.preview_url}></audio>
+                </ListItem>
+              </List>
             </div>
-            <div>{data.artist}</div>
-            <audio controls src={data.preview_url}></audio>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+      {buzzSongList.length > 0 && (
+        <div>
+          <ParallelCoordinates songList={buzzSongList} />
+        </div>
+      )}
+    </Box>
   );
 }

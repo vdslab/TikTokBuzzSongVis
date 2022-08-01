@@ -44,37 +44,32 @@ export default function BuzzSongs({ setSelectedSongId }) {
         {buzzSongList.map((data, idx) => {
           return (
             <div key={idx}>
-              <List
-                className={style.songlist}
-                // className="songlist"
-                // style={{
-                //   display: "flex",
-                //   alignItems: "flexStart",
-                //   position: "relative",
-                //   flexDirection: "column",
-                //   boxSizing: "borderBox",
-                //   textAlign: "left",
-                //   justifyContents: "flexStart",
-                // }}
-              >
+              <List className={style.songlist}>
                 <ListItem>
-                  {/* TODO:Imageタグに置き換える */}
-                  <img
-                    src={data.detail.img_url}
-                    style={{ width: "50px", height: "50px" }}
-                    alt=""
-                  ></img>
-                  {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
-                  <div
-                    onClick={() => {
-                      setSelectedSongId(data.id);
-                      console.log("click");
-                    }}
-                  >
-                    {data.detail.title}
+                  <div className={style.listitem}>
+                    {/* TODO:Imageタグに置き換える */}
+                    <div className={style.images_names}>
+                      <img
+                        src={data.detail.img_url}
+                        style={{ width: "50px", height: "50px" }}
+                        alt=""
+                        className={style.image}
+                      ></img>
+                      {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
+                      <div className={style.names}>
+                        <div
+                          onClick={() => {
+                            setSelectedSongId(data.id);
+                            console.log("click");
+                          }}
+                        >
+                          {data.detail.title}
+                        </div>
+                        <div>{data.detail.artist}</div>
+                      </div>
+                    </div>
+                    <audio controls src={data.detail.preview_url}></audio>
                   </div>
-                  <div>{data.detail.artist}</div>
-                  <audio controls src={data.detail.preview_url}></audio>
                 </ListItem>
               </List>
             </div>

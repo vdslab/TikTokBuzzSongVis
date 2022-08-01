@@ -49,7 +49,7 @@ export function ParallelCoordinates({ songList }) {
   const colorScale = d3
     .scaleLinear()
     .domain([0, 100])
-    .range(["#00FFFF", "#FF00FF"]);
+    .range(["#0CCCC7", "#FE2C55"]);
 
   const xTickScale = d3
     .scalePoint()

@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import style from "./WordCloud.module.css";
 
 const legend = [
-  { value: -1, text: "ネガティブ" },
-  { value: 0, text: "ノーマル" },
   { value: 1, text: "ポジティブ" },
+  { value: 0, text: "ノーマル" },
+  { value: -1, text: "ネガティブ" },
 ];
 
 export default function WordCloudChart({ feature }) {
@@ -31,7 +31,7 @@ export default function WordCloudChart({ feature }) {
   const colorScale = d3
     .scaleLinear()
     .domain([-1, 0, 1])
-    .range(["#53befc", "#a3a3a3", "#fc77e8"]);
+    .range(["#0CCCC7", "#a3a3a3", "#FE2C55"]);
 
   const cloudData = feature.map((data) => {
     return {
@@ -70,7 +70,7 @@ export default function WordCloudChart({ feature }) {
 
   return (
     <div className={style.title_chart} style={{ width: 480 }}>
-      WordCloud
+      <div className={style.title}>WordCloud</div>
       <div className="chart">
         {" "}
         <svg

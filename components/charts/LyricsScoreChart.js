@@ -7,8 +7,8 @@ export default function LyricsScoreChart({ feature }) {
 
   const margin = {
     left: 50,
-    right: 60,
-    top: 10,
+    right: 110,
+    top: 20,
     bottom: 50,
   };
   const contentWidth = 600;
@@ -179,6 +179,30 @@ export default function LyricsScoreChart({ feature }) {
               </g>
             );
           })}
+          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#ff00ff"></circle>
+          <text
+            x={contentWidth + 43}
+            y="-3"
+            textAnchor="start"
+            dominantBaseline="central"
+            fontSize="9"
+            fill="#333333"
+            style={{ userSelect: "none" }}
+          >
+            ポジティブ度
+          </text>
+          <circle cx={contentWidth + 35} cy="13" r="5" fill="#00bfff"></circle>
+          <text
+            x={contentWidth + 43}
+            y="13"
+            textAnchor="start"
+            dominantBaseline="central"
+            fontSize="9"
+            fill="#333333"
+            style={{ userSelect: "none" }}
+          >
+            韻踏み度
+          </text>
         </g>
       </svg>
     </div>

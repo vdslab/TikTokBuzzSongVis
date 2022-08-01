@@ -130,7 +130,7 @@ function RaderChart({ feature }) {
   }
 
   return (
-    <div className={style.title_chart} style={{ width: 480 }}>
+    <div className={style.title_chart} style={{ width: 450 }}>
       音楽特徴量
       <div style={{ fontSize: "0.75rem", padding: "0.75rem 0" }}>
         <div style={{ display: "flex" }}>

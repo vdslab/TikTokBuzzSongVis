@@ -69,7 +69,7 @@ export default function WordCloudChart({ feature }) {
   }, [cloudData]);
 
   return (
-    <div className={style.title_chart} style={{ width: 480 }}>
+    <div className={style.title_chart} style={{ width: 450 }}>
       WordCloud
       <div className="chart">
         {" "}

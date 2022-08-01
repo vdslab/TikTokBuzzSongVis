@@ -9,14 +9,14 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", padding: "1rem" }}>
+      <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
         <div>
           <BuzzSongs
             selectedSongId={selectedSongId}
             setSelectedSongId={setSelectedSongId}
           />
         </div>
-        <div style={{ width: "50%" }}>
+        <div style={{ paddingLeft: "32px", width: "80%" }}>
           <SongDetail songId={selectedSongId} />
         </div>
       </div>

@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from "react";
+import style from "./RadarChart.module.css";
+
 const featureFeature = [
   "acousticness",
   "danceability",
@@ -128,7 +130,7 @@ function RaderChart({ feature }) {
   }
 
   return (
-    <div>
+    <div className={style.title_chart} style={{ width: 480 }}>
       音楽特徴量
       <div style={{ fontSize: "0.75rem", padding: "0.75rem 0" }}>
         <div style={{ display: "flex" }}>

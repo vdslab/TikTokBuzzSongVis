@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, List, ListItem } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import { ParallelCoordinates } from "../charts/ParallelCoordinates";
+// import Image from "next/image";
 
 export default function BuzzSongs({ setSelectedSongId }) {
   const [date, setDate] = useState([]);
@@ -57,6 +58,13 @@ export default function BuzzSongs({ setSelectedSongId }) {
                 // }}
               >
                 <ListItem>
+                  {/* TODO:Imageタグに置き換える */}
+                  <img
+                    src={data.detail.img_url}
+                    style={{ width: "50px", height: "50px" }}
+                    alt=""
+                  ></img>
+                  {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
                   <div
                     onClick={() => {
                       setSelectedSongId(data.id);

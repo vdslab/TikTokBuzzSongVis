@@ -23,7 +23,7 @@ export default function SearchSongs({ feature }) {
   useEffect(() => {
     (async () => {
       if (inputSongName !== "") {
-        const songListRes = await fetch("/api/search_songs", {
+        const songListRes = await fetch("/api/spotify/search_songs", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
           body: JSON.stringify(inputSongName),

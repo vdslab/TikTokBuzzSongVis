@@ -1,8 +1,17 @@
+.upper {
+  overflow-y: scroll;
+  height: 480px;
+}
+
+.songlist {
+  overflow-y: scroll;
+}
+
 .listitem {
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 .images_names {
@@ -15,6 +24,11 @@
 
 .names {
   padding-left: 16px;
+}
+
+.parallel {
+  padding-top: 16px;
+  height: 100px;
 }
 
 /* .buttons {

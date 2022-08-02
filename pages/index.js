@@ -16,7 +16,7 @@ export default function Home() {
           padding: "1rem",
         }}
       >
-        <div style={{ height: "700px", overflowY: "scroll", width: "30%" }}>
+        <div style={{ width: "30%" }}>
           <BuzzSongs
             selectedSongId={selectedSongId}
             setSelectedSongId={setSelectedSongId}

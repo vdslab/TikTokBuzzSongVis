@@ -40,7 +40,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
   return (
     <Box component="main">
       <div>buzzSongsView</div>
-      <div>
+      <div className={style.upper}>
         {buzzSongList.map((data, idx) => {
           return (
             <div key={idx}>
@@ -90,7 +90,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         })}
       </div>
       {buzzSongList.length > 0 && (
-        <div>
+        <div className={style.parallel}>
           <ParallelCoordinates songList={buzzSongList} />
         </div>
       )}

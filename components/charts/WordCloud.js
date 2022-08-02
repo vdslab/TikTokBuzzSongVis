@@ -13,7 +13,7 @@ export default function WordCloudChart({ feature }) {
   console.log(feature);
   const margin = {
     left: 5,
-    right: 55,
+    right: 65,
     top: 5,
     bottom: 5,
   };
@@ -71,63 +71,59 @@ export default function WordCloudChart({ feature }) {
   return (
     <div className={style.title_chart} style={{ width: 480 }}>
       WordCloud
-      <div className="chart">
-        {" "}
-        <svg
-          viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-          style={{
-            border: "solid 0.1px",
-            borderColor: "#BBBBBB",
-          }}
-        >
-          {legend.map((l, i) => {
+      <svg
+        viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+        style={{
+          border: "solid 0.1px",
+          borderColor: "#BBBBBB",
+        }}
+      >
+        {legend.map((l, i) => {
+          return (
+            <g key={l.text}>
+              <circle
+                cx={contentWidth}
+                cy={16.5 + 15 * i}
+                r="5"
+                fill={colorScale(l.value)}
+              />
+              <text
+                x={contentWidth + 12.5}
+                y={10 + 15 * i + 10 / 2}
+                textAnchor="start"
+                dominantBaseline="central"
+                fontSize="7.5"
+                fill="#333333"
+                style={{ userSelect: "none" }}
+              >
+                {l.text}
+              </text>
+            </g>
+          );
+        })}
+        <g transform={`translate(${contentWidth / 2},${contentHeight / 2})`}>
+          {chart.words.map((word) => {
             return (
-              <g key={l.text}>
-                <rect
-                  x={contentWidth}
-                  y={10 + 15 * i}
-                  width="10"
-                  height="10"
-                  fill={colorScale(l.value)}
-                />
+              <g
+                key={word}
+                transform={`translate(${word.x},${word.y})rotate(${word.rotate})`}
+              >
                 <text
-                  x={contentWidth + 12.5}
-                  y={10 + 15 * i + 10 / 2}
-                  textAnchor="start"
-                  dominantBaseline="central"
-                  fontSize="7.5"
-                  fill="#333333"
+                  x={0}
+                  y={0}
+                  textAnchor="middle"
+                  fontSize={word.size}
+                  fill={word.color}
+                  fontFamily="Impact"
                   style={{ userSelect: "none" }}
                 >
-                  {l.text}
+                  {word.text}
                 </text>
               </g>
             );
           })}
-          <g transform={`translate(${contentWidth / 2},${contentHeight / 2})`}>
-            {chart.words.map((word) => {
-              return (
-                <g
-                  key={word}
-                  transform={`translate(${word.x},${word.y})rotate(${word.rotate})`}
-                >
-                  <text
-                    x={0}
-                    y={0}
-                    textAnchor="middle"
-                    fontSize={word.size}
-                    fill={word.color}
-                    fontFamily="Impact"
-                    style={{ userSelect: "none" }}
-                  >
-                    {word.text}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
-        </svg>
-      </div>
+        </g>
+      </svg>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default async function playlists(req, res) {
   const token = await getToken();
 
   const response = await fetch(
-    `https://api.spotify.com/v1/search?q=${songName}&type=track`,
+    `https://api.spotify.com/v1/search?q=${songName}&type=track&market=JP`,
     {
       method: "GET",
       headers: {

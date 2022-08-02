@@ -3,7 +3,6 @@ import LyricsScoreChart from "../charts/LyricsScoreChart";
 import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {

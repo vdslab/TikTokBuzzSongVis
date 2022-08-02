@@ -10,7 +10,7 @@ import { useState, useRef, useEffect } from "react";
 import style from "./BuzzSongs.module.css";
 import { useRouter } from "next/router";
 
-export default function SearchSongs({ feature }) {
+export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
   const [songList, setSongList] = useState([]);
   const inputEl = useRef("");
@@ -85,6 +85,9 @@ export default function SearchSongs({ feature }) {
                     <div
                       onClick={() => {
                         router.push(`/song/${song.id}`);
+                        if (props.clickAndClose) {
+                          props.handleClose();
+                        }
                       }}
                     >
                       {song.name}

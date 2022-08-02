@@ -7,8 +7,14 @@ import {
   IconButton,
 } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
+import SearchPopup from "../views/SearchPopup";
 
 export default function Header() {
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  function handleClose() {
+    setIsOpenPopup(false);
+  }
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -31,12 +37,16 @@ export default function Header() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => {
+                setIsOpenPopup(true);
+              }}
             >
               <SearchIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
       </Box>
+      <SearchPopup isOpen={isOpenPopup} handleClose={handleClose} />
     </div>
   );
 }

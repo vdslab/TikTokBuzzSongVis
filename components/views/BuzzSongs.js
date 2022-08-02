@@ -68,6 +68,19 @@ export default function BuzzSongs({ setSelectedSongId }) {
                         <div>{data.detail.artist}</div>
                       </div>
                     </div>
+                    {/* <audio
+                      controls
+                      id="demo"
+                      src={data.detail.preview_url}
+                    ></audio> */}
+                    {/* <div class="container">
+                      <div>
+                        <button id="play" class="btn btn-primary">
+                          再生
+                        </button>
+                      </div>
+                    </div> */}
+
                     <audio controls src={data.detail.preview_url}></audio>
                   </div>
                 </ListItem>
@@ -77,7 +90,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         })}
       </div>
       {buzzSongList.length > 0 && (
-        <div>
+        <div className={style.parallel}>
           <ParallelCoordinates songList={buzzSongList} />
         </div>
       )}

@@ -1,12 +1,17 @@
-.title {
-  font-size: 20px;
+.upper {
+  overflow-y: scroll;
+  height: 480px;
+}
+
+.songlist {
+  overflow-y: scroll;
 }
 
 .listitem {
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 .images_names {
@@ -29,3 +34,18 @@
   padding-left: 16px;
   cursor: pointer;
 }
+
+.parallel {
+  padding-top: 16px;
+  height: 100px;
+}
+
+/* .buttons {
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+ button img {
+  display: block;
+} */

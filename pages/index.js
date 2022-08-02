@@ -9,14 +9,20 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
-        <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: "1rem",
+        }}
+      >
+        <div style={{ width: "30%" }}>
           <BuzzSongs
             selectedSongId={selectedSongId}
             setSelectedSongId={setSelectedSongId}
           />
         </div>
-        <div style={{ paddingLeft: "32px", width: "80%" }}>
+        <div style={{ paddingLeft: "30px", width: "70%" }}>
           <SongDetail songId={selectedSongId} hasData={true} />
         </div>
       </div>

@@ -12,7 +12,7 @@ export default function WordCloudChart({ feature }) {
   console.log(feature);
   const margin = {
     left: 5,
-    right: 65,
+    right: 55,
     top: 5,
     bottom: 5,
   };
@@ -80,10 +80,11 @@ export default function WordCloudChart({ feature }) {
         {legend.map((l, i) => {
           return (
             <g key={l.text}>
-              <circle
-                cx={contentWidth}
-                cy={16.5 + 15 * i}
-                r="5"
+              <rect
+                x={contentWidth}
+                y={10 + 15 * i}
+                width="10"
+                height="10"
                 fill={colorScale(l.value)}
               />
               <text

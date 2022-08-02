@@ -261,14 +261,14 @@ function RaderChart({ feature }) {
                 <g key={i}>
                   {show && info.feature === p.name && (
                     <g>
-                      {/* <rect
+                      <rect
                         x={p.x - 25 / 2}
                         y={p.y - 15}
                         width="25"
                         height="10"
                         fill="#ffffff"
-                        fillOpacity={0.5}
-                      /> */}
+                        fillOpacity={0.8}
+                      />
 
                       <text
                         id={p.name + " " + p.value}

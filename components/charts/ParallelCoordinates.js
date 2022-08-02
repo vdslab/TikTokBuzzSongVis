@@ -48,8 +48,8 @@ export function ParallelCoordinates({ songList }) {
   // TINK:最低最大をrankに合わせるかどうか
   const colorScale = d3
     .scaleLinear()
-    .domain([0, 100])
-    .range(["#0CCCC7", "#FE2C55"]);
+    .domain([0, 50, 100]) // FIXME
+    .range(["#24F4EE", "#fffe18", "#FE2C55"]);
 
   const xTickScale = d3
     .scalePoint()

@@ -4,23 +4,43 @@ import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
 
-export default function SongDetail({ songId }) {
+async function getDbSongData(songId) {
+  const songRes = await fetch("/api/db_song", {
+    method: "POST",
+    body: JSON.stringify(songId),
+  });
+  const data = await songRes.json();
+  data.music_feature = JSON.parse(data.music_feature);
+  data.lyrics_feature = JSON.parse(data.lyrics_feature);
+  data.genres = JSON.parse(data.genres);
+  return data;
+}
+
+async function getSongData(songId) {
+  const songInfoReq = await fetch("/api/bebebe/song_info", {
+    method: "POST",
+    body: JSON.stringify(songId),
+  });
+  const songInfo = await songInfoReq.json();
+  return songInfo;
+}
+
+// HACK:親コンポーネントからdetail情報を渡した方がいい
+export default function SongDetail({ songId, hasData }) {
   const [songData, setSongData] = useState([]);
   useEffect(() => {
     (async () => {
       if (songId) {
-        const songRes = await fetch("/api/db_song", {
-          method: "POST",
-          body: JSON.stringify(songId),
-        });
-        const data = await songRes.json();
-        data.music_feature = JSON.parse(data.music_feature);
-        data.lyrics_feature = JSON.parse(data.lyrics_feature);
-        data.genres = JSON.parse(data.genres);
-        setSongData(data);
+        if (hasData) {
+          const data = await getDbSongData(songId);
+          setSongData(data);
+        } else {
+          const data = await getSongData(songId);
+          setSongData(data);
+        }
       }
     })();
-  }, [songId]);
+  }, [songId, hasData]);
 
   return (
     <div style={{ padding: "1rem" }}>

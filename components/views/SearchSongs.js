@@ -57,6 +57,7 @@ export default function SearchSongs({ feature }) {
         />
         <IconButton
           type="text"
+          size="small"
           sx={{ p: "10px" }}
           aria-label="search"
           onClick={changeInputSongName}

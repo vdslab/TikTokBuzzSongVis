@@ -34,7 +34,7 @@ export default function Header() {
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
             <IconButton
-              size="large"
+              size="medium"
               aria-label="show 4 new mails"
               color="inherit"
               onClick={() => {

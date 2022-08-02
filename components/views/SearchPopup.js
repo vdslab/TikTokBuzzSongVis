@@ -42,7 +42,7 @@ export default function SearchPopup(props) {
           </DialogActions>
         </div>
         <DialogContent>
-          <SearchSongs clickAndClose={true} handleClose={props.handleClose} />
+          <SearchSongs clickAndClose={true} />
         </DialogContent>
       </Dialog>
     </div>

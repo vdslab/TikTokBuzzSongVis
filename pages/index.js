@@ -17,7 +17,7 @@ export default function Home() {
           />
         </div>
         <div style={{ paddingLeft: "32px", width: "80%" }}>
-          <SongDetail songId={selectedSongId} />
+          <SongDetail songId={selectedSongId} hasData={true} />
         </div>
       </div>
     </div>

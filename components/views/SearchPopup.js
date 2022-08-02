@@ -28,6 +28,7 @@ export default function SearchPopup(props) {
           </DialogTitle>
           <DialogActions>
             <IconButton
+              size="small"
               onClick={props.handleClose}
               aria-label="close"
               sx={{
@@ -42,7 +43,7 @@ export default function SearchPopup(props) {
           </DialogActions>
         </div>
         <DialogContent>
-          <SearchSongs clickAndClose={true} />
+          <SearchSongs clickAndClose={true} handleClose={props.handleClose} />
         </DialogContent>
       </Dialog>
     </div>

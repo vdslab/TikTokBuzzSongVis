@@ -8,11 +8,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, useRef, useEffect } from "react";
 import style from "./BuzzSongs.module.css";
+import { useRouter } from "next/router";
 
-export default function SearchSongs({ feature }) {
+export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
   const [songList, setSongList] = useState([]);
   const inputEl = useRef("");
+  const router = useRouter();
 
   function changeInputSongName() {
     setInputSongName(inputEl.current.value);
@@ -21,7 +23,7 @@ export default function SearchSongs({ feature }) {
   useEffect(() => {
     (async () => {
       if (inputSongName !== "") {
-        const songListRes = await fetch("/api/search_songs", {
+        const songListRes = await fetch("/api/spotify/search_songs", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
           body: JSON.stringify(inputSongName),
@@ -57,6 +59,7 @@ export default function SearchSongs({ feature }) {
         />
         <IconButton
           type="text"
+          size="small"
           sx={{ p: "10px" }}
           aria-label="search"
           onClick={changeInputSongName}
@@ -78,7 +81,17 @@ export default function SearchSongs({ feature }) {
                     className={style.image}
                   ></img>
                   <div className={style.names}>
-                    <div>{song.name}</div>
+                    {/* HACK:Linkの方がいい？ */}
+                    <div
+                      onClick={() => {
+                        router.push(`/song/${song.id}`);
+                        if (props.clickAndClose) {
+                          props.handleClose();
+                        }
+                      }}
+                    >
+                      {song.name}
+                    </div>
                     <div>{song.artists[0].name}</div>
                   </div>
                 </div>

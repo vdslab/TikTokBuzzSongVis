@@ -3,24 +3,47 @@ import LyricsScoreChart from "../charts/LyricsScoreChart";
 import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
+import { ConstructionOutlined } from "@mui/icons-material";
 
-export default function SongDetail({ songId }) {
+async function getDbSongData(songId) {
+  const songRes = await fetch("/api/db_song", {
+    method: "POST",
+    body: JSON.stringify(songId),
+  });
+  const data = await songRes.json();
+  data.music_feature = JSON.parse(data.music_feature);
+  data.lyrics_feature = JSON.parse(data.lyrics_feature);
+  data.genres = JSON.parse(data.genres);
+  return data;
+}
+
+async function getSongData(songId) {
+  const songInfoReq = await fetch("/api/bebebe/song_info", {
+    method: "POST",
+    body: JSON.stringify(songId),
+  });
+  const songInfo = await songInfoReq.json();
+  return songInfo;
+}
+
+// HACK:親コンポーネントからdetail情報を渡した方がいい
+export default function SongDetail({ songId, hasData }) {
   const [songData, setSongData] = useState([]);
   useEffect(() => {
     (async () => {
       if (songId) {
-        const songRes = await fetch("/api/db_song", {
-          method: "POST",
-          body: JSON.stringify(songId),
-        });
-        const data = await songRes.json();
-        data.music_feature = JSON.parse(data.music_feature);
-        data.lyrics_feature = JSON.parse(data.lyrics_feature);
-        data.genres = JSON.parse(data.genres);
-        setSongData(data);
+        if (hasData) {
+          const data = await getDbSongData(songId);
+          setSongData(data);
+        } else {
+          const data = await getSongData(songId);
+          setSongData(data);
+        }
       }
     })();
-  }, [songId]);
+  }, [songId, hasData]);
+
+  console.log(songData);
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -34,6 +57,7 @@ export default function SongDetail({ songId }) {
           ></img>
           <div className={style.names}>
             <div>{songData.title}</div>
+            <div>&nbsp; / &nbsp;</div>
             <div>{songData.artist}</div>
           </div>
         </div>
@@ -46,7 +70,7 @@ export default function SongDetail({ songId }) {
             <RadarChart feature={songData.music_feature} />
           )}
         </div>
-        <div className={style.wordcloud} style={{ padding: "1rem" }}>
+        <div className={style.wordcloud}>
           {songData.lyrics_feature?.word_cloud_data &&
             Object.keys(songData.lyrics_feature?.word_cloud_data).length >
               0 && (
@@ -57,7 +81,9 @@ export default function SongDetail({ songId }) {
         </div>
       </div>
       <div style={{ padding: "1rem" }}>
-        <LyricsScoreChart feature={songData.lyrics_feature} />
+        {songData.lyrics_feature && (
+          <LyricsScoreChart feature={songData.lyrics_feature} />
+        )}
       </div>
     </div>
   );

@@ -39,8 +39,8 @@ export default function BuzzSongs({ setSelectedSongId }) {
 
   return (
     <Box component="main">
-      <div>buzzSongsView</div>
-      <div className={style.upper}>
+      <div className={style.title}>これから流行る曲はこれだ！</div>
+      <div>
         {buzzSongList.map((data, idx) => {
           return (
             <div key={idx}>

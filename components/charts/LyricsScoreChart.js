@@ -1,10 +1,8 @@
 import * as d3 from "d3";
 import React, { useState } from "react";
-/* import { useMemo } from "react"; */
 export default function LyricsScoreChart({ feature }) {
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});
-  /*   console.log(feature); */
   const x = 0;
 
   const margin = {
@@ -42,7 +40,6 @@ export default function LyricsScoreChart({ feature }) {
       x: Xscale(d),
     };
   });
-  /* console.log(xTicks); */
 
   const yTicks = Yscale.ticks(10).map((d) => {
     return {
@@ -50,7 +47,7 @@ export default function LyricsScoreChart({ feature }) {
       y: Yscale(d),
     };
   });
-  /* console.log(yTicks); */
+
   const positiveLine = {
     label: "ポジティブ度",
     color: "pink",
@@ -77,8 +74,6 @@ export default function LyricsScoreChart({ feature }) {
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
   };
-
-  /* console.log(rhymeLine); */
 
   const lines2 = [positiveLine, rhymeLine];
 
@@ -166,7 +161,8 @@ export default function LyricsScoreChart({ feature }) {
                   opacity="0.8"
                 />
                 {item.points.map((p, j) => {
-                  /* console.log(i + "" + j); */
+                  console.log(item.scores);
+
                   return (
                     <g key={i + "" + j}>
                       <circle

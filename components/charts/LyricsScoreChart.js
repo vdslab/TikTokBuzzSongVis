@@ -10,7 +10,7 @@ export default function LyricsScoreChart({ feature }) {
   const margin = {
     left: 50,
     right: 110,
-    top: 20,
+    top: 35,
     bottom: 50,
   };
   const contentWidth = 600;
@@ -188,19 +188,19 @@ export default function LyricsScoreChart({ feature }) {
                           <g>
                             <rect
                               x={p.x + 10}
-                              y={p.y - 35}
-                              width="75"
+                              y={p.y - 30}
+                              width="80"
                               height="20"
                               stroke={item.pointColor}
                               fill={item.pointFill}
                               fillOpacity={0.5}
                             />
                             <text
-                              x={p.x + 10}
-                              y={p.y - 25}
-                              textAnchor="start"
+                              x={p.x + 50}
+                              y={p.y - 20}
+                              textAnchor="middle"
                               dominantBaseline="central"
-                              fontSize="10"
+                              fontSize="9"
                               style={{ userSelect: "none" }}
                             >
                               {item.label}:{item.scores[j]}

@@ -1,0 +1,26 @@
+import { useState } from "react";
+import Header from "../../components/layouts/Header";
+import BuzzSongs from "../../components/views/BuzzSongs";
+import SongDetail from "../../components/views/SongDetail";
+
+export default function Home() {
+  const [selectedSongId, setSelectedSongId] = useState(null);
+
+  return (
+    <div>
+      <Header />
+      <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
+        <div>
+          {/* <BuzzSongs
+            selectedSongId={selectedSongId}
+            setSelectedSongId={setSelectedSongId}
+          /> */}
+          選んだ曲
+        </div>
+        <div style={{ paddingLeft: "32px", width: "80%" }}>
+          <SongDetail songId={selectedSongId} />
+        </div>
+      </div>
+    </div>
+  );
+}

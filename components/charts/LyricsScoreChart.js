@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import React, { useState } from "react";
-import { useMemo } from "react";
+/* import { useMemo } from "react"; */
 export default function LyricsScoreChart({ feature }) {
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});

@@ -16,7 +16,6 @@ export default function WordCloudChart({ feature }) {
     top: 5,
     bottom: 5,
   };
-
   const contentWidth = 400;
   const contentHeight = 400;
 

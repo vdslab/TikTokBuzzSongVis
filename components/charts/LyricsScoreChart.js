@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import style from "./LyricsScoreChart.module.css";
 /* import { color } from "d3"; */
 export default function LyricsScoreChart({ feature }) {
   console.log(feature);
@@ -64,8 +65,8 @@ export default function LyricsScoreChart({ feature }) {
 
   const positiveLine = {
     label: "ポジティブ度",
-    color: "pink",
-    pointColor: "#ff00ff",
+    color: "rgb(254, 44, 85, 0.5)",
+    pointColor: "#FE2C55",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -76,8 +77,8 @@ export default function LyricsScoreChart({ feature }) {
   };
   const rhymeLine = {
     label: "韻踏み度",
-    color: "#00bfff",
-    pointColor: "blue",
+    color: "rgb(12, 204, 199, 0.5)",
+    pointColor: "#0CCCC7",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -93,7 +94,7 @@ export default function LyricsScoreChart({ feature }) {
   console.log(lines2);
   return (
     <div>
-      <div>LyricsScoreChart</div>
+      <div className={style.title}>LyricsScoreChart</div>
       <svg
         viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
         style={{
@@ -179,26 +180,26 @@ export default function LyricsScoreChart({ feature }) {
               </g>
             );
           })}
-          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#ff00ff"></circle>
+          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#FE2C55"></circle>
           <text
             x={contentWidth + 43}
             y="-3"
             textAnchor="start"
             dominantBaseline="central"
             fontSize="9"
-            fill="#333333"
+            fill="#FE2C55"
             style={{ userSelect: "none" }}
           >
             ポジティブ度
           </text>
-          <circle cx={contentWidth + 35} cy="13" r="5" fill="#00bfff"></circle>
+          <circle cx={contentWidth + 35} cy="13" r="5" fill="#0CCCC7"></circle>
           <text
             x={contentWidth + 43}
             y="13"
             textAnchor="start"
             dominantBaseline="central"
             fontSize="9"
-            fill="#333333"
+            fill="#0CCCC7"
             style={{ userSelect: "none" }}
           >
             韻踏み度

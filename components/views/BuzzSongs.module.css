@@ -1,3 +1,7 @@
+.title {
+  font-size: 20px;
+}
+
 .listitem {
   display: flex;
   position: relative;

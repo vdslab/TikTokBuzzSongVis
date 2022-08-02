@@ -34,6 +34,7 @@ export default function SongDetail({ songId }) {
           ></img>
           <div className={style.names}>
             <div>{songData.title}</div>
+            <div>&nbsp; / &nbsp;</div>
             <div>{songData.artist}</div>
           </div>
         </div>
@@ -46,7 +47,7 @@ export default function SongDetail({ songId }) {
             <RadarChart feature={songData.music_feature} />
           )}
         </div>
-        <div className={style.wordcloud} style={{ padding: "1rem" }}>
+        <div className={style.wordcloud}>
           {songData.lyrics_feature?.word_cloud_data &&
             Object.keys(songData.lyrics_feature?.word_cloud_data).length >
               0 && (

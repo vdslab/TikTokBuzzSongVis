@@ -1,15 +1,15 @@
 import * as d3 from "d3";
+import React, { useState } from "react";
 import style from "./LyricsScoreChart.module.css";
-/* import { color } from "d3"; */
 export default function LyricsScoreChart({ feature }) {
-  console.log(feature);
-  const strokeColor = "#888";
+  const [show, setShow] = useState(false);
+  const [info, setInfo] = useState({});
   const x = 0;
 
   const margin = {
     left: 50,
     right: 110,
-    top: 20,
+    top: 35,
     bottom: 50,
   };
   const contentWidth = 600;
@@ -41,7 +41,6 @@ export default function LyricsScoreChart({ feature }) {
       x: Xscale(d),
     };
   });
-  console.log(xTicks);
 
   const yTicks = Yscale.ticks(10).map((d) => {
     return {
@@ -49,24 +48,12 @@ export default function LyricsScoreChart({ feature }) {
       y: Yscale(d),
     };
   });
-  console.log(yTicks);
-
-  const lines = feature.lyrics_list.map((section, idx) => {
-    return {
-      x: Xscale(idx),
-      rhymeY: Yscale(section.rhyme_score),
-      positiveY: Yscale(section.positive_score),
-      color: "#0000",
-      rhymeScore: section.rhyme_score,
-      positiveScore: section.positive_score,
-    };
-  });
-  console.log(lines);
 
   const positiveLine = {
     label: "ポジティブ度",
     color: "rgb(254, 44, 85, 0.5)",
     pointColor: "#FE2C55",
+    pointFill: "#fff0f5",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -79,6 +66,7 @@ export default function LyricsScoreChart({ feature }) {
     label: "韻踏み度",
     color: "rgb(12, 204, 199, 0.5)",
     pointColor: "#0CCCC7",
+    pointFill: "#f0ffff",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -87,11 +75,24 @@ export default function LyricsScoreChart({ feature }) {
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
   };
+  const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
 
-  console.log(rhymeLine);
+  if (rhymeLine.scores.indexOf(null) !== -1) {
+    lines2.pop();
+  }
 
-  const lines2 = [positiveLine, rhymeLine];
-  console.log(lines2);
+  if (positiveLine.scores.indexOf(null) !== -1) {
+    lines2.shift();
+  }
+
+  function onHover(e) {
+    setShow(true);
+  }
+
+  function changeInfo(labelName, index) {
+    setInfo({ labelName: labelName, index: index });
+  }
+
   return (
     <div>
       <div className={style.title}>LyricsScoreChart</div>
@@ -166,15 +167,47 @@ export default function LyricsScoreChart({ feature }) {
                   opacity="0.8"
                 />
                 {item.points.map((p, j) => {
-                  /* console.log(i + "" + j); */
                   return (
-                    <circle
-                      key={i + "" + j}
-                      cx={p.x}
-                      cy={p.y}
-                      r="5"
-                      fill={item.pointColor}
-                    ></circle>
+                    <g key={i + "" + j}>
+                      <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r="7"
+                        fill={item.pointColor}
+                        onMouseMove={(e) => {
+                          onHover(e);
+                          changeInfo(item.label, j);
+                        }}
+                        onMouseLeave={() => {
+                          setShow(false);
+                        }}
+                      ></circle>
+                      {show === true &&
+                        info.labelName === item.label &&
+                        info.index === j && (
+                          <g>
+                            <rect
+                              x={p.x + 10}
+                              y={p.y - 30}
+                              width="80"
+                              height="20"
+                              stroke={item.pointColor}
+                              fill={item.pointFill}
+                              fillOpacity={0.5}
+                            />
+                            <text
+                              x={p.x + 50}
+                              y={p.y - 20}
+                              textAnchor="middle"
+                              dominantBaseline="central"
+                              fontSize="9"
+                              style={{ userSelect: "none" }}
+                            >
+                              {item.label}:{item.scores[j]}
+                            </text>
+                          </g>
+                        )}
+                    </g>
                   );
                 })}
               </g>

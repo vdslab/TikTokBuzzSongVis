@@ -1,62 +1,26 @@
-// 仮でおいているだけ。本当は違うデータが返ってくる
+import { similarSongSample } from "./sampleData/songData";
 
-import request from "request";
-//Note:クライアント側で変数を使うときは`NEXT_PUBLIC_`が必要
-const spotify = {
-  ClientId: process.env.SPOTIFY_CLIENT_ID,
-  ClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-};
+export default async function getSongInfo(req, res) {
+  const id = JSON.parse(req.body);
 
-// HACK:fetchで書けるはず？tokenをどこかに保存しておきたい
-async function getToken() {
-  const authOptions = {
-    url: "https://accounts.spotify.com/api/token",
-    headers: {
-      Authorization:
-        "Basic " +
-        new Buffer(spotify.ClientId + ":" + spotify.ClientSecret).toString(
-          "base64"
-        ),
-    },
-    form: {
-      grant_type: "client_credentials",
-    },
-    json: true,
-  };
-
-  const rqt = () => {
-    return new Promise((resolve, reject) => {
-      request.post(authOptions, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-          resolve(body.access_token);
-        }
-      });
-    });
-  };
-
-  const body = await rqt();
-  return body;
-}
-
-export default async function playlists(req, res) {
-  const songName = JSON.parse(req.body);
-  const token = await getToken();
-
-  const response = await fetch(
-    `https://api.spotify.com/v1/search?q=habit&type=track&market=JP`,
+  // HACK:これでええんか？
+  const data = await fetch(
+    `${process.env.API_ENDPOINT}/similar_buzz_songs/${id}`,
     {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       json: true,
     }
-  );
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.log("データの取得に失敗しました。", error);
+      return similarSongSample;
+    });
 
-  const data = await response.json();
-  if (data.tracks?.items) {
-    res.status(200).json(data.tracks.items);
-  } else {
-    res.status(200).json({});
-  }
+  res.status(200).json(data);
 }

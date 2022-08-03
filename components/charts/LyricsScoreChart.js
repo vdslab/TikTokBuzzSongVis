@@ -74,8 +74,6 @@ export default function LyricsScoreChart({ feature }) {
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
   };
-  console.log(positiveLine.scores);
-  console.log(rhymeLine.scores);
   const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
 
   if (rhymeLine.scores.indexOf(null) !== -1) {

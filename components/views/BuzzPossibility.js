@@ -31,7 +31,7 @@ export default function BuzzPossibility({ songData }) {
                   {/* TODO:Imageタグに置き換える */}
                   <div className={style.images_names}>
                     <img
-                      src={song.images_url}
+                      src={song.img_url}
                       style={{ width: "50px", height: "50px" }}
                       alt=""
                       className={style.image}

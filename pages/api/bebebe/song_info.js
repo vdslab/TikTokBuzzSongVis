@@ -1,3 +1,5 @@
+import { sampleData } from "./sampleData/songData";
+
 export default async function getSongInfo(req, res) {
   const id = JSON.parse(req.body);
 
@@ -14,7 +16,7 @@ export default async function getSongInfo(req, res) {
     })
     .catch((error) => {
       console.log("データの取得に失敗しました。", error);
-      return {};
+      return sampleData;
     });
 
   res.status(200).json(data);

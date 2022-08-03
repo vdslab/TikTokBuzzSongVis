@@ -13,24 +13,18 @@ export default function Home() {
     (async () => {
       const songReq = await fetch("/api/bebebe/song_buzz_score", {
         method: "POST",
-        // TODO:ここの引数のdateをユーザーが変更できるように
         body: JSON.stringify(id),
       });
       const data = await songReq.json();
-      console.log(data);
       setSongData(data);
     })();
   }, [id]);
-
-  console.log("songData", songData);
 
   return (
     <div>
       <Header />
       <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
-        <div>
-          {songData !== undefined && <BuzzPossibility songData={songData} />}
-        </div>
+        <div>{songData && <BuzzPossibility songData={songData} />}</div>
         <div style={{ paddingLeft: "32px", width: "80%" }}>
           <SongDetail songId={id} hasData={false} />
         </div>

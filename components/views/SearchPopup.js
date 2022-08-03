@@ -22,9 +22,15 @@ export default function SearchPopup(props) {
           },
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "8px",
+          }}
+        >
           <DialogTitle style={{ fontSize: "1.5rem", fontWeight: "bolder" }}>
-            曲名を検索
+            曲名で検索
           </DialogTitle>
           <DialogActions>
             <IconButton
@@ -33,8 +39,6 @@ export default function SearchPopup(props) {
               aria-label="close"
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
                 color: (theme) => theme.palette.grey[500],
               }}
             >

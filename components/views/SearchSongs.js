@@ -7,8 +7,8 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, useRef, useEffect } from "react";
-import style from "./BuzzSongs.module.css";
 import { useRouter } from "next/router";
+import style from "./SearchSongs.module.css";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
@@ -45,27 +45,31 @@ export default function SearchSongs(props) {
           overflowY: "clip",
         }}
       >
-        <InputBase
-          placeholder="曲名を検索"
-          inputProps={{ "aria-label": "SchoolName" }}
-          inputRef={inputEl}
-          fullWidth={true}
-          onChange={(e) => {
-            if (e.target.value === "") {
-              setInputSongName("");
-            }
-          }}
-          sx={{ m: 1 }}
-        />
-        <IconButton
-          type="text"
-          size="small"
-          sx={{ p: "10px" }}
-          aria-label="search"
-          onClick={changeInputSongName}
-        >
-          <SearchIcon />
-        </IconButton>
+        <div className={style.searchbar}>
+          <InputBase
+            style={{ padding: "4px 8px 4px 15px" }}
+            placeholder="曲名を入力"
+            inputProps={{ "aria-label": "SchoolName" }}
+            inputRef={inputEl}
+            fullWidth={true}
+            onChange={(e) => {
+              if (e.target.value === "") {
+                setInputSongName("");
+              }
+            }}
+            sx={{ m: 1 }}
+          />
+          <IconButton
+            style={{ padding: "4px 8px 4px 8px" }}
+            type="text"
+            size="small"
+            sx={{ p: "10px" }}
+            aria-label="search"
+            onClick={changeInputSongName}
+          >
+            <SearchIcon />
+          </IconButton>
+        </div>
       </Paper>
       {songList.map((song) => {
         return (

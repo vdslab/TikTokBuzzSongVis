@@ -15,8 +15,6 @@ export default function BuzzPossibility({ songData }) {
     })();
   }, [songData]);
 
-  console.log(songData);
-
   return (
     <div>
       <div>
@@ -33,7 +31,7 @@ export default function BuzzPossibility({ songData }) {
                   {/* TODO:Imageタグに置き換える */}
                   <div className={style.images_names}>
                     <img
-                      src={song.album.images[0].url}
+                      src={song.images_url}
                       style={{ width: "50px", height: "50px" }}
                       alt=""
                       className={style.image}
@@ -42,15 +40,15 @@ export default function BuzzPossibility({ songData }) {
                       {/* HACK:Linkの方がいい？ */}
                       <div
                         onClick={() => {
-                          router.push(`/song/${song.id}`);
-                          if (props.clickAndClose) {
-                            props.handleClose();
-                          }
+                          // router.push(`/song/${song.id}`);
+                          // if (props.clickAndClose) {
+                          //   props.handleClose();
+                          // }
                         }}
                       >
-                        {song.name}
+                        {song.title}
                       </div>
-                      <div>{song.artists[0].name}</div>
+                      <div>{song.artists}</div>
                     </div>
                   </div>
                   <audio controls src={song.preview_url}></audio>

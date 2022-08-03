@@ -39,42 +39,50 @@ export default function BuzzSongs({ setSelectedSongId }) {
 
   return (
     <Box component="main">
-      <div>buzzSongsView</div>
-      <div>
+      <div className={style.title}>これから流行る曲はこれだ！</div>
+      <div className={style.upper}>
         {buzzSongList.map((data, idx) => {
           return (
             <div key={idx}>
-              <List
-                className={style.songlist}
-                // className="songlist"
-                // style={{
-                //   display: "flex",
-                //   alignItems: "flexStart",
-                //   position: "relative",
-                //   flexDirection: "column",
-                //   boxSizing: "borderBox",
-                //   textAlign: "left",
-                //   justifyContents: "flexStart",
-                // }}
-              >
+              <List className={style.songlist}>
                 <ListItem>
-                  {/* TODO:Imageタグに置き換える */}
-                  <img
-                    src={data.detail.img_url}
-                    style={{ width: "50px", height: "50px" }}
-                    alt=""
-                  ></img>
-                  {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
-                  <div
-                    onClick={() => {
-                      setSelectedSongId(data.id);
-                      console.log("click");
-                    }}
-                  >
-                    {data.detail.title}
+                  <div className={style.listitem}>
+                    {/* TODO:Imageタグに置き換える */}
+                    <div className={style.images_names}>
+                      <img
+                        src={data.detail.img_url}
+                        style={{ width: "50px", height: "50px" }}
+                        alt=""
+                        className={style.image}
+                      ></img>
+                      {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
+                      <div className={style.names}>
+                        <div
+                          onClick={() => {
+                            setSelectedSongId(data.id);
+                            console.log("click");
+                          }}
+                        >
+                          {data.detail.title}
+                        </div>
+                        <div>{data.detail.artist}</div>
+                      </div>
+                    </div>
+                    {/* <audio
+                      controls
+                      id="demo"
+                      src={data.detail.preview_url}
+                    ></audio> */}
+                    {/* <div class="container">
+                      <div>
+                        <button id="play" class="btn btn-primary">
+                          再生
+                        </button>
+                      </div>
+                    </div> */}
+
+                    <audio controls src={data.detail.preview_url}></audio>
                   </div>
-                  <div>{data.detail.artist}</div>
-                  <audio controls src={data.detail.preview_url}></audio>
                 </ListItem>
               </List>
             </div>
@@ -82,7 +90,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         })}
       </div>
       {buzzSongList.length > 0 && (
-        <div>
+        <div className={style.parallel}>
           <ParallelCoordinates songList={buzzSongList} />
         </div>
       )}

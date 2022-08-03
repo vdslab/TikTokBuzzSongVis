@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from "react";
+import style from "./RadarChart.module.css";
+
 const featureFeature = [
   "acousticness",
   "danceability",
@@ -128,8 +130,8 @@ function RaderChart({ feature }) {
   }
 
   return (
-    <div>
-      音楽特徴量
+    <div className={style.title_chart} style={{ width: 480 }}>
+      <div className={style.title}>音楽特徴量</div>
       <div style={{ fontSize: "0.75rem", padding: "0.75rem 0" }}>
         <div style={{ display: "flex" }}>
           <div style={{ paddingRight: "0.75rem" }}>
@@ -223,9 +225,9 @@ function RaderChart({ feature }) {
           })}
 
           <path
-            fill="#2f97f4"
+            fill="#fed52c"
             fillOpacity="0.5"
-            stroke="#485fc7"
+            stroke="#fed52c"
             strokeWidth="0.5"
             d={chart.score}
           />
@@ -240,7 +242,7 @@ function RaderChart({ feature }) {
                   r={1.8}
                   fill="white"
                   fillOpacity={0.6}
-                  stroke="#485fc7"
+                  stroke="#fe932c"
                   strokeWidth={0.5}
                   onMouseMove={(e) => {
                     onHover(e);
@@ -264,8 +266,8 @@ function RaderChart({ feature }) {
                         y={p.y - 15}
                         width="25"
                         height="10"
-                        fill="#ffdbfb"
-                        fillOpacity={1.0}
+                        fill="#ffffff"
+                        fillOpacity={0.8}
                       />
 
                       <text
@@ -273,8 +275,10 @@ function RaderChart({ feature }) {
                         x={p.x}
                         y={p.y - 10}
                         textAnchor="middle"
+                        fill="#fe932c"
                         dominantBaseline="central"
                         fontSize="5"
+                        fontWeight="bold"
                         style={{ userSelect: "none" }}
                       >
                         {p.value}

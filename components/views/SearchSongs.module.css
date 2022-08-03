@@ -1,0 +1,32 @@
+.searchbar {
+  display: flex;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.songlist {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.listitem {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.images_names {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-items: flex-start;
+  padding-bottom: 16px;
+}
+
+.names {
+  padding-left: 16px;
+}

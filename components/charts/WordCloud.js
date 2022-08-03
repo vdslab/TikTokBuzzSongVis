@@ -1,11 +1,12 @@
 import * as d3 from "d3";
 import * as cloud from "d3-cloud";
 import { useMemo } from "react";
+import style from "./WordCloud.module.css";
 
 const legend = [
-  { value: -1, text: "ネガティブ" },
-  { value: 0, text: "ノーマル" },
   { value: 1, text: "ポジティブ" },
+  { value: 0, text: "ノーマル" },
+  { value: -1, text: "ネガティブ" },
 ];
 
 export default function WordCloudChart({ feature }) {
@@ -30,7 +31,7 @@ export default function WordCloudChart({ feature }) {
   const colorScale = d3
     .scaleLinear()
     .domain([-1, 0, 1])
-    .range(["#53befc", "#a3a3a3", "#fc77e8"]);
+    .range(["#0CCCC7", "#a3a3a3", "#FE2C55"]);
 
   const cloudData = feature.map((data) => {
     return {
@@ -68,62 +69,65 @@ export default function WordCloudChart({ feature }) {
   }, [cloudData]);
 
   return (
-    <div>
-      WordCloud
-      <svg
-        viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-        style={{
-          border: "solid 0.1px",
-          borderColor: "#BBBBBB",
-        }}
-      >
-        {legend.map((l, i) => {
-          return (
-            <g key={l.text}>
-              <rect
-                x={contentWidth}
-                y={10 + 15 * i}
-                width="10"
-                height="10"
-                fill={colorScale(l.value)}
-              />
-              <text
-                x={contentWidth + 12.5}
-                y={10 + 15 * i + 10 / 2}
-                textAnchor="start"
-                dominantBaseline="central"
-                fontSize="7.5"
-                fill="#333333"
-                style={{ userSelect: "none" }}
-              >
-                {l.text}
-              </text>
-            </g>
-          );
-        })}
-        <g transform={`translate(${contentWidth / 2},${contentHeight / 2})`}>
-          {chart.words.map((word) => {
+    <div className={style.title_chart} style={{ width: 480 }}>
+      <div className={style.title}>WordCloud</div>
+      <div className="chart">
+        {" "}
+        <svg
+          viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+          style={{
+            border: "solid 0.1px",
+            borderColor: "#BBBBBB",
+          }}
+        >
+          {legend.map((l, i) => {
             return (
-              <g
-                key={word}
-                transform={`translate(${word.x},${word.y})rotate(${word.rotate})`}
-              >
+              <g key={l.text}>
+                <rect
+                  x={contentWidth}
+                  y={10 + 15 * i}
+                  width="10"
+                  height="10"
+                  fill={colorScale(l.value)}
+                />
                 <text
-                  x={0}
-                  y={0}
-                  textAnchor="middle"
-                  fontSize={word.size}
-                  fill={word.color}
-                  fontFamily="Impact"
+                  x={contentWidth + 12.5}
+                  y={10 + 15 * i + 10 / 2}
+                  textAnchor="start"
+                  dominantBaseline="central"
+                  fontSize="7.5"
+                  fill="#333333"
                   style={{ userSelect: "none" }}
                 >
-                  {word.text}
+                  {l.text}
                 </text>
               </g>
             );
           })}
-        </g>
-      </svg>
+          <g transform={`translate(${contentWidth / 2},${contentHeight / 2})`}>
+            {chart.words.map((word) => {
+              return (
+                <g
+                  key={word}
+                  transform={`translate(${word.x},${word.y})rotate(${word.rotate})`}
+                >
+                  <text
+                    x={0}
+                    y={0}
+                    textAnchor="middle"
+                    fontSize={word.size}
+                    fill={word.color}
+                    fontFamily="Impact"
+                    style={{ userSelect: "none" }}
+                  >
+                    {word.text}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
     </div>
   );
 }

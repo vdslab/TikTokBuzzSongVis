@@ -74,8 +74,17 @@ export default function LyricsScoreChart({ feature }) {
     }),
     scores: feature.lyrics_list.map((section) => section.rhyme_score),
   };
+  console.log(positiveLine.scores);
+  console.log(rhymeLine.scores);
+  const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
 
-  const lines2 = [positiveLine, rhymeLine];
+  if (rhymeLine.scores.indexOf(null) !== -1) {
+    lines2.pop();
+  }
+
+  if (positiveLine.scores.indexOf(null) !== -1) {
+    lines2.shift();
+  }
 
   function onHover(e) {
     setShow(true);
@@ -84,9 +93,7 @@ export default function LyricsScoreChart({ feature }) {
   function changeInfo(labelName, index) {
     setInfo({ labelName: labelName, index: index });
   }
-  console.log(lines2);
-  console.log(show);
-  console.log(info);
+
   return (
     <div>
       <div>LyricsScoreChart</div>
@@ -161,8 +168,6 @@ export default function LyricsScoreChart({ feature }) {
                   opacity="0.8"
                 />
                 {item.points.map((p, j) => {
-                  console.log(item.scores);
-
                   return (
                     <g key={i + "" + j}>
                       <circle

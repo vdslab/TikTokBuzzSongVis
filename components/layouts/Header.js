@@ -9,9 +9,12 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import SearchPopup from "../views/SearchPopup";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const router = useRouter();
+
   function handleClose() {
     setIsOpenPopup(false);
   }
@@ -29,7 +32,12 @@ export default function Header() {
           >
             <MenuIcon />
           </IconButton> */}
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              onClick={() => router.push(`/`)}
+            >
               header title
             </Typography>
             {/* <Button color="inherit">Login</Button> */}

@@ -58,14 +58,23 @@ export default function BuzzSongs({ setSelectedSongId }) {
                       {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
                       <div className={style.names}>
                         <div
+                          className={style.name_score}
                           onClick={() => {
                             setSelectedSongId(data.id);
                             console.log("click");
                           }}
                         >
-                          {data.detail.title}
+                          <div>{data.detail.title}</div>
+                          <div>{data.rank}点</div>
                         </div>
-                        <div>{data.detail.artist}</div>
+                        <div
+                          onClick={() => {
+                            setSelectedSongId(data.id);
+                            console.log("click");
+                          }}
+                        >
+                          {data.detail.artist}
+                        </div>
                       </div>
                     </div>
                     <audio controls src={data.detail.preview_url}></audio>

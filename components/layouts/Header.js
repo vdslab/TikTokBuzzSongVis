@@ -30,13 +30,14 @@ export default function Header() {
             <MenuIcon />
           </IconButton> */}
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              header title
+              TikTokBuzzSongVis
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
             <IconButton
               size="medium"
               aria-label="show 4 new mails"
               color="inherit"
+              style={{ marginLeft: "84%" }}
               onClick={() => {
                 setIsOpenPopup(true);
               }}

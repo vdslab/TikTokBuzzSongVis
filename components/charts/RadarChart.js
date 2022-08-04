@@ -38,7 +38,7 @@ function RaderChart({ feature }) {
   const margin = {
     left: 50,
     right: 10,
-    top: 10,
+    top: 30,
     bottom: 10,
   };
   const contentWidth = 300;
@@ -158,22 +158,7 @@ function RaderChart({ feature }) {
               </g>
             );
           })}
-          {chart.tick.map((t, i) => {
-            return (
-              <g key={i}>
-                <text
-                  x={t.x}
-                  y={t.y}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fontSize="5"
-                  style={{ userSelect: "none" }}
-                >
-                  {t.value}
-                </text>
-              </g>
-            );
-          })}
+
           {chart.perimetersPoint.map((p, i) => {
             return (
               <g key={i}>
@@ -223,6 +208,22 @@ function RaderChart({ feature }) {
               </g>
             );
           })}
+          {chart.tick.map((t, i) => {
+            return (
+              <g key={i}>
+                <text
+                  x={t.x}
+                  y={t.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize="5"
+                  style={{ userSelect: "none" }}
+                >
+                  {t.value}
+                </text>
+              </g>
+            );
+          })}
 
           <path
             fill="#fed52c"
@@ -262,23 +263,22 @@ function RaderChart({ feature }) {
                   {show && info.feature === p.name && (
                     <g>
                       <rect
-                        x={p.x - 25 / 2}
+                        x={p.x - 23 / 2}
                         y={p.y - 15}
-                        width="25"
+                        width="23"
                         height="10"
-                        fill="#ffffff"
+                        fill="#fffcf9"
+                        stroke="#fe932c"
+                        strokeWidth={0.5}
                         fillOpacity={0.8}
                       />
-
                       <text
                         id={p.name + " " + p.value}
                         x={p.x}
                         y={p.y - 10}
                         textAnchor="middle"
-                        fill="#fe932c"
                         dominantBaseline="central"
                         fontSize="5"
-                        fontWeight="bold"
                         style={{ userSelect: "none" }}
                       >
                         {p.value}

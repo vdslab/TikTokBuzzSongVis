@@ -31,12 +31,18 @@
 }
 
 .names {
+  width: 268px;
   padding-left: 16px;
   cursor: pointer;
 }
 
+.name_score {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .parallel {
-  padding-top: 16px;
+  padding-top: 24px;
   height: 100px;
 }
 

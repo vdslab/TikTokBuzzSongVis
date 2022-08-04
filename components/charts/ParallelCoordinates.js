@@ -1,29 +1,11 @@
 import * as d3 from "d3";
 import { useMemo, useState } from "react";
 
-const feature = [
-  "acousticness",
-  "danceability",
-  "duration_ms",
-  "energy",
-  "instrumentalness",
-  "key",
-  "liveness",
-  "loudness",
-  "mode",
-  "speechiness",
-  "tempo",
-  "time_signature",
-  "valence",
-  // "total_positive_score",
-  // "total_rhyme_score",
-];
-
 function isFullWidthChar(str) {
   return str.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/);
 }
 
-export function ParallelCoordinates({ songList }) {
+export function ParallelCoordinates({ songList, priorityFeature }) {
   const [selectedId, setSelectedId] = useState("");
 
   const margin = {
@@ -45,20 +27,33 @@ export function ParallelCoordinates({ songList }) {
     .x(({ x }) => x)
     .y(({ y }) => y);
 
-  // TINK:最低最大をrankに合わせるかどうか
-  const colorScale = d3
-    .scaleLinear()
-    .domain([0, 50, 100]) // FIXME
-    .range(["#24F4EE", "#fffe18", "#FE2C55"]);
-
-  const xTickScale = d3
-    .scalePoint()
-    .range([0, contentWidth])
-    .padding(1)
-    .domain(feature);
-
   const chart = useMemo(() => {
     //HACK
+    const scoreMinMax = d3.extent(
+      songList.map((song) => {
+        return song.rank;
+      })
+    );
+    const aveScore = (scoreMinMax[0] + scoreMinMax[1]) / 2;
+
+    const colorScale = d3
+      .scaleLinear()
+      .domain([scoreMinMax[0], aveScore, scoreMinMax[1]]) // FIXME
+      .range(["#24F4EE", "#640bf5", "#FE2C55"]);
+
+    const feature = Object.entries(priorityFeature.slice(0, 8)).map(
+      ([i, f]) => {
+        const key = Object.keys(f)[0];
+        return key;
+      }
+    );
+
+    const xTickScale = d3
+      .scalePoint()
+      .range([0, contentWidth])
+      .padding(1)
+      .domain(feature);
+
     const yTickScale = {};
     const yTicks = {};
     for (const i in feature) {
@@ -143,8 +138,11 @@ export function ParallelCoordinates({ songList }) {
     return {
       lines: lines,
       yTicks: yTicks,
+      colorScale: colorScale,
+      feature: feature,
+      xTickScale: xTickScale,
     };
-  }, [songList, xTickScale, parallelHeigth, colorScale]);
+  }, [songList, parallelHeigth, priorityFeature]);
 
   return (
     <div>
@@ -187,27 +185,27 @@ export function ParallelCoordinates({ songList }) {
               100
             </text>
             <linearGradient id="gradient">
-              <stop offset="0%" stopColor={colorScale(0)} />
-              <stop offset="5%" stopColor={colorScale(5)} />
-              <stop offset="10%" stopColor={colorScale(10)} />
-              <stop offset="15%" stopColor={colorScale(15)} />
-              <stop offset="20%" stopColor={colorScale(20)} />
-              <stop offset="25%" stopColor={colorScale(25)} />
-              <stop offset="30%" stopColor={colorScale(30)} />
-              <stop offset="35%" stopColor={colorScale(35)} />
-              <stop offset="40%" stopColor={colorScale(40)} />
-              <stop offset="45%" stopColor={colorScale(45)} />
-              <stop offset="50%" stopColor={colorScale(50)} />
-              <stop offset="55%" stopColor={colorScale(55)} />
-              <stop offset="60%" stopColor={colorScale(60)} />
-              <stop offset="65%" stopColor={colorScale(65)} />
-              <stop offset="70%" stopColor={colorScale(70)} />
-              <stop offset="75%" stopColor={colorScale(75)} />
-              <stop offset="80%" stopColor={colorScale(80)} />
-              <stop offset="85%" stopColor={colorScale(85)} />
-              <stop offset="90%" stopColor={colorScale(90)} />
-              <stop offset="95%" stopColor={colorScale(95)} />
-              <stop offset="100%" stopColor={colorScale(100)} />
+              <stop offset="0%" stopColor={chart.colorScale(0)} />
+              <stop offset="5%" stopColor={chart.colorScale(5)} />
+              <stop offset="10%" stopColor={chart.colorScale(10)} />
+              <stop offset="15%" stopColor={chart.colorScale(15)} />
+              <stop offset="20%" stopColor={chart.colorScale(20)} />
+              <stop offset="25%" stopColor={chart.colorScale(25)} />
+              <stop offset="30%" stopColor={chart.colorScale(30)} />
+              <stop offset="35%" stopColor={chart.colorScale(35)} />
+              <stop offset="40%" stopColor={chart.colorScale(40)} />
+              <stop offset="45%" stopColor={chart.colorScale(45)} />
+              <stop offset="50%" stopColor={chart.colorScale(50)} />
+              <stop offset="55%" stopColor={chart.colorScale(55)} />
+              <stop offset="60%" stopColor={chart.colorScale(60)} />
+              <stop offset="65%" stopColor={chart.colorScale(65)} />
+              <stop offset="70%" stopColor={chart.colorScale(70)} />
+              <stop offset="75%" stopColor={chart.colorScale(75)} />
+              <stop offset="80%" stopColor={chart.colorScale(80)} />
+              <stop offset="85%" stopColor={chart.colorScale(85)} />
+              <stop offset="90%" stopColor={chart.colorScale(90)} />
+              <stop offset="95%" stopColor={chart.colorScale(95)} />
+              <stop offset="100%" stopColor={chart.colorScale(100)} />
             </linearGradient>
             <rect
               x={50}
@@ -219,24 +217,24 @@ export function ParallelCoordinates({ songList }) {
           </g>
           {/** 軸 */}
           <g>
-            {feature.map((f, i) => {
+            {chart.feature.map((f, i) => {
               return (
                 <g key={i}>
                   <line
-                    x1={xTickScale(f)}
+                    x1={chart.xTickScale(f)}
                     y1={graphPadding}
-                    x2={xTickScale(f)}
+                    x2={chart.xTickScale(f)}
                     y2={parallelHeigth}
                     stroke={"black"}
                   />
                   <g
-                    transform={`rotate(-40, ${xTickScale(
+                    transform={`rotate(-40, ${chart.xTickScale(
                       f
                     )},${parallelHeigth})translate(-10,5)`}
                   >
                     <text
                       id={i}
-                      x={xTickScale(f)}
+                      x={chart.xTickScale(f)}
                       y={parallelHeigth}
                       textAnchor="middle"
                       dominantBaseline="central"
@@ -251,14 +249,14 @@ export function ParallelCoordinates({ songList }) {
                       return (
                         <g key={tick.y}>
                           <line
-                            x1={xTickScale(f) - 10}
+                            x1={chart.xTickScale(f) - 10}
                             y1={tick.y}
-                            x2={xTickScale(f)}
+                            x2={chart.xTickScale(f)}
                             y2={tick.y}
                             stroke={"black"}
                           />
                           <text
-                            x={xTickScale(f) - 25}
+                            x={chart.xTickScale(f) - 25}
                             y={tick.y}
                             textAnchor="middle"
                             dominantBaseline="central"

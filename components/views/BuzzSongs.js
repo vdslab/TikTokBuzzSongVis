@@ -7,6 +7,7 @@ import { ParallelCoordinates } from "../charts/ParallelCoordinates";
 export default function BuzzSongs({ setSelectedSongId }) {
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
+  const [priorityFeature, setPriorityFeature] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -19,13 +20,13 @@ export default function BuzzSongs({ setSelectedSongId }) {
   useEffect(() => {
     (async () => {
       if (date.length > 0) {
-        const buzzSongsRes = await fetch("api/buzz_songs", {
+        const buzzSongsReq = await fetch("api/buzz_songs", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
           body: JSON.stringify(date[0]),
         });
         // TODO:rank->title順での並び替え（現状ではrankでのみ）
-        const data = await buzzSongsRes.json();
+        const data = await buzzSongsReq.json();
         // JSONをobjに
         for (const song of data) {
           song.detail.music_feature = JSON.parse(song.detail.music_feature);
@@ -33,6 +34,14 @@ export default function BuzzSongs({ setSelectedSongId }) {
           song.detail.genres = JSON.parse(song.detail.genres);
         }
         setBuzzSongList(data);
+
+        const featureReq = await fetch("api/priority_feature", {
+          method: "POST",
+          // TODO:ここの引数のdateをユーザーが変更できるように
+          body: JSON.stringify(date[0]),
+        });
+        const featureData = await featureReq.json();
+        setPriorityFeature(JSON.parse(featureData.feature));
       }
     })();
   }, [date]);
@@ -100,7 +109,10 @@ export default function BuzzSongs({ setSelectedSongId }) {
       </div>
       {buzzSongList.length > 0 && (
         <div className={style.parallel}>
-          <ParallelCoordinates songList={buzzSongList} />
+          <ParallelCoordinates
+            songList={buzzSongList}
+            priorityFeature={priorityFeature}
+          />
         </div>
       )}
     </Box>

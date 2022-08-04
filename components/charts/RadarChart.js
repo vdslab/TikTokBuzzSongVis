@@ -262,12 +262,14 @@ function RaderChart({ feature }) {
                   {show && info.feature === p.name && (
                     <g>
                       <rect
-                        x={p.x - 25 / 2}
+                        x={p.x - 23 / 2}
                         y={p.y - 15}
-                        width="25"
+                        width="23"
                         height="10"
-                        fill="#ffffff"
-                        fillOpacity={0.8}
+                        fill="#fff9f4"
+                        stroke="#fe932c"
+                        strokeWidth={0.5}
+                        fillOpacity={0.5}
                       />
 
                       <text
@@ -275,10 +277,8 @@ function RaderChart({ feature }) {
                         x={p.x}
                         y={p.y - 10}
                         textAnchor="middle"
-                        fill="#fe932c"
                         dominantBaseline="central"
                         fontSize="5"
-                        fontWeight="bold"
                         style={{ userSelect: "none" }}
                       >
                         {p.value}

@@ -34,6 +34,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
           song.detail.genres = JSON.parse(song.detail.genres);
         }
         setBuzzSongList(data);
+        setSelectedSongId(data[0].id);
 
         const featureReq = await fetch("api/priority_feature", {
           method: "POST",

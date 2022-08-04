@@ -13,13 +13,14 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 350px;
+  height: 300px;
 }
 
 .detail {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  font-size: 14px;
+  width: 120px;
 }
 
 .chart {

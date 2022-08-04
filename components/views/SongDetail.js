@@ -42,6 +42,8 @@ export default function SongDetail({ songId, hasData }) {
     })();
   }, [songId, hasData]);
 
+  console.log(songData);
+
   return (
     <div style={{ padding: "1rem" }}>
       <div className={style.listitem}>

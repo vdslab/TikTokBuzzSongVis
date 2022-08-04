@@ -105,10 +105,10 @@ export default function WordCloudChart({ feature }) {
             );
           })}
           <g transform={`translate(${contentWidth / 2},${contentHeight / 2})`}>
-            {chart.words.map((word) => {
+            {chart.words.map((word, i) => {
               return (
                 <g
-                  key={word}
+                  key={i}
                   transform={`translate(${word.x},${word.y})rotate(${word.rotate})`}
                 >
                   <text

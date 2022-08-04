@@ -40,7 +40,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
   return (
     <Box component="main">
       <div className={style.title}>これから流行る曲はこれだ！</div>
-      <div>
+      <div className={style.upper}>
         {buzzSongList.map((data, idx) => {
           return (
             <div key={idx}>
@@ -77,6 +77,19 @@ export default function BuzzSongs({ setSelectedSongId }) {
                         </div>
                       </div>
                     </div>
+                    {/* <audio
+                      controls
+                      id="demo"
+                      src={data.detail.preview_url}
+                    ></audio> */}
+                    {/* <div class="container">
+                      <div>
+                        <button id="play" class="btn btn-primary">
+                          再生
+                        </button>
+                      </div>
+                    </div> */}
+
                     <audio controls src={data.detail.preview_url}></audio>
                   </div>
                 </ListItem>
@@ -86,7 +99,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         })}
       </div>
       {buzzSongList.length > 0 && (
-        <div>
+        <div className={style.parallel}>
           <ParallelCoordinates songList={buzzSongList} />
         </div>
       )}

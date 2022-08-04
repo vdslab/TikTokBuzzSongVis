@@ -22,7 +22,7 @@ export default function BuzzPossibility({ songData }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       <div>
-        <div>{songData.title}の類似曲</div>
+        <div>{songData.title}の類似曲でバズりそうなもの</div>
         <div className={style.upper}>
           {similarSongList.map((song) => {
             return (
@@ -40,14 +40,14 @@ export default function BuzzPossibility({ songData }) {
                       <div className={style.names}>
                         {/* HACK:Linkの方がいい？ */}
                         <div
-                          onClick={() => {
-                            // router.push(`/song/${song.id}`);
-                            // if (props.clickAndClose) {
-                            //   props.handleClose();
-                            // }
-                          }}
+                          className={style.name_score}
+                          // onClick={() => {
+                          //   setSelectedSongId(data.id);
+                          //   console.log("click");
+                          // }}
                         >
-                          {song.title}
+                          <div>{song.title}</div>
+                          <div>{song.rank}点</div>
                         </div>
                         <div>{song.artist}</div>
                       </div>

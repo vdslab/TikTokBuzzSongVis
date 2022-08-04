@@ -17,8 +17,8 @@ export default function WordCloudChart({ feature }) {
     top: 5,
     bottom: 5,
   };
-  const contentWidth = 400;
-  const contentHeight = 400;
+  const contentWidth = 380;
+  const contentHeight = 330;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
@@ -69,7 +69,7 @@ export default function WordCloudChart({ feature }) {
   }, [cloudData]);
 
   return (
-    <div className={style.title_chart} style={{ width: 480 }}>
+    <div className={style.title_chart} style={{ width: 380 }}>
       <div className={style.title}>WordCloud</div>
       <div className="chart">
         {" "}

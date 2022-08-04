@@ -15,7 +15,7 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
     bottom: 15,
   };
   const contentWidth = 600;
-  const contentHeight = 400;
+  const contentHeight = 550;
   const parallelHeigth = contentHeight * 0.9;
 
   const svgWidth = margin.left + margin.right + contentWidth;

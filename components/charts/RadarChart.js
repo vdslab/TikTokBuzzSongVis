@@ -130,7 +130,7 @@ function RaderChart({ feature }) {
   }
 
   return (
-    <div className={style.title_chart} style={{ width: 480 }}>
+    <div className={style.title_chart} style={{ width: 560 }}>
       <div className={style.title}>音楽特徴量</div>
       <div className={style.contents}>
         <div className={style.detail}>
@@ -149,7 +149,7 @@ function RaderChart({ feature }) {
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
           style={{ border: "solid 0px" }}
         >
-          <g transform={`scale(2.5)`}>
+          <g transform={`scale(1.6)`}>
             {chart.perimeters.map((d, i) => {
               return (
                 <g key={i}>

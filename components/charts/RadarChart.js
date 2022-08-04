@@ -38,7 +38,7 @@ function RaderChart({ feature }) {
   const margin = {
     left: 50,
     right: 10,
-    top: 10,
+    top: 30,
     bottom: 10,
   };
   const contentWidth = 300;
@@ -158,22 +158,7 @@ function RaderChart({ feature }) {
               </g>
             );
           })}
-          {chart.tick.map((t, i) => {
-            return (
-              <g key={i}>
-                <text
-                  x={t.x}
-                  y={t.y}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fontSize="5"
-                  style={{ userSelect: "none" }}
-                >
-                  {t.value}
-                </text>
-              </g>
-            );
-          })}
+
           {chart.perimetersPoint.map((p, i) => {
             return (
               <g key={i}>
@@ -223,6 +208,22 @@ function RaderChart({ feature }) {
               </g>
             );
           })}
+          {chart.tick.map((t, i) => {
+            return (
+              <g key={i}>
+                <text
+                  x={t.x}
+                  y={t.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize="5"
+                  style={{ userSelect: "none" }}
+                >
+                  {t.value}
+                </text>
+              </g>
+            );
+          })}
 
           <path
             fill="#fed52c"
@@ -266,12 +267,11 @@ function RaderChart({ feature }) {
                         y={p.y - 15}
                         width="23"
                         height="10"
-                        fill="#fff9f4"
+                        fill="#fffcf9"
                         stroke="#fe932c"
                         strokeWidth={0.5}
-                        fillOpacity={0.5}
+                        fillOpacity={0.8}
                       />
-
                       <text
                         id={p.name + " " + p.value}
                         x={p.x}

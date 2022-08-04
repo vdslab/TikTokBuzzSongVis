@@ -13,7 +13,7 @@ export default function LyricsScoreChart({ feature }) {
     bottom: 50,
   };
   const contentWidth = 600;
-  const contentHeight = 450;
+  const contentHeight = 200;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;

@@ -1,29 +1,11 @@
 import * as d3 from "d3";
 import { useMemo, useState } from "react";
 
-const feature = [
-  "acousticness",
-  "danceability",
-  "duration_ms",
-  "energy",
-  "instrumentalness",
-  "key",
-  "liveness",
-  "loudness",
-  "mode",
-  "speechiness",
-  "tempo",
-  "time_signature",
-  "valence",
-  // "total_positive_score",
-  // "total_rhyme_score",
-];
-
 function isFullWidthChar(str) {
   return str.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/);
 }
 
-export function ParallelCoordinates({ songList }) {
+export function ParallelCoordinates({ songList, priorityFeature }) {
   const [selectedId, setSelectedId] = useState("");
 
   const margin = {
@@ -50,6 +32,11 @@ export function ParallelCoordinates({ songList }) {
     .scaleLinear()
     .domain([0, 50, 100]) // FIXME
     .range(["#24F4EE", "#fffe18", "#FE2C55"]);
+
+  const feature = Object.entries(priorityFeature.slice(0, 8)).map(([i, f]) => {
+    const key = Object.keys(f)[0];
+    return key;
+  });
 
   const xTickScale = d3
     .scalePoint()

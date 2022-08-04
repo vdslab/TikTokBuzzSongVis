@@ -51,9 +51,9 @@ export default function LyricsScoreChart({ feature }) {
 
   const positiveLine = {
     label: "ポジティブ度",
-    color: "rgb(254, 44, 85, 0.5)",
-    pointColor: "#FE2C55",
-    pointFill: "#fff0f5",
+    color: "rgb(255, 107, 43, 0.5)",
+    pointColor: "#FF6B2B",
+    pointFill: "#fff5f1",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -64,9 +64,9 @@ export default function LyricsScoreChart({ feature }) {
   };
   const rhymeLine = {
     label: "韻踏み度",
-    color: "rgb(12, 204, 199, 0.5)",
-    pointColor: "#0CCCC7",
-    pointFill: "#f0ffff",
+    color: "rgb(255, 213, 43, 0.5)",
+    pointColor: "#FFD52B",
+    pointFill: "#fffcf1",
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
@@ -213,26 +213,24 @@ export default function LyricsScoreChart({ feature }) {
               </g>
             );
           })}
-          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#FE2C55"></circle>
+          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#FF6B2B"></circle>
           <text
             x={contentWidth + 43}
             y="-3"
             textAnchor="start"
             dominantBaseline="central"
             fontSize="9"
-            fill="#FE2C55"
             style={{ userSelect: "none" }}
           >
             ポジティブ度
           </text>
-          <circle cx={contentWidth + 35} cy="13" r="5" fill="#0CCCC7"></circle>
+          <circle cx={contentWidth + 35} cy="13" r="5" fill="#FFD52B"></circle>
           <text
             x={contentWidth + 43}
             y="13"
             textAnchor="start"
             dominantBaseline="central"
             fontSize="9"
-            fill="#0CCCC7"
             style={{ userSelect: "none" }}
           >
             韻踏み度

@@ -203,7 +203,7 @@ export default function LyricsScoreChart({ feature }) {
                               fontSize="9"
                               style={{ userSelect: "none" }}
                             >
-                              {item.label}:{item.scores[j]}
+                              {item.label}：{item.scores[j]}
                             </text>
                           </g>
                         )}

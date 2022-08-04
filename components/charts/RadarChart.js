@@ -38,7 +38,7 @@ function RaderChart({ feature }) {
   const margin = {
     left: 50,
     right: 10,
-    top: 10,
+    top: 30,
     bottom: 10,
   };
   const contentWidth = 300;
@@ -132,8 +132,8 @@ function RaderChart({ feature }) {
   return (
     <div className={style.title_chart} style={{ width: 480 }}>
       <div className={style.title}>音楽特徴量</div>
-      <div style={{ fontSize: "0.75rem", padding: "0.75rem 0" }}>
-        <div style={{ display: "flex" }}>
+      <div className={style.contents}>
+        <div className={style.detail}>
           <div style={{ paddingRight: "0.75rem" }}>
             テンポ：{Math.floor(feature.tempo)}
           </div>
@@ -145,152 +145,160 @@ function RaderChart({ feature }) {
             {feature?.mode == 0 ? "minor" : "major"}
           </div>
         </div>
-      </div>
-      <svg
-        viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-        style={{ border: "solid 0px" }}
-      >
-        <g transform={`scale(2.5)`}>
-          {chart.perimeters.map((d, i) => {
-            return (
-              <g key={i}>
-                <path fill="none" stroke="lightgray" d={d} strokeWidth="0.5" />
-              </g>
-            );
-          })}
-          {chart.tick.map((t, i) => {
-            return (
-              <g key={i}>
-                <text
-                  x={t.x}
-                  y={t.y}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fontSize="5"
-                  style={{ userSelect: "none" }}
-                >
-                  {t.value}
-                </text>
-              </g>
-            );
-          })}
-          {chart.perimetersPoint.map((p, i) => {
-            return (
-              <g key={i}>
-                {!p.legend ? (
-                  <line
-                    x1={posX}
-                    y1={posY}
-                    x2={p.x}
-                    y2={p.y}
-                    id={p.name + " " + p.value}
-                    stroke="lightgray"
-                    strokeWidth="0.5"
-                    onMouseMove={(e) => {
-                      onHover(e);
-                    }}
-                    onMouseLeave={() => {
-                      setShow(false);
-                    }}
-                  />
-                ) : (
-                  <g>
-                    {p.name !== "speechiness" ? (
-                      <text
-                        x={p.x}
-                        y={p.y}
-                        textAnchor="middle"
-                        dominantBaseline="central"
-                        fontSize="5"
-                        style={{ userSelect: "none" }}
-                      >
-                        {p.name}
-                      </text>
+
+        <div className={style.chart}>
+          <svg
+            viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+            style={{ border: "solid 0px" }}
+          >
+            <g transform={`scale(2.5)`}>
+              {chart.perimeters.map((d, i) => {
+                return (
+                  <g key={i}>
+                    <path
+                      fill="none"
+                      stroke="lightgray"
+                      d={d}
+                      strokeWidth="0.5"
+                    />
+                  </g>
+                );
+              })}
+              {chart.tick.map((t, i) => {
+                return (
+                  <g key={i}>
+                    <text
+                      x={t.x}
+                      y={t.y}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize="5"
+                      style={{ userSelect: "none" }}
+                    >
+                      {t.value}
+                    </text>
+                  </g>
+                );
+              })}
+              {chart.perimetersPoint.map((p, i) => {
+                return (
+                  <g key={i}>
+                    {!p.legend ? (
+                      <line
+                        x1={posX}
+                        y1={posY}
+                        x2={p.x}
+                        y2={p.y}
+                        id={p.name + " " + p.value}
+                        stroke="lightgray"
+                        strokeWidth="0.5"
+                        onMouseMove={(e) => {
+                          onHover(e);
+                        }}
+                        onMouseLeave={() => {
+                          setShow(false);
+                        }}
+                      />
                     ) : (
-                      <text
-                        x={p.x + 10}
-                        y={p.y}
-                        textAnchor="middle"
-                        dominantBaseline="central"
-                        fontSize="5"
-                        style={{ userSelect: "none" }}
-                      >
-                        {p.name}
-                      </text>
+                      <g>
+                        {p.name !== "speechiness" ? (
+                          <text
+                            x={p.x}
+                            y={p.y}
+                            textAnchor="middle"
+                            dominantBaseline="central"
+                            fontSize="5"
+                            style={{ userSelect: "none" }}
+                          >
+                            {p.name}
+                          </text>
+                        ) : (
+                          <text
+                            x={p.x + 10}
+                            y={p.y}
+                            textAnchor="middle"
+                            dominantBaseline="central"
+                            fontSize="5"
+                            style={{ userSelect: "none" }}
+                          >
+                            {p.name}
+                          </text>
+                        )}
+                      </g>
                     )}
                   </g>
-                )}
-              </g>
-            );
-          })}
+                );
+              })}
 
-          <path
-            fill="#fed52c"
-            fillOpacity="0.5"
-            stroke="#fed52c"
-            strokeWidth="0.5"
-            d={chart.score}
-          />
-          {chart.scorePoint.map((p, i) => {
-            return (
-              <g key={i}>
-                <circle
-                  className="test"
-                  id={p.name + " " + p.value}
-                  cx={p.x}
-                  cy={p.y}
-                  r={1.8}
-                  fill="white"
-                  fillOpacity={0.6}
-                  stroke="#fe932c"
-                  strokeWidth={0.5}
-                  onMouseMove={(e) => {
-                    onHover(e);
-                    changeInfo(p.name, p.value);
-                  }}
-                  onMouseLeave={() => {
-                    setShow(false);
-                  }}
-                />
-              </g>
-            );
-          })}
-          <g>
-            {chart.scorePoint.map((p, i) => {
-              return (
-                <g key={i}>
-                  {show && info.feature === p.name && (
-                    <g>
-                      <rect
-                        x={p.x - 25 / 2}
-                        y={p.y - 15}
-                        width="25"
-                        height="10"
-                        fill="#ffffff"
-                        fillOpacity={0.8}
-                      />
+              <path
+                fill="#fed52c"
+                fillOpacity="0.5"
+                stroke="#fed52c"
+                strokeWidth="0.5"
+                d={chart.score}
+              />
+              {chart.scorePoint.map((p, i) => {
+                return (
+                  <g key={i}>
+                    <circle
+                      className="test"
+                      id={p.name + " " + p.value}
+                      cx={p.x}
+                      cy={p.y}
+                      r={1.8}
+                      fill="white"
+                      fillOpacity={0.6}
+                      stroke="#fe932c"
+                      strokeWidth={0.5}
+                      onMouseMove={(e) => {
+                        onHover(e);
+                        changeInfo(p.name, p.value);
+                      }}
+                      onMouseLeave={() => {
+                        setShow(false);
+                      }}
+                    />
+                  </g>
+                );
+              })}
+              <g>
+                {chart.scorePoint.map((p, i) => {
+                  return (
+                    <g key={i}>
+                      {show && info.feature === p.name && (
+                        <g>
+                          <rect
+                            x={p.x - 25 / 2}
+                            y={p.y - 15}
+                            width="25"
+                            height="10"
+                            fill="#ffffff"
+                            fillOpacity={0.8}
+                          />
 
-                      <text
-                        id={p.name + " " + p.value}
-                        x={p.x}
-                        y={p.y - 10}
-                        textAnchor="middle"
-                        fill="#fe932c"
-                        dominantBaseline="central"
-                        fontSize="5"
-                        fontWeight="bold"
-                        style={{ userSelect: "none" }}
-                      >
-                        {p.value}
-                      </text>
+                          <text
+                            id={p.name + " " + p.value}
+                            x={p.x}
+                            y={p.y - 10}
+                            textAnchor="middle"
+                            fill="#fe932c"
+                            dominantBaseline="central"
+                            fontSize="5"
+                            fontWeight="bold"
+                            style={{ userSelect: "none" }}
+                          >
+                            {p.value}
+                          </text>
+                        </g>
+                      )}
                     </g>
-                  )}
-                </g>
-              );
-            })}
-          </g>
-        </g>
-      </svg>
+                  );
+                })}
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
     </div>
   );
 }

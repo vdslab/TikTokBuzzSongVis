@@ -5,3 +5,23 @@
 .title_chart {
   width: 50%;
 }
+
+.contents {
+  display: flex;
+  font-size: 0.75rem;
+  padding: 0.75rem 0;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 350px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.chart {
+  width: 380px;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { List, ListItem } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function BuzzPossibility({ songData }) {
   const [similarSongList, setSimilarSongList] = useState([]);
@@ -22,9 +23,9 @@ export default function BuzzPossibility({ songData }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       <div>
-        <div>{songData.title}の類似曲でバズりそうなもの</div>
-        <div className={style.upper}>
-          {similarSongList.map((song) => {
+        <div>{songData.title}の類似曲</div>
+        {similarSongList.length > 0 ? (
+          similarSongList.map((song) => {
             return (
               <List key={song.id} className={style.songlist}>
                 <ListItem>
@@ -57,8 +58,10 @@ export default function BuzzPossibility({ songData }) {
                 </ListItem>
               </List>
             );
-          })}
-        </div>
+          })
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     </div>
   );

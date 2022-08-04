@@ -24,7 +24,9 @@ export default function Home() {
     <div>
       <Header />
       <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
-        <div>{songData && <BuzzPossibility songData={songData} />}</div>
+        <div>
+          {songData && <BuzzPossibility songData={songData} key={id} />}
+        </div>
         <div style={{ paddingLeft: "32px", width: "80%" }}>
           <SongDetail songId={id} hasData={false} />
         </div>

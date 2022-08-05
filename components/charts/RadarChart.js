@@ -226,8 +226,6 @@ function RaderChart({ feature }) {
                 </g>
               );
             })}
-          </g>
-          <g>
             {chart.tick.map((t, i) => {
               return (
                 <g key={i}>

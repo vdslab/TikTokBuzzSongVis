@@ -8,7 +8,7 @@ export default function Home() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();
   const id = router.query.id;
-  const [selectedSongId, setSelectedSongId] = useState(id);
+  const [selectedSongId, setSelectedSongId] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -18,6 +18,7 @@ export default function Home() {
       });
       const data = await songReq.json();
       setSongData(data);
+      setSelectedSongId(id);
     })();
   }, [id]);
 
@@ -35,7 +36,11 @@ export default function Home() {
           )}
         </div>
         <div style={{ paddingLeft: "32px", width: "80%" }}>
-          <SongDetail songId={selectedSongId} hasData={false} />
+          <SongDetail
+            songId={selectedSongId}
+            hasData={false}
+            key={selectedSongId}
+          />
         </div>
       </div>
     </div>

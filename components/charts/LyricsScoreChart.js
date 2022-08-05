@@ -77,6 +77,7 @@ export default function LyricsScoreChart({ feature }) {
     };
   });
 
+  // FIXME:スコアが振り切る時があるのでバックエンドで修正する
   const positiveLine = {
     label: "ポジティブ度",
     color: "rgb(255, 107, 43, 0.5)",
@@ -85,10 +86,12 @@ export default function LyricsScoreChart({ feature }) {
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
-        y: Yscale(section.positive_score),
+        y: Yscale(section.positive_score > 100 ? 100 : section.positive_score),
       };
     }),
-    scores: feature.lyrics_list.map((section) => section.positive_score),
+    scores: feature.lyrics_list.map((section) =>
+      section.positive_score > 100 ? 100 : section.positive_score
+    ),
   };
   const rhymeLine = {
     label: "韻踏み度",
@@ -98,10 +101,12 @@ export default function LyricsScoreChart({ feature }) {
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
-        y: Yscale(section.rhyme_score),
+        y: Yscale(section.rhyme_score > 100 ? 100 : section.rhyme_score),
       };
     }),
-    scores: feature.lyrics_list.map((section) => section.rhyme_score),
+    scores: feature.lyrics_list.map((section) =>
+      section.rhyme_score > 100 ? 100 : section.rhyme_score
+    ),
   };
   const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
 

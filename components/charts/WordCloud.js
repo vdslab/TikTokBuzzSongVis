@@ -70,7 +70,7 @@ export default function WordCloudChart({ feature }) {
 
   return (
     <div className={style.title_chart} style={{ width: 380 }}>
-      <div className={style.title}>ワードクラウド</div>
+      <div className={style.title}>歌詞を特徴づけるワード</div>
       <div className="chart">
         {" "}
         <svg

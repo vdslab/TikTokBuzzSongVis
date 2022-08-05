@@ -21,6 +21,13 @@ export default function SearchSongs(props) {
     event.preventDefault();
   }
 
+  function changeSelectId(id) {
+    router.push(`/song/${id}`);
+    if (props.clickAndClose) {
+      props.handleClose();
+    }
+  }
+
   useEffect(() => {
     (async () => {
       if (inputSongName !== "") {
@@ -46,7 +53,7 @@ export default function SearchSongs(props) {
           overflowY: "clip",
         }}
       >
-        <form onClick={changeInputSongName}>
+        <form onSubmit={changeInputSongName}>
           <div className={style.searchbar}>
             <InputBase
               style={{ padding: "4px 8px 4px 15px" }}
@@ -90,10 +97,7 @@ export default function SearchSongs(props) {
                     {/* HACK:Linkの方がいい？ */}
                     <div
                       onClick={() => {
-                        router.push(`/song/${song.id}`);
-                        if (props.clickAndClose) {
-                          props.handleClose();
-                        }
+                        changeSelectId(song.id);
                       }}
                     >
                       {song.name}

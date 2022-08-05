@@ -147,7 +147,6 @@ function RaderChart({ feature }) {
         </div>
         <svg
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-          style={{ border: "solid 0px" }}
         >
           <g transform={`scale(1.9)`}>
             {chart.perimeters.map((d, i) => {

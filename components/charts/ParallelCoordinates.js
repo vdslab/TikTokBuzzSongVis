@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { useMemo, useState } from "react";
+import style from "./ParallelCoordinates.module.css";
 
 function isFullWidthChar(str) {
   return str.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/);
@@ -145,12 +146,12 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
   }, [songList, parallelHeigth, priorityFeature]);
 
   return (
-    <div style={{ fontSize: "20px" }}>
-      特徴量比較
+    <div>
       <div>
+        <div className={style.title}> 特徴量比較</div>
         <svg
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-          style={{ border: "solid 0px" }}
+          style={{ border: "solid 0.1px", borderColor: "#BBBBBB" }}
         >
           {/* レジェンド */}
           <g transform={`translate(${contentWidth - 150}, -5)`}>

@@ -163,7 +163,7 @@ export default function LyricsScoreChart({ feature }) {
                   d={line(item.points)}
                   fill="none"
                   stroke={item.color}
-                  strokeWidth="2"
+                  strokeWidth="3"
                   opacity="0.8"
                 />
                 {item.points.map((p, j) => {

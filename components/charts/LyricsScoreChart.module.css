@@ -2,3 +2,53 @@
   font-size: 20px;
   padding-bottom: 8px;
 }
+
+#tooltip {
+  border: 1px solid rgba(179, 179, 179,0.5);
+  padding: 5px;
+  position: absolute;
+  background-color: white;
+}
+
+.absolute{
+  position: absolute;
+  background-color: rgba(255,255,255,0.8);;
+  width: 72.5%;
+  height: 60%;
+  top: 15%;
+  left: 10%;
+  border: solid 0.1px;
+}
+
+.relative{
+  position: relative;
+}
+
+.lyric{
+  padding: 0 1rem 1rem;
+  font-size: 0.75rem;
+
+}
+
+.lyric_box{
+  /* height: 100%; */
+  height: calc(100% - 1.5rem);;
+  overflow-y: scroll;
+}
+
+.close_button_area{
+  display: flex;
+  justify-content: flex-end;
+
+  padding-right: 0.5rem;
+  
+}
+
+.close_button{
+  font-size: 0.65rem;
+  font-weight: lighter;
+  
+} 
+.close_button:hover {
+  color: orange;
+}

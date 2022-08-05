@@ -13,7 +13,7 @@ export default function LyricsScoreChart({ feature }) {
     bottom: 50,
   };
   const contentWidth = 600;
-  const contentHeight = 450;
+  const contentHeight = 300;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
@@ -42,7 +42,7 @@ export default function LyricsScoreChart({ feature }) {
     };
   });
 
-  const yTicks = Yscale.ticks(10).map((d) => {
+  const yTicks = Yscale.ticks(5).map((d) => {
     return {
       label: d,
       y: Yscale(d),

@@ -38,7 +38,7 @@ export default function Header() {
               sx={{ flexGrow: 1 }}
               onClick={() => router.push(`/`)}
             >
-              header title
+              TikTokBuzzSongVis
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
             <IconButton

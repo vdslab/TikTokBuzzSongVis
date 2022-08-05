@@ -250,9 +250,9 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
                       return (
                         <g key={tick.y}>
                           <line
-                            x1={chart.xTickScale(f) - 10}
+                            x1={chart.xTickScale(f) - 5}
                             y1={tick.y}
-                            x2={chart.xTickScale(f)}
+                            x2={chart.xTickScale(f) + 5}
                             y2={tick.y}
                             stroke={"black"}
                           />

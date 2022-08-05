@@ -95,7 +95,7 @@ export default function LyricsScoreChart({ feature }) {
 
   return (
     <div>
-      <div className={style.title}>LyricsScoreChart</div>
+      <div className={style.title}>ポジティブ度&韻踏み度</div>
       <svg
         viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
         style={{
@@ -187,9 +187,9 @@ export default function LyricsScoreChart({ feature }) {
                         info.index === j && (
                           <g>
                             <rect
-                              x={p.x + 10}
+                              x={p.x + 5}
                               y={p.y - 30}
-                              width="80"
+                              width="90"
                               height="20"
                               stroke={item.pointColor}
                               fill={item.pointFill}

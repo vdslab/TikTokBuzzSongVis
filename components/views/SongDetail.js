@@ -45,7 +45,7 @@ export default function SongDetail({ songId, hasData }) {
 
   if (!songData) {
     return (
-      <div>
+      <div className={style.loading}>
         <CircularProgress />
       </div>
     );

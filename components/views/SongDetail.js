@@ -3,6 +3,7 @@ import LyricsScoreChart from "../charts/LyricsScoreChart";
 import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -27,7 +28,7 @@ async function getSongData(songId) {
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
 export default function SongDetail({ songId, hasData }) {
-  const [songData, setSongData] = useState([]);
+  const [songData, setSongData] = useState();
   useEffect(() => {
     (async () => {
       if (songId) {
@@ -42,24 +43,32 @@ export default function SongDetail({ songId, hasData }) {
     })();
   }, [songId, hasData]);
 
-  console.log(songData);
+  if (!songData) {
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: "1rem" }}>
       <div className={style.listitem}>
-        <div className={style.images_names}>
-          <img
-            src={songData.img_url}
-            style={{ width: "50px", height: "50px" }}
-            alt=""
-            className={style.image}
-          ></img>
-          <div className={style.names}>
-            <div>{songData.title}</div>
-            <div>&nbsp; / &nbsp;</div>
-            <div>{songData.artist}</div>
+        {songData && (
+          <div className={style.images_names}>
+            <img
+              src={songData.img_url}
+              style={{ width: "50px", height: "50px" }}
+              alt=""
+              className={style.image}
+            ></img>
+            <div className={style.names}>
+              <div>{songData.title}</div>
+              <div>&nbsp; / &nbsp;</div>
+              <div>{songData.artist}</div>
+            </div>
           </div>
-        </div>
+        )}
         <audio controls src={songData.preview_url}></audio>
       </div>
 

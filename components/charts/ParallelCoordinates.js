@@ -145,7 +145,7 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
   }, [songList, parallelHeigth, priorityFeature]);
 
   return (
-    <div>
+    <div style={{ fontSize: "20px" }}>
       特徴量比較
       <div>
         <svg

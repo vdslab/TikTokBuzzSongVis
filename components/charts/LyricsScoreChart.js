@@ -118,9 +118,9 @@ export default function LyricsScoreChart({ feature }) {
               <g key={tick.x}>
                 <line
                   x1={tick.x}
-                  y1={contentHeight - 10}
+                  y1={contentHeight - 5}
                   x2={tick.x}
-                  y2={contentHeight + 10}
+                  y2={contentHeight + 5}
                   stroke={"black"}
                 />
                 <text

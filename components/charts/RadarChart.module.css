@@ -9,11 +9,12 @@
 .contents {
   display: flex;
   font-size: 0.75rem;
-  padding: 0.75rem 0;
+  margin: 8px 0;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   height: 300px;
+  border: 0.1px solid rgb(187, 187, 187);
 }
 
 .detail {
@@ -21,6 +22,8 @@
   flex-direction: column;
   font-size: 14px;
   width: 120px;
+  padding-top: 16px;
+  padding-left: 16px;
 }
 
 .chart {

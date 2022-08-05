@@ -78,6 +78,7 @@ export default function WordCloudChart({ feature }) {
           style={{
             border: "solid 0.1px",
             borderColor: "#BBBBBB",
+            height: "300px",
           }}
         >
           {legend.map((l, i) => {

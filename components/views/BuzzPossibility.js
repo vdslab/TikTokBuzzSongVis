@@ -30,7 +30,7 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
         </div>
         <audio controls src={songData.preview_url}></audio>
       </div>
-      <div>
+      <div style={{ paddingTop: "16px" }}>
         <div>{songData.title}の類似曲</div>
         {similarSongList.length > 0 ? (
           similarSongList.map((song) => {
@@ -68,7 +68,9 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
             );
           })
         ) : (
-          <CircularProgress />
+          <div style={{ textAlign: "center", paddingTop: "100px" }}>
+            <CircularProgress />
+          </div>
         )}
       </div>
     </div>

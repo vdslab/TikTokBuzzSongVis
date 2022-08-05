@@ -1,10 +1,33 @@
 import * as d3 from "d3";
 import React, { useState } from "react";
 import style from "./LyricsScoreChart.module.css";
+
+function Tooltip({ show, idx, feature, closeLyricsShow }) {
+  return (
+    <div>
+      {show && (
+        <div id="tooltip" className={style.absolute}>
+          <div className={style.close_button_area} onClick={closeLyricsShow}>
+            <div className={style.close_button}>close</div>
+          </div>
+          <div className={style.lyric_box}>
+            <div className={style.lyric}>
+              {feature.lyrics_list[idx].text.map((line, i) => {
+                return <div key={i}>{line}</div>;
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LyricsScoreChart({ feature }) {
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState({});
-  const x = 0;
+  const [lyricShow, setLyricShow] = useState(false);
+  const [lyricsIdx, setLyricsIdx] = useState(-1);
 
   const margin = {
     left: 50,
@@ -17,6 +40,11 @@ export default function LyricsScoreChart({ feature }) {
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
+
+  function closeLyricsShow() {
+    setLyricShow(false);
+    setLyricsIdx(-1);
+  }
 
   const line = d3
     .line()
@@ -42,13 +70,14 @@ export default function LyricsScoreChart({ feature }) {
     };
   });
 
-  const yTicks = Yscale.ticks(10).map((d) => {
+  const yTicks = Yscale.ticks(5).map((d) => {
     return {
       label: d,
       y: Yscale(d),
     };
   });
 
+  // FIXME:スコアが振り切る時があるのでバックエンドで修正する
   const positiveLine = {
     label: "ポジティブ度",
     color: "rgb(255, 107, 43, 0.5)",
@@ -57,10 +86,12 @@ export default function LyricsScoreChart({ feature }) {
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
-        y: Yscale(section.positive_score),
+        y: Yscale(section.positive_score > 100 ? 100 : section.positive_score),
       };
     }),
-    scores: feature.lyrics_list.map((section) => section.positive_score),
+    scores: feature.lyrics_list.map((section) =>
+      section.positive_score > 100 ? 100 : section.positive_score
+    ),
   };
   const rhymeLine = {
     label: "韻踏み度",
@@ -70,10 +101,12 @@ export default function LyricsScoreChart({ feature }) {
     points: feature.lyrics_list.map((section, idx) => {
       return {
         x: Xscale(idx),
-        y: Yscale(section.rhyme_score),
+        y: Yscale(section.rhyme_score > 100 ? 100 : section.rhyme_score),
       };
     }),
-    scores: feature.lyrics_list.map((section) => section.rhyme_score),
+    scores: feature.lyrics_list.map((section) =>
+      section.rhyme_score > 100 ? 100 : section.rhyme_score
+    ),
   };
   const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
 
@@ -96,147 +129,179 @@ export default function LyricsScoreChart({ feature }) {
   return (
     <div>
       <div className={style.title}>ポジティブ度&韻踏み度</div>
-      <svg
-        viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-        style={{
-          border: "solid 0.1px",
-          borderColor: "#BBBBBB",
-        }}
-      >
-        <g stroke="black" strokeWidth="1">
-          <line x1="0" y1="0" x2="0" y2={contentHeight}></line>
-          <line
-            x1="0"
-            y1={contentHeight}
-            x2={contentWidth}
-            y2={contentHeight}
-          ></line>
-        </g>
-        <g>
-          {xTicks.map((tick) => {
-            return (
-              <g key={tick.x}>
-                <line
-                  x1={tick.x}
-                  y1={contentHeight - 10}
-                  x2={tick.x}
-                  y2={contentHeight + 10}
-                  stroke={"black"}
-                />
-                <text
-                  x={tick.x}
-                  y={contentHeight + 20}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fontSize="10"
-                  style={{ userSelect: "none" }}
-                >
-                  {tick.label}
-                </text>
-              </g>
-            );
-          })}
+      <div className={style.relative}>
+        <svg
+          viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+          style={{
+            border: "solid 0.1px",
+            borderColor: "#BBBBBB",
+          }}
+        >
+          <g stroke="black" strokeWidth="1">
+            <line x1="0" y1="0" x2="0" y2={contentHeight}></line>
+            <line
+              x1="0"
+              y1={contentHeight}
+              x2={contentWidth}
+              y2={contentHeight}
+            ></line>
+          </g>
+          <g>
+            {xTicks.map((tick, i) => {
+              return (
+                <g key={tick.x}>
+                  <line
+                    x1={tick.x}
+                    y1={contentHeight - 5}
+                    x2={tick.x}
+                    y2={contentHeight + 5}
+                    stroke={"black"}
+                  />
+                  <text
+                    x={tick.x}
+                    y={contentHeight + 20}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fill={lyricsIdx === i ? "orange" : "black"}
+                    fontSize="10"
+                    style={{ userSelect: "none" }}
+                    onMouseMove={(e) => {
+                      setLyricsIdx(i);
+                    }}
+                    onMouseUp={(e) => {
+                      setLyricShow(true);
+                      setLyricsIdx(i);
+                    }}
+                  >
+                    {tick.label}
+                  </text>
+                </g>
+              );
+            })}
 
-          {yTicks.map((tick) => {
-            return (
-              <g key={tick.y}>
-                <line x1="-5" y1={tick.y} x2="5" y2={tick.y} stroke={"black"} />
-                <text
-                  x="-15"
-                  y={tick.y}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fontSize="10"
-                  style={{ userSelect: "none" }}
-                >
-                  {tick.label}
-                </text>
-              </g>
-            );
-          })}
-        </g>
-        <g>
-          {lines2.map((item, i) => {
-            return (
-              <g key={i}>
-                <path
-                  d={line(item.points)}
-                  fill="none"
-                  stroke={item.color}
-                  strokeWidth="2"
-                  opacity="0.8"
-                />
-                {item.points.map((p, j) => {
-                  return (
-                    <g key={i + "" + j}>
-                      <circle
-                        cx={p.x}
-                        cy={p.y}
-                        r="7"
-                        fill={item.pointColor}
-                        onMouseMove={(e) => {
-                          onHover(e);
-                          changeInfo(item.label, j);
-                        }}
-                        onMouseLeave={() => {
-                          setShow(false);
-                        }}
-                      ></circle>
-                      {show === true &&
-                        info.labelName === item.label &&
-                        info.index === j && (
-                          <g>
-                            <rect
-                              x={p.x + 5}
-                              y={p.y - 30}
-                              width="90"
-                              height="20"
-                              stroke={item.pointColor}
-                              fill={item.pointFill}
-                              fillOpacity={0.5}
-                            />
-                            <text
-                              x={p.x + 50}
-                              y={p.y - 20}
-                              textAnchor="middle"
-                              dominantBaseline="central"
-                              fontSize="9"
-                              style={{ userSelect: "none" }}
-                            >
-                              {item.label}：{item.scores[j]}
-                            </text>
-                          </g>
-                        )}
-                    </g>
-                  );
-                })}
-              </g>
-            );
-          })}
-          <circle cx={contentWidth + 35} cy="-3" r="5" fill="#FF6B2B"></circle>
-          <text
-            x={contentWidth + 43}
-            y="-3"
-            textAnchor="start"
-            dominantBaseline="central"
-            fontSize="9"
-            style={{ userSelect: "none" }}
-          >
-            ポジティブ度
-          </text>
-          <circle cx={contentWidth + 35} cy="13" r="5" fill="#FFD52B"></circle>
-          <text
-            x={contentWidth + 43}
-            y="13"
-            textAnchor="start"
-            dominantBaseline="central"
-            fontSize="9"
-            style={{ userSelect: "none" }}
-          >
-            韻踏み度
-          </text>
-        </g>
-      </svg>
+            {yTicks.map((tick) => {
+              return (
+                <g key={tick.y}>
+                  <line
+                    x1="-5"
+                    y1={tick.y}
+                    x2="5"
+                    y2={tick.y}
+                    stroke={"black"}
+                  />
+                  <text
+                    x="-15"
+                    y={tick.y}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fontSize="10"
+                    style={{ userSelect: "none" }}
+                  >
+                    {tick.label}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+          <g>
+            {lines2.map((item, i) => {
+              return (
+                <g key={i}>
+                  <path
+                    d={line(item.points)}
+                    fill="none"
+                    stroke={item.color}
+                    strokeWidth="3"
+                    opacity="0.8"
+                  />
+                  {item.points.map((p, j) => {
+                    return (
+                      <g key={i + "" + j}>
+                        <circle
+                          cx={p.x}
+                          cy={p.y}
+                          r="7"
+                          fill={item.pointColor}
+                          onMouseMove={(e) => {
+                            onHover(e);
+                            changeInfo(item.label, j);
+                          }}
+                          onMouseLeave={() => {
+                            setShow(false);
+                          }}
+                        ></circle>
+                        {show === true &&
+                          info.labelName === item.label &&
+                          info.index === j && (
+                            <g>
+                              <rect
+                                x={p.x + 5}
+                                y={p.y - 30}
+                                width="90"
+                                height="20"
+                                stroke={item.pointColor}
+                                fill={item.pointFill}
+                                fillOpacity={0.5}
+                              />
+                              <text
+                                x={p.x + 50}
+                                y={p.y - 20}
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                fontSize="9"
+                                style={{ userSelect: "none" }}
+                              >
+                                {item.label}：{item.scores[j]}
+                              </text>
+                            </g>
+                          )}
+                      </g>
+                    );
+                  })}
+                </g>
+              );
+            })}
+            <circle
+              cx={contentWidth + 35}
+              cy="-3"
+              r="5"
+              fill="#FF6B2B"
+            ></circle>
+            <text
+              x={contentWidth + 43}
+              y="-3"
+              textAnchor="start"
+              dominantBaseline="central"
+              fontSize="9"
+              style={{ userSelect: "none" }}
+            >
+              ポジティブ度
+            </text>
+            <circle
+              cx={contentWidth + 35}
+              cy="13"
+              r="5"
+              fill="#FFD52B"
+            ></circle>
+            <text
+              x={contentWidth + 43}
+              y="13"
+              textAnchor="start"
+              dominantBaseline="central"
+              fontSize="9"
+              style={{ userSelect: "none" }}
+            >
+              韻踏み度
+            </text>
+          </g>
+        </svg>
+        <Tooltip
+          show={lyricShow}
+          idx={lyricsIdx}
+          feature={feature}
+          closeLyricsShow={closeLyricsShow}
+        />
+      </div>
     </div>
   );
 }

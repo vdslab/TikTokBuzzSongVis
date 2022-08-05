@@ -42,7 +42,7 @@ export default function LyricsScoreChart({ feature }) {
     };
   });
 
-  const yTicks = Yscale.ticks(10).map((d) => {
+  const yTicks = Yscale.ticks(5).map((d) => {
     return {
       label: d,
       y: Yscale(d),

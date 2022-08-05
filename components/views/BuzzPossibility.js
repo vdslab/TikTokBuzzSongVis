@@ -3,7 +3,7 @@ import { List, ListItem } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function BuzzPossibility({ songData }) {
+export default function BuzzPossibility({ songData, setSelectedSongId }) {
   const [similarSongList, setSimilarSongList] = useState([]);
   useEffect(() => {
     (async () => {
@@ -19,7 +19,15 @@ export default function BuzzPossibility({ songData }) {
   return (
     <div>
       <div>
-        {songData.title} バズり度 {songData.rank}
+        <div
+          className={style.images_names}
+          onClick={() => {
+            setSelectedSongId(songData.id);
+            console.log("click");
+          }}
+        >
+          {songData.title} バズり度 {songData.rank}
+        </div>
         <audio controls src={songData.preview_url}></audio>
       </div>
       <div>
@@ -42,10 +50,10 @@ export default function BuzzPossibility({ songData }) {
                         {/* HACK:Linkの方がいい？ */}
                         <div
                           className={style.name_score}
-                          // onClick={() => {
-                          //   setSelectedSongId(data.id);
-                          //   console.log("click");
-                          // }}
+                          onClick={() => {
+                            setSelectedSongId(song.id);
+                            console.log("click");
+                          }}
                         >
                           <div>{song.title}</div>
                           <div>{song.rank}点</div>

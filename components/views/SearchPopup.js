@@ -30,7 +30,7 @@ export default function SearchPopup(props) {
           }}
         >
           <DialogTitle style={{ fontSize: "1.5rem", fontWeight: "bolder" }}>
-            曲名で検索
+            曲名 または アーティスト名で検索
           </DialogTitle>
           <DialogActions>
             <IconButton

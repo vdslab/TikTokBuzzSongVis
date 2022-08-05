@@ -57,7 +57,7 @@ export default function SearchSongs(props) {
           <div className={style.searchbar}>
             <InputBase
               style={{ padding: "4px 8px 4px 15px" }}
-              placeholder="曲名を入力"
+              placeholder="曲名 または アーティスト名を入力"
               inputProps={{ "aria-label": "SchoolName" }}
               inputRef={inputEl}
               fullWidth={true}

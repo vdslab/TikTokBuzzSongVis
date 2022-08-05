@@ -20,20 +20,20 @@
   align-items: center;
   align-items: flex-start;
   padding-bottom: 16px;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-
-.images_names:hover {
-  color: #ff6b2b;
 }
 
 .names {
   width: 268px;
   padding-left: 16px;
   cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.names:hover {
+  color: #ff6b2b;
 }
 
 .name_score {

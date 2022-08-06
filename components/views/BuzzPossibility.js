@@ -20,15 +20,14 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
     <div>
       <div>
         <div
-          className={style.images_names}
+          className={style.buzz_title}
           onClick={() => {
             setSelectedSongId(songData.id);
             console.log("click");
           }}
         >
-          {songData.title} バズり度 {songData.rank}
+          {songData.title} バズり度 <span>{songData.rank}点</span>
         </div>
-        <audio controls src={songData.preview_url}></audio>
       </div>
       <div style={{ paddingTop: "16px" }}>
         <div>{songData.title}の類似曲</div>

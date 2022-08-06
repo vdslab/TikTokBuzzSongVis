@@ -80,17 +80,52 @@ export default function SongDetail({ songId, hasData }) {
         </div>
         <div className={style.wordcloud}>
           {songData.lyrics_feature?.word_cloud_data &&
-            Object.keys(songData.lyrics_feature?.word_cloud_data).length >
-              0 && (
-              <WordCloudChart
-                feature={songData.lyrics_feature?.word_cloud_data}
-              />
-            )}
+          Object.keys(songData.lyrics_feature?.word_cloud_data).length > 0 ? (
+            <WordCloudChart
+              feature={songData.lyrics_feature?.word_cloud_data}
+            />
+          ) : (
+            <div style={{ width: 380 }}>
+              <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
+                歌詞を特徴づけるワード
+              </div>
+              <div
+                style={{
+                  height: "300px",
+                  border: "solid 0.1px",
+                  borderColor: "#bbbbbb",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div> 表示するデータがありません</div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div style={{ padding: "1rem" }}>
-        {songData.lyrics_feature && (
+        {songData.lyrics_feature ? (
           <LyricsScoreChart feature={songData.lyrics_feature} />
+        ) : (
+          <div style={{ width: 900 }}>
+            <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
+              ポジティブ度&韻踏み度
+            </div>
+            <div
+              style={{
+                height: "300px",
+                border: "solid 0.1px",
+                borderColor: "#bbbbbb",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div>表示するデータがありません</div>
+            </div>
+          </div>
         )}
       </div>
     </div>

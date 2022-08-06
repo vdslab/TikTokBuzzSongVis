@@ -49,9 +49,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
 
   return (
     <Box component="main">
-      {buzzSongList.length > 0 && (
-        <div className={style.title}>ピックアップ</div>
-      )}
+      <div className={style.title}>ピックアップ</div>
       <div className={style.upper}>
         {buzzSongList.map((data, idx) => {
           return (

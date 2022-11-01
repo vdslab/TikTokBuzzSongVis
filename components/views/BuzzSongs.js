@@ -23,7 +23,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         const buzzSongsReq = await fetch("api/buzz_songs", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
-          body: JSON.stringify(date[0]),
+          body: JSON.stringify(date[date.length - 1]),
         });
         // TODO:rank->title順での並び替え（現状ではrankでのみ）
         const data = await buzzSongsReq.json();
@@ -39,7 +39,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         const featureReq = await fetch("api/priority_feature", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
-          body: JSON.stringify(date[0]),
+          body: JSON.stringify(date[date.length-1]),
         });
         const featureData = await featureReq.json();
         setPriorityFeature(JSON.parse(featureData.feature));

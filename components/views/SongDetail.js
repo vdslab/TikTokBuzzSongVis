@@ -4,6 +4,7 @@ import WordCloudChart from "../charts/WordCloud";
 import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { localStorageKey } from "../common";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -46,7 +47,7 @@ export default function SongDetail({ songId, hasData }) {
   }, [songId, hasData]);
 
   useEffect(() => {
-    const list = localStorage.getItem("BUZZLEAD_LIKE_LIST");
+    const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
     if (list) {
       const parsedList = JSON.parse(list);
       setLikeList(parsedList);
@@ -63,7 +64,10 @@ export default function SongDetail({ songId, hasData }) {
       // リストになければお気に入り登録
       adjustedList = likeList.concat([selectedId]);
     }
-    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    localStorage.setItem(
+      localStorageKey.BUZZLEAD_LIKE_LIST,
+      JSON.stringify(adjustedList)
+    );
     setLikeList(adjustedList);
   }
 

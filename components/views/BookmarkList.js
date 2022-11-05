@@ -25,7 +25,10 @@ export default function BookmarkList() {
       // リストになければお気に入り登録
       adjustedList = likeList.concat([selectedId]);
     }
-    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    localStorage.setItem(
+      localStorageKey.BUZZLEAD_LIKE_LIST,
+      JSON.stringify(adjustedList)
+    );
     setLikeList(adjustedList);
   }
 

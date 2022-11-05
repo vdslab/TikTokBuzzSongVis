@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./BuzzSongs.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { SongListCard } from "./SongListCard";
+import { localStorageKey } from "../common";
 
 export default function BuzzPossibility({ songData, setSelectedSongId }) {
   const [likeList, setLikeList] = useState([]);
@@ -18,7 +19,7 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
   }, [songData]);
 
   useEffect(() => {
-    const list = localStorage.getItem("BUZZLEAD_LIKE_LIST");
+    const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
     if (list) {
       const parsedList = JSON.parse(list);
       setLikeList(parsedList);
@@ -35,7 +36,10 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
       // リストになければお気に入り登録
       adjustedList = likeList.concat([selectedId]);
     }
-    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    localStorage.setItem(
+      localStorageKey.BUZZLEAD_LIKE_LIST,
+      JSON.stringify(adjustedList)
+    );
     setLikeList(adjustedList);
   }
 

@@ -3,9 +3,7 @@ import Header from "../components/layouts/Header";
 import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
-
-// TODO:共通化、サイズの検討
-const MINI_DISPLAY_SIZE = 700;
+import { MINI_DISPLAY_SIZE } from "../components/common";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useState(null);

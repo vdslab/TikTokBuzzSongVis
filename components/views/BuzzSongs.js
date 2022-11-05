@@ -5,6 +5,7 @@ import { ParallelCoordinates } from "../charts/ParallelCoordinates";
 import { SongListCard } from "./SongListCard";
 
 export default function BuzzSongs({ setSelectedSongId }) {
+  const [likeList, setLikeList] = useState([]);
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
   const [priorityFeature, setPriorityFeature] = useState([]);
@@ -15,6 +16,14 @@ export default function BuzzSongs({ setSelectedSongId }) {
       const data = await dateRes.json();
       setDate(data);
     })();
+  }, []);
+
+  useEffect(() => {
+    const list = localStorage.getItem("BUZZLEAD_LIKE_LIST");
+    if (list) {
+      const parsedList = JSON.parse(list);
+      setLikeList(parsedList);
+    }
   }, []);
 
   useEffect(() => {
@@ -47,6 +56,24 @@ export default function BuzzSongs({ setSelectedSongId }) {
     })();
   }, [date]);
 
+  // TODO:共通化
+  function clickLikeList(selectedId) {
+    let adjustedList;
+    if (inLikeList(selectedId)) {
+      // リストにあればお気に入り削除
+      adjustedList = likeList.filter((id) => id !== selectedId);
+    } else {
+      // リストになければお気に入り登録
+      adjustedList = likeList.concat([selectedId]);
+    }
+    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    setLikeList(adjustedList);
+  }
+
+  function inLikeList(id) {
+    return likeList.includes(id);
+  }
+
   return (
     <Box component="main">
       {buzzSongList.length > 0 && (
@@ -59,6 +86,8 @@ export default function BuzzSongs({ setSelectedSongId }) {
               songInfo={data}
               setSelectedSongId={setSelectedSongId}
               key={idx}
+              clickLikeList={clickLikeList}
+              like={inLikeList(data.id)}
             />
           );
         })}

@@ -68,9 +68,6 @@ export function SongListCard({
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  // if (!like) {
-                  //   clickLikeList(songInfo.id);
-                  // }
                   clickLikeList(songInfo.id);
                 }}
               >

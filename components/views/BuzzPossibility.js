@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { SongListCard } from "./SongListCard";
 
 export default function BuzzPossibility({ songData, setSelectedSongId }) {
+  const [likeList, setLikeList] = useState([]);
   const [similarSongList, setSimilarSongList] = useState([]);
   useEffect(() => {
     (async () => {
@@ -15,6 +16,24 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
       setSimilarSongList(data);
     })();
   }, [songData]);
+
+  // TODO:共通化
+  function clickLikeList(selectedId) {
+    let adjustedList;
+    if (inLikeList(selectedId)) {
+      // リストにあればお気に入り削除
+      adjustedList = likeList.filter((id) => id !== selectedId);
+    } else {
+      // リストになければお気に入り登録
+      adjustedList = likeList.concat([selectedId]);
+    }
+    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    setLikeList(adjustedList);
+  }
+
+  function inLikeList(id) {
+    return likeList.includes(id);
+  }
 
   return (
     <div>
@@ -39,6 +58,8 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
                   songInfo={song}
                   setSelectedSongId={setSelectedSongId}
                   key={idx}
+                  clickLikeList={clickLikeList}
+                  like={inLikeList(song.id)}
                 />
               );
             })

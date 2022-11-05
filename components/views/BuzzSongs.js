@@ -56,6 +56,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
     })();
   }, [date]);
 
+  // TODO:共通化
   function clickLikeList(selectedId) {
     let adjustedList;
     if (inLikeList(selectedId)) {
@@ -72,8 +73,6 @@ export default function BuzzSongs({ setSelectedSongId }) {
   function inLikeList(id) {
     return likeList.includes(id);
   }
-
-  console.log("likeList", likeList);
 
   return (
     <Box component="main">

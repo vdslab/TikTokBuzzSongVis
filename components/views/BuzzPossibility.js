@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { List, ListItem } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { SongListCard } from "./SongListCard";
 
 export default function BuzzPossibility({ songData, setSelectedSongId }) {
   const [similarSongList, setSimilarSongList] = useState([]);
@@ -33,38 +33,13 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
         <div>{songData.title}の類似曲</div>
         <div className={style.upper}>
           {similarSongList.length > 0 ? (
-            similarSongList.map((song) => {
+            similarSongList.map((song, idx) => {
               return (
-                <List key={song.id} className={style.songlist}>
-                  <ListItem>
-                    <div className={style.listitem}>
-                      {/* TODO:Imageタグに置き換える */}
-                      <div className={style.images_names}>
-                        <img
-                          src={song.img_url}
-                          style={{ width: "50px", height: "50px" }}
-                          alt=""
-                          className={style.image}
-                        ></img>
-                        <div className={style.names}>
-                          {/* HACK:Linkの方がいい？ */}
-                          <div
-                            className={style.name_score}
-                            onClick={() => {
-                              setSelectedSongId(song.id);
-                              console.log("click");
-                            }}
-                          >
-                            <div>{song.title}</div>
-                            <div>{song.rank}点</div>
-                          </div>
-                          <div>{song.artist}</div>
-                        </div>
-                      </div>
-                      <audio controls src={song.preview_url}></audio>
-                    </div>
-                  </ListItem>
-                </List>
+                <SongListCard
+                  songInfo={song}
+                  setSelectedSongId={setSelectedSongId}
+                  key={idx}
+                />
               );
             })
           ) : (

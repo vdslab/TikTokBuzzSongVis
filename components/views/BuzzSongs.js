@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Box, List, ListItem } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import { ParallelCoordinates } from "../charts/ParallelCoordinates";
-// import Image from "next/image";
+import { SongListCard } from "./SongListCard";
 
 export default function BuzzSongs({ setSelectedSongId }) {
   const [date, setDate] = useState([]);
@@ -39,7 +39,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         const featureReq = await fetch("api/priority_feature", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
-          body: JSON.stringify(date[date.length-1]),
+          body: JSON.stringify(date[date.length - 1]),
         });
         const featureData = await featureReq.json();
         setPriorityFeature(JSON.parse(featureData.feature));
@@ -55,58 +55,11 @@ export default function BuzzSongs({ setSelectedSongId }) {
       <div className={style.upper}>
         {buzzSongList.map((data, idx) => {
           return (
-            <div key={idx}>
-              <List className={style.songlist}>
-                <ListItem>
-                  <div className={style.listitem}>
-                    {/* TODO:Imageタグに置き換える */}
-                    <div className={style.images_names}>
-                      <img
-                        src={data.detail.img_url}
-                        style={{ width: "50px", height: "50px" }}
-                        alt=""
-                        className={style.image}
-                      ></img>
-                      {/* <Image src={data.detail.img_url} width={50} height={50} /> */}
-                      <div className={style.names}>
-                        <div
-                          className={style.name_score}
-                          onClick={() => {
-                            setSelectedSongId(data.id);
-                            console.log("click");
-                          }}
-                        >
-                          <div>{data.detail.title}</div>
-                          <div>{data.rank}点</div>
-                        </div>
-                        <div
-                          onClick={() => {
-                            setSelectedSongId(data.id);
-                            console.log("click");
-                          }}
-                        >
-                          {data.detail.artist}
-                        </div>
-                      </div>
-                    </div>
-                    {/* <audio
-                      controls
-                      id="demo"
-                      src={data.detail.preview_url}
-                    ></audio> */}
-                    {/* <div class="container">
-                      <div>
-                        <button id="play" class="btn btn-primary">
-                          再生
-                        </button>
-                      </div>
-                    </div> */}
-
-                    <audio controls src={data.detail.preview_url}></audio>
-                  </div>
-                </ListItem>
-              </List>
-            </div>
+            <SongListCard
+              songInfo={data}
+              setSelectedSongId={setSelectedSongId}
+              key={idx}
+            />
           );
         })}
       </div>

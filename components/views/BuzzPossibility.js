@@ -17,6 +17,14 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
     })();
   }, [songData]);
 
+  useEffect(() => {
+    const list = localStorage.getItem("BUZZLEAD_LIKE_LIST");
+    if (list) {
+      const parsedList = JSON.parse(list);
+      setLikeList(parsedList);
+    }
+  }, []);
+
   // TODO:共通化
   function clickLikeList(selectedId) {
     let adjustedList;

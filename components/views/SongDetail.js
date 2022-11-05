@@ -29,6 +29,8 @@ async function getSongData(songId) {
 // HACK:親コンポーネントからdetail情報を渡した方がいい
 export default function SongDetail({ songId, hasData }) {
   const [songData, setSongData] = useState();
+  const [likeList, setLikeList] = useState([]);
+
   useEffect(() => {
     (async () => {
       if (songId) {
@@ -42,6 +44,32 @@ export default function SongDetail({ songId, hasData }) {
       }
     })();
   }, [songId, hasData]);
+
+  useEffect(() => {
+    const list = localStorage.getItem("BUZZLEAD_LIKE_LIST");
+    if (list) {
+      const parsedList = JSON.parse(list);
+      setLikeList(parsedList);
+    }
+  }, []);
+
+  // TODO:共通化
+  function clickLikeList(selectedId) {
+    let adjustedList;
+    if (inLikeList(selectedId)) {
+      // リストにあればお気に入り削除
+      adjustedList = likeList.filter((id) => id !== selectedId);
+    } else {
+      // リストになければお気に入り登録
+      adjustedList = likeList.concat([selectedId]);
+    }
+    localStorage.setItem("BUZZLEAD_LIKE_LIST", JSON.stringify(adjustedList));
+    setLikeList(adjustedList);
+  }
+
+  function inLikeList(id) {
+    return likeList.includes(id);
+  }
 
   if (!songData) {
     return (
@@ -66,6 +94,17 @@ export default function SongDetail({ songId, hasData }) {
               <div>{songData.title}</div>
               <div>&nbsp; / &nbsp;</div>
               <div>{songData.artist}</div>
+            </div>
+            <div
+              style={{
+                color: inLikeList(songData.id) ? "red" : "black",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                clickLikeList(songData.id);
+              }}
+            >
+              like
             </div>
           </div>
         )}

@@ -2,10 +2,13 @@ import { useState } from "react";
 import Header from "../components/layouts/Header";
 import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
+import { useWindowSize } from "../components/hooks/getWindwSize";
 
-export default function Home() {
+// TODO:共通化、サイズの検討
+const MINI_DISPLAY_SIZE = 700;
+
+function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useState(null);
-
   return (
     <div>
       <Header />
@@ -32,4 +35,28 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+function MiniSizeHome() {
+  const [selectedSongId, setSelectedSongId] = useState(null);
+  // TODO:ぬまけいよろしく
+  return (
+    <div>
+      <Header />
+      <BuzzSongs
+        selectedSongId={selectedSongId}
+        setSelectedSongId={setSelectedSongId}
+      />
+    </div>
+  );
+}
+
+export default function Home() {
+  const { height, width } = useWindowSize();
+
+  if (width > MINI_DISPLAY_SIZE) {
+    return <DefaultSizeHome />;
+  } else {
+    return <MiniSizeHome />;
+  }
 }

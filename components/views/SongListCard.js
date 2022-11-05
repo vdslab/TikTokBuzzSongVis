@@ -4,7 +4,12 @@ import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 import { useRouter } from "next/router";
 
-export function SongListCard({ songInfo, setSelectedSongId }) {
+export function SongListCard({
+  songInfo,
+  setSelectedSongId,
+  clickLikeList,
+  like,
+}) {
   const { height, width } = useWindowSize();
   const router = useRouter();
   //TODO:返ってくるデータの形を同じにしておきたい
@@ -57,6 +62,31 @@ export function SongListCard({ songInfo, setSelectedSongId }) {
               >
                 {artist}
               </div>
+              <div
+                style={{
+                  color: like ? "red" : "black",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  // if (!like) {
+                  //   clickLikeList(songInfo.id);
+                  // }
+                  clickLikeList(songInfo.id);
+                }}
+              >
+                like
+              </div>
+              {/* TODO:ボタンにする
+              <IconButton
+                size="medium"
+                aria-label="show 4 new mails"
+                color="inherit"
+                onClick={() => {
+                  setIsOpenPopup(true);
+                }}
+              >
+                <SearchIcon />
+              </IconButton> */}
             </div>
           </div>
           {/* <audio

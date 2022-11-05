@@ -29,7 +29,6 @@ export default function SearchSongs(props) {
   }
 
   useEffect(() => {
-    console.log("search");
     (async () => {
       if (inputSongName !== "") {
         const songListRes = await fetch("/api/spotify/search_songs", {
@@ -38,7 +37,6 @@ export default function SearchSongs(props) {
           body: JSON.stringify(inputSongName),
         });
         const songListData = await songListRes.json();
-        console.log("songListData", songListData);
         setSongList(songListData);
       }
     })();

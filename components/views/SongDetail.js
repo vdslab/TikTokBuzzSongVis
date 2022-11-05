@@ -71,7 +71,7 @@ export default function SongDetail({ songId, hasData }) {
         )}
         <audio controls src={songData.preview_url}></audio>
       </div>
-
+      {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
       <div className={style.charts}>
         <div className={style.raderchart}>
           {songData.music_feature && (

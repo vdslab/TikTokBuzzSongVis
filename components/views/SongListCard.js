@@ -1,7 +1,12 @@
 import { ListItem, List } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
+import { MINI_DISPLAY_SIZE } from "../common";
+import { useWindowSize } from "../hooks/getWindwSize";
+import { useRouter } from "next/router";
 
 export function SongListCard({ songInfo, setSelectedSongId }) {
+  const { height, width } = useWindowSize();
+  const router = useRouter();
   //TODO:返ってくるデータの形を同じにしておきたい
   const title = songInfo.detail ? songInfo.detail.title : songInfo.title;
   const img_url = songInfo.detail ? songInfo.detail.img_url : songInfo.img_url;
@@ -9,6 +14,10 @@ export function SongListCard({ songInfo, setSelectedSongId }) {
   const preview_url = songInfo.detail
     ? songInfo.detail.preview_url
     : songInfo.preview_url;
+
+  function showSelectIdSong(id) {
+    router.push(`/song/detail/${id}`);
+  }
 
   return (
     <List>
@@ -27,7 +36,11 @@ export function SongListCard({ songInfo, setSelectedSongId }) {
               <div
                 className={style.name_score}
                 onClick={() => {
-                  setSelectedSongId(songInfo.id);
+                  if (width > MINI_DISPLAY_SIZE) {
+                    setSelectedSongId(songInfo.id);
+                  } else {
+                    showSelectIdSong(songInfo.id);
+                  }
                 }}
               >
                 <div>{title}</div>
@@ -35,7 +48,11 @@ export function SongListCard({ songInfo, setSelectedSongId }) {
               </div>
               <div
                 onClick={() => {
-                  setSelectedSongId(songInfo.id);
+                  if (width > MINI_DISPLAY_SIZE) {
+                    setSelectedSongId(songInfo.id);
+                  } else {
+                    showSelectIdSong(songInfo.id);
+                  }
                 }}
               >
                 {artist}

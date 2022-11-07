@@ -25,6 +25,10 @@ export default function Header() {
               variant="h6"
               component="div"
               sx={{ flexGrow: 1 }}
+              style={{
+                cursor: "pointer",
+                width: "180px",
+              }}
               onClick={() => router.push(`/`)}
             >
               TikTokBuzzSongVis

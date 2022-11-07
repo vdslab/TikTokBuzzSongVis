@@ -7,9 +7,12 @@ import { localStorageKey } from "../common";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { IconButton } from "@mui/material";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
 export default function BuzzSongs({ setSelectedSongId }) {
-  const [likeList, setLikeList] = useState([]);
+  const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
   const [priorityFeature, setPriorityFeature] = useState([]);
@@ -23,20 +26,20 @@ export default function BuzzSongs({ setSelectedSongId }) {
     })();
   }, []);
 
+  //TODO:ここも共通化したい
   useEffect(() => {
     const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
     if (list) {
       const parsedList = JSON.parse(list);
       setLikeList(parsedList);
     }
-  }, []);
+  }, [setLikeList]);
 
   useEffect(() => {
     (async () => {
       if (date.length > 0) {
         const buzzSongsReq = await fetch("api/buzz_songs", {
           method: "POST",
-          // TODO:ここの引数のdateをユーザーが変更できるように
           body: JSON.stringify(date[selectedDateIdx]),
         });
         // TODO:rank->title順での並び替え（現状ではrankでのみ）
@@ -63,27 +66,6 @@ export default function BuzzSongs({ setSelectedSongId }) {
       }
     })();
   }, [selectedDateIdx, date]);
-
-  // TODO:共通化
-  function clickLikeList(selectedId) {
-    let adjustedList;
-    if (inLikeList(selectedId)) {
-      // リストにあればお気に入り削除
-      adjustedList = likeList.filter((id) => id !== selectedId);
-    } else {
-      // リストになければお気に入り登録
-      adjustedList = likeList.concat([selectedId]);
-    }
-    localStorage.setItem(
-      localStorageKey.BUZZLEAD_LIKE_LIST,
-      JSON.stringify(adjustedList)
-    );
-    setLikeList(adjustedList);
-  }
-
-  function inLikeList(id) {
-    return likeList.includes(id);
-  }
 
   return (
     <Box component="main">
@@ -120,8 +102,11 @@ export default function BuzzSongs({ setSelectedSongId }) {
               songInfo={data}
               setSelectedSongId={setSelectedSongId}
               key={idx}
-              clickLikeList={clickLikeList}
-              like={inLikeList(data.id)}
+              clickLikeList={() => {
+                const adjustedList = clickLikeList(likeList, data.id);
+                setLikeList(adjustedList);
+              }}
+              like={inList(likeList, data.id)}
             />
           );
         })}

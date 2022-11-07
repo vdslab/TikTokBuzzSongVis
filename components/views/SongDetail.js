@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { localStorageKey } from "../common";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -32,7 +35,7 @@ async function getSongData(songId) {
 // HACK:親コンポーネントからdetail情報を渡した方がいい
 export default function SongDetail({ songId, hasData }) {
   const [songData, setSongData] = useState();
-  const [likeList, setLikeList] = useState([]);
+  const [likeList, setLikeList] = useRecoilState(bookmarkState);
 
   useEffect(() => {
     (async () => {
@@ -55,27 +58,6 @@ export default function SongDetail({ songId, hasData }) {
       setLikeList(parsedList);
     }
   }, []);
-
-  // TODO:共通化
-  function clickLikeList(selectedId) {
-    let adjustedList;
-    if (inLikeList(selectedId)) {
-      // リストにあればお気に入り削除
-      adjustedList = likeList.filter((id) => id !== selectedId);
-    } else {
-      // リストになければお気に入り登録
-      adjustedList = likeList.concat([selectedId]);
-    }
-    localStorage.setItem(
-      localStorageKey.BUZZLEAD_LIKE_LIST,
-      JSON.stringify(adjustedList)
-    );
-    setLikeList(adjustedList);
-  }
-
-  function inLikeList(id) {
-    return likeList.includes(id);
-  }
 
   if (!songData) {
     return (
@@ -103,11 +85,12 @@ export default function SongDetail({ songId, hasData }) {
             </div>
             <div
               style={{
-                color: inLikeList(songData.id) ? "red" : "black",
+                color: inList(likeList, songData.id) ? "red" : "black",
                 cursor: "pointer",
               }}
               onClick={() => {
-                clickLikeList(songData.id);
+                const adjustedList = clickLikeList(likeList, songData.id);
+                setLikeList(adjustedList);
               }}
             >
               like

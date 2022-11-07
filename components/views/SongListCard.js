@@ -41,7 +41,7 @@ export function SongListCard({
             {/* <Image src={songInfo.detail.img_url} width={50} height={50} /> */}
             <div className={style.names}>
               <div
-                className={style.name_score}
+                className={style.name}
                 onClick={() => {
                   if (width > MINI_DISPLAY_SIZE) {
                     setSelectedSongId(songInfo.id);
@@ -50,38 +50,31 @@ export function SongListCard({
                   }
                 }}
               >
-                <div>{title}</div>
-              </div>
-              <div
-                onClick={() => {
-                  if (width > MINI_DISPLAY_SIZE) {
-                    setSelectedSongId(songInfo.id);
-                  } else {
-                    showSelectIdSong(songInfo.id);
-                  }
-                }}
-              >
-                {artist}
-              </div>
-              <div className={style.score_fav}>
-                <div>{songInfo.rank}点</div>
-                <IconButton
-                  style={{
-                    color: like ? "rgb(250, 58, 96)" : "white",
-                    stroke: like ? "none" : "gray",
-                    cursor: "pointer",
-                    width: "24px",
-                    height: "24px",
-                  }}
-                  onClick={() => {
-                    clickLikeList(songInfo.id);
-                  }}
-                >
-                  <FavoriteIcon />
-                </IconButton>
+                {title}
               </div>
 
-              {/* TODO:ボタンにする
+              <div className={style.artist_score}>
+                <div>{artist}</div>
+                <div>{songInfo.rank}点</div>
+              </div>
+            </div>
+            <IconButton
+              className={style.button}
+              style={{
+                color: like ? "rgb(250, 58, 96)" : "white",
+                stroke: like ? "none" : "#aaa",
+                cursor: "pointer",
+                width: "40px",
+                height: "40px",
+              }}
+              onClick={() => {
+                clickLikeList(songInfo.id);
+              }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+
+            {/* TODO:ボタンにする
               <IconButton
                 size="medium"
                 aria-label="show 4 new mails"
@@ -92,8 +85,8 @@ export function SongListCard({
               >
                 <SearchIcon />
               </IconButton> */}
-            </div>
           </div>
+
           {/* <audio
             controls
             id="demo"

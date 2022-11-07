@@ -90,7 +90,7 @@ export default function SongDetail({ songId, hasData }) {
                 color: inList(likeList, songData.id)
                   ? "rgb(250, 58, 96)"
                   : "white",
-                stroke: inList(likeList, songData.id) ? "none" : "gray",
+                stroke: inList(likeList, songData.id) ? "none" : "#aaa",
                 cursor: "pointer",
               }}
               onClick={() => {

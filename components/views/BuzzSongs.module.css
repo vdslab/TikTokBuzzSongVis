@@ -28,28 +28,18 @@
 }
 
 .names {
+  display: inline-block;
   width: 268px;
   padding-left: 16px;
-  cursor: pointer;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .names:hover {
   color: #ff6b2b;
-}
-
-/* .name_score {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-} */
-
-.score_fav {
-  display: flex;
-  justify-content: space-between;
 }
 
 .parallel {

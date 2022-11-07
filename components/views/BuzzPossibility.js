@@ -3,9 +3,12 @@ import style from "./BuzzSongs.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { SongListCard } from "./SongListCard";
 import { localStorageKey } from "../common";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
 export default function BuzzPossibility({ songData, setSelectedSongId }) {
-  const [likeList, setLikeList] = useState([]);
+  const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [similarSongList, setSimilarSongList] = useState([]);
   useEffect(() => {
     (async () => {
@@ -26,27 +29,6 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
     }
   }, []);
 
-  // TODO:共通化
-  function clickLikeList(selectedId) {
-    let adjustedList;
-    if (inLikeList(selectedId)) {
-      // リストにあればお気に入り削除
-      adjustedList = likeList.filter((id) => id !== selectedId);
-    } else {
-      // リストになければお気に入り登録
-      adjustedList = likeList.concat([selectedId]);
-    }
-    localStorage.setItem(
-      localStorageKey.BUZZLEAD_LIKE_LIST,
-      JSON.stringify(adjustedList)
-    );
-    setLikeList(adjustedList);
-  }
-
-  function inLikeList(id) {
-    return likeList.includes(id);
-  }
-
   return (
     <div>
       <div>
@@ -54,7 +36,6 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
           className={style.buzz_title}
           onClick={() => {
             setSelectedSongId(songData.id);
-            console.log("click");
           }}
         >
           {songData.title} バズり度 <span>{songData.rank}点</span>
@@ -70,8 +51,11 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
                   songInfo={song}
                   setSelectedSongId={setSelectedSongId}
                   key={idx}
-                  clickLikeList={clickLikeList}
-                  like={inLikeList(song.id)}
+                  clickLikeList={() => {
+                    const adjustedList = clickLikeList(likeList, song.id);
+                    setLikeList(adjustedList);
+                  }}
+                  like={inList(likeList, song.id)}
                 />
               );
             })

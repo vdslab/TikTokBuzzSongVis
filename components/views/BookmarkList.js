@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SongListCard } from "./SongListCard";
 import { localStorageKey } from "../common";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
 async function getSongBasicInfo(songId) {
   const songInfoReq = await fetch("/api/song_basic_info", {
@@ -12,55 +15,43 @@ async function getSongBasicInfo(songId) {
 }
 
 export default function BookmarkList() {
-  const [likeList, setLikeList] = useState([]);
+  const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
+  const [likeSongInfoList, setLikeSongInfoList] = useState([]);
 
   useEffect(() => {
     (async () => {
       const songlist = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
       const parsedSongIdList = JSON.parse(songlist);
+      setLikeIdList(parsedSongIdList);
 
-      const songInfoList = [];
-      for (const id of parsedSongIdList) {
-        const song = await getSongBasicInfo(id);
-        songInfoList.push(song);
+      if (parsedSongIdList) {
+        const songInfoList = [];
+        for (const id of parsedSongIdList) {
+          const song = await getSongBasicInfo(id);
+          songInfoList.push(song);
+        }
+        setLikeSongInfoList(songInfoList);
       }
-
-      setLikeList(songInfoList);
     })();
-  }, []);
-
-  // TODO:共通化
-  function clickLikeList(selectedId) {
-    let adjustedList;
-    if (inLikeList(selectedId)) {
-      // リストにあればお気に入り削除
-      adjustedList = likeList.filter((id) => id !== selectedId);
-    } else {
-      // リストになければお気に入り登録
-      adjustedList = likeList.concat([selectedId]);
-    }
-    localStorage.setItem(
-      localStorageKey.BUZZLEAD_LIKE_LIST,
-      JSON.stringify(adjustedList)
-    );
-    setLikeList(adjustedList);
-  }
-
-  function inLikeList(id) {
-    return likeList?.includes(id);
-  }
+  }, [setLikeSongInfoList, setLikeIdList]);
 
   return (
     <div>
       お気に入り
-      {likeList.map((song) => {
-        console.log(song);
+      {likeSongInfoList.map((song) => {
         return (
           <SongListCard
             songInfo={song}
             key={song.id}
-            like={inLikeList(song.id)}
-            clickLikeList={clickLikeList}
+            like={inList(likeIdList, song.id)}
+            clickLikeList={() => {
+              const adjustedIdList = clickLikeList(likeIdList, song.id);
+              setLikeIdList(adjustedIdList);
+              const adjustedSongList = likeSongInfoList.filter(
+                (like) => like.id !== song.id
+              );
+              setLikeSongInfoList(adjustedSongList);
+            }}
           />
         );
       })}

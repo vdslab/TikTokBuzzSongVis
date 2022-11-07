@@ -1,18 +1,32 @@
 import { useState, useEffect } from "react";
 import { SongListCard } from "./SongListCard";
-import { sampleList } from "./data";
 import { localStorageKey } from "../common";
 
-// TODO:sampleListではなくローカルから取得したIDをもとに情報を取得して表示する
+async function getSongBasicInfo(songId) {
+  const songInfoReq = await fetch("/api/song_basic_info", {
+    method: "POST",
+    body: JSON.stringify(songId),
+  });
+  const songInfo = await songInfoReq.json();
+  return songInfo;
+}
 
 export default function BookmarkList() {
   const [likeList, setLikeList] = useState([]);
+
   useEffect(() => {
-    const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
-    if (list) {
-      const parsedList = JSON.parse(list);
-      setLikeList(parsedList);
-    }
+    (async () => {
+      const songlist = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
+      const parsedSongIdList = JSON.parse(songlist);
+
+      const songInfoList = [];
+      for (const id of parsedSongIdList) {
+        const song = await getSongBasicInfo(id);
+        songInfoList.push(song);
+      }
+
+      setLikeList(songInfoList);
+    })();
   }, []);
 
   // TODO:共通化
@@ -33,12 +47,14 @@ export default function BookmarkList() {
   }
 
   function inLikeList(id) {
-    return likeList.includes(id);
+    return likeList?.includes(id);
   }
+
   return (
     <div>
       お気に入り
-      {sampleList.map((song) => {
+      {likeList.map((song) => {
+        console.log(song);
         return (
           <SongListCard
             songInfo={song}

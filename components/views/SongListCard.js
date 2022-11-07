@@ -39,20 +39,17 @@ export function SongListCard({
               className={style.image}
             ></img>
             {/* <Image src={songInfo.detail.img_url} width={50} height={50} /> */}
-            <div className={style.names}>
-              <div
-                className={style.name}
-                onClick={() => {
-                  if (width > MINI_DISPLAY_SIZE) {
-                    setSelectedSongId(songInfo.id);
-                  } else {
-                    showSelectIdSong(songInfo.id);
-                  }
-                }}
-              >
-                {title}
-              </div>
-
+            <div
+              className={style.names}
+              onClick={() => {
+                if (width > MINI_DISPLAY_SIZE) {
+                  setSelectedSongId(songInfo.id);
+                } else {
+                  showSelectIdSong(songInfo.id);
+                }
+              }}
+            >
+              <div className={style.name}>{title}</div>
               <div className={style.artist_score}>
                 <div>{artist}</div>
                 <div>{songInfo.rank}点</div>

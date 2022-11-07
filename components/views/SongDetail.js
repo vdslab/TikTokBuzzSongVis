@@ -59,8 +59,6 @@ export default function SongDetail({ songId, hasData }) {
     }
   }, []);
 
-  console.log(songData);
-
   if (!songData) {
     return (
       <div className={style.loading}>

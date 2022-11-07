@@ -10,7 +10,6 @@ const legend = [
 ];
 
 export default function WordCloudChart({ feature }) {
-  console.log(feature);
   const margin = {
     left: 5,
     right: 55,

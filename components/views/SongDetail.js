@@ -12,9 +12,11 @@ async function getDbSongData(songId) {
     body: JSON.stringify(songId),
   });
   const data = await songRes.json();
-  data.music_feature = JSON.parse(data.music_feature);
-  data.lyrics_feature = JSON.parse(data.lyrics_feature);
-  data.genres = JSON.parse(data.genres);
+  if (typeof data.music_feature === "string") {
+    data.music_feature = JSON.parse(data.music_feature);
+    data.lyrics_feature = JSON.parse(data.lyrics_feature);
+    data.genres = JSON.parse(data.genres);
+  }
   return data;
 }
 

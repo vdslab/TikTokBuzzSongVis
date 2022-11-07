@@ -63,7 +63,9 @@
 .buzz_title:hover {
   color: #ff6b2b;
 }
-
+.date_select{
+  text-align: center;
+}
 /* .buttons {
   padding: 0;
   border: none;

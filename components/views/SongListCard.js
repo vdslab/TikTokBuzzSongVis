@@ -51,7 +51,6 @@ export function SongListCard({
                 }}
               >
                 <div>{title}</div>
-                <div>{songInfo.rank}点</div>
               </div>
               <div
                 onClick={() => {
@@ -64,18 +63,23 @@ export function SongListCard({
               >
                 {artist}
               </div>
-              <IconButton
-                style={{
-                  color: like ? "rgb(250, 58, 96)" : "white",
-                  stroke: like ? "none" : "gray",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  clickLikeList(songInfo.id);
-                }}
-              >
-                <FavoriteIcon />
-              </IconButton>
+              <div className={style.score_fav}>
+                <div>{songInfo.rank}点</div>
+                <IconButton
+                  style={{
+                    color: like ? "rgb(250, 58, 96)" : "white",
+                    stroke: like ? "none" : "gray",
+                    cursor: "pointer",
+                    width: "24px",
+                    height: "24px",
+                  }}
+                  onClick={() => {
+                    clickLikeList(songInfo.id);
+                  }}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </div>
 
               {/* TODO:ボタンにする
               <IconButton

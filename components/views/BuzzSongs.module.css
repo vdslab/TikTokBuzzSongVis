@@ -41,11 +41,17 @@
   color: #ff6b2b;
 }
 
-.name_score {
+/* .name_score {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+} */
+
+.score_fav {
+  display: flex;
+  justify-content: space-between;
 }
+
 .parallel {
   padding-top: 24px;
   height: 100px;
@@ -63,7 +69,7 @@
 .buzz_title:hover {
   color: #ff6b2b;
 }
-.date_select{
+.date_select {
   text-align: center;
 }
 /* .buttons {

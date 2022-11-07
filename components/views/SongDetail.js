@@ -8,6 +8,8 @@ import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
 import { bookmarkState } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -83,9 +85,12 @@ export default function SongDetail({ songId, hasData }) {
               <div>&nbsp; / &nbsp;</div>
               <div>{songData.artist}</div>
             </div>
-            <div
+            <IconButton
               style={{
-                color: inList(likeList, songData.id) ? "red" : "black",
+                color: inList(likeList, songData.id)
+                  ? "rgb(250, 58, 96)"
+                  : "white",
+                stroke: inList(likeList, songData.id) ? "none" : "gray",
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -93,8 +98,8 @@ export default function SongDetail({ songId, hasData }) {
                 setLikeList(adjustedList);
               }}
             >
-              like
-            </div>
+              <FavoriteIcon />
+            </IconButton>
           </div>
         )}
         <audio controls src={songData.preview_url}></audio>

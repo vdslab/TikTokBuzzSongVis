@@ -3,6 +3,8 @@ import style from "./BuzzSongs.module.css";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 import { useRouter } from "next/router";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export function SongListCard({
   songInfo,
@@ -62,17 +64,19 @@ export function SongListCard({
               >
                 {artist}
               </div>
-              <div
+              <IconButton
                 style={{
-                  color: like ? "red" : "black",
+                  color: like ? "rgb(250, 58, 96)" : "white",
+                  stroke: like ? "none" : "gray",
                   cursor: "pointer",
                 }}
                 onClick={() => {
                   clickLikeList(songInfo.id);
                 }}
               >
-                like
-              </div>
+                <FavoriteIcon />
+              </IconButton>
+
               {/* TODO:ボタンにする
               <IconButton
                 size="medium"

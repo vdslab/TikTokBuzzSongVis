@@ -4,6 +4,8 @@ import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
 import { bookmarkState } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
+import style from "./SongDetail.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 async function getSongBasicInfo(songId) {
   const songInfoReq = await fetch("/api/song_basic_info", {
@@ -16,7 +18,7 @@ async function getSongBasicInfo(songId) {
 
 export default function BookmarkList() {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
-  const [likeSongInfoList, setLikeSongInfoList] = useState([]);
+  const [likeSongInfoList, setLikeSongInfoList] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -35,6 +37,13 @@ export default function BookmarkList() {
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 
+  if (!likeSongInfoList) {
+    return (
+      <div className={style.loading}>
+        <CircularProgress />
+      </div>
+    );
+  }
   return (
     <div>
       お気に入り

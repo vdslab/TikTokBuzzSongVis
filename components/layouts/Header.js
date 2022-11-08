@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -21,14 +20,13 @@ export default function Header() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{ backgroundColor: "black" }}>
           <Toolbar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
-              onClick={() => router.push(`/`)}
-            >
-              TikTokBuzzSongVis
-            </Typography>
+            <img
+              src="images/logo.png"
+              height="40px"
+              alt="ロゴ"
+              style={{ padding: "8px" }}
+            />
+            <Box sx={{ flexGrow: 1 }} />
             <IconButton
               size="medium"
               aria-label="show 4 new mails"

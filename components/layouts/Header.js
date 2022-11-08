@@ -24,7 +24,8 @@ export default function Header() {
               src="images/logo.png"
               height="40px"
               alt="ロゴ"
-              style={{ padding: "8px" }}
+              style={{ padding: "8px", cursor: "pointer" }}
+              onClick={() => router.push(`/`)}
             />
             <Box sx={{ flexGrow: 1 }} />
             <IconButton

@@ -26,18 +26,18 @@ export default function BookmarkList() {
       const parsedSongIdList = JSON.parse(songlist);
       setLikeIdList(parsedSongIdList);
 
+      const songInfoList = [];
       if (parsedSongIdList) {
-        const songInfoList = [];
         for (const id of parsedSongIdList) {
           const song = await getSongBasicInfo(id);
           songInfoList.push(song);
         }
-        setLikeSongInfoList(songInfoList);
       }
+      setLikeSongInfoList(songInfoList);
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 
-  if (!likeSongInfoList) {
+  if (likeSongInfoList === null) {
     return (
       <div className={style.loading}>
         <CircularProgress />

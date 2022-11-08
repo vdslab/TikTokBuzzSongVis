@@ -130,6 +130,15 @@ export default function LyricsScoreChart({ feature }) {
     <div>
       <div className={style.title}>ポジティブ度&韻踏み度</div>
       <div className={style.relative}>
+        <div className={style.detail}>
+          <div style={{ paddingRight: "0.75rem" }}>
+            ポジティブ度：{feature.total_positive_score}
+          </div>
+          <div style={{ paddingRight: "0.75rem" }}>
+            韻踏み度：{feature.total_rhyme_score}
+          </div>
+        </div>
+
         <svg
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
           style={{

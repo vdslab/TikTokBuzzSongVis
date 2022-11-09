@@ -4,9 +4,11 @@ import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
+import { useRecoilState } from "recoil";
+import { selectedSong } from "../components/atoms";
 
 function DefaultSizeHome() {
-  const [selectedSongId, setSelectedSongId] = useState(null);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
   return (
     <div>
       <Header />
@@ -18,17 +20,11 @@ function DefaultSizeHome() {
         }}
       >
         <div style={{ width: "30%" }}>
-          <BuzzSongs
-            selectedSongId={selectedSongId}
-            setSelectedSongId={setSelectedSongId}
-          />
+          <BuzzSongs />
         </div>
         <div style={{ paddingLeft: "30px", width: "70%" }}>
-          <SongDetail
-            songId={selectedSongId}
-            hasData={true}
-            key={selectedSongId}
-          />
+          {/* MEMO:ローディングを出すためkeyをつけている */}
+          <SongDetail key={selectedSongId} />
         </div>
       </div>
     </div>
@@ -41,10 +37,7 @@ function MiniSizeHome() {
   return (
     <div>
       <Header />
-      <BuzzSongs
-        selectedSongId={selectedSongId}
-        setSelectedSongId={setSelectedSongId}
-      />
+      <BuzzSongs />
     </div>
   );
 }

@@ -4,12 +4,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { SongListCard } from "./SongListCard";
 import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
-import { bookmarkState } from "../atoms";
+import { bookmarkState, selectedSong } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
-export default function BuzzPossibility({ songData, setSelectedSongId }) {
+export default function BuzzPossibility({ songData }) {
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [similarSongList, setSimilarSongList] = useState([]);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+
   useEffect(() => {
     (async () => {
       const songReq = await fetch("/api/bebebe/similar_songs", {
@@ -36,6 +38,7 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
           className={style.buzz_title}
           onClick={() => {
             setSelectedSongId(songData.id);
+            console.log("clicked");
           }}
         >
           {songData.title} バズり度 <span>{songData.rank}点</span>
@@ -49,7 +52,6 @@ export default function BuzzPossibility({ songData, setSelectedSongId }) {
               return (
                 <SongListCard
                   songInfo={song}
-                  setSelectedSongId={setSelectedSongId}
                   key={idx}
                   clickLikeList={() => {
                     const adjustedList = clickLikeList(likeList, song.id);

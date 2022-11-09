@@ -17,5 +17,9 @@ export default async function (req, res) {
   );
   const data = await response.json();
 
-  res.status(200).send(data["songs"][0]);
+  if (data["songs"].length > 0) {
+    res.status(200).send(data["songs"][0]);
+  } else {
+    throw new Error("データがありません");
+  }
 }

@@ -8,12 +8,22 @@ import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 async function getSongBasicInfo(songId) {
-  const songInfoReq = await fetch("/api/song_basic_info", {
-    method: "POST",
-    body: JSON.stringify(songId),
-  });
-  const songInfo = await songInfoReq.json();
-  return songInfo;
+  try {
+    const songInfoReq = await fetch("/api/song_basic_info", {
+      method: "POST",
+      body: JSON.stringify(songId),
+    });
+    const songInfo = await songInfoReq.json();
+    return songInfo;
+  } catch (error) {
+    // データベースになければspotifyからとってくる
+    const songInfoReq = await fetch("/api/bebebe/song_info", {
+      method: "POST",
+      body: JSON.stringify(songId),
+    });
+    const songInfo = await songInfoReq.json();
+    return songInfo;
+  }
 }
 
 export default function BookmarkList() {

@@ -106,50 +106,46 @@ export default function SongDetail({ songId, hasData }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
-      <div className={style.charts}>
-        <Grid container>
-          <Grid item xs={4}>
-            <div className={style.raderchart}>
-              {songData.music_feature && (
-                <RadarChart feature={songData.music_feature} />
-              )}
-            </div>
-          </Grid>
-          <Grid item xs={2}>
-            <p>空白</p>
-          </Grid>
-          <Grid item xs={4}>
-            <div className={style.wordcloud}>
-              {songData.lyrics_feature?.word_cloud_data &&
-              Object.keys(songData.lyrics_feature?.word_cloud_data).length >
-                0 ? (
-                <WordCloudChart
-                  feature={songData.lyrics_feature?.word_cloud_data}
-                />
-              ) : (
-                <div style={{ width: 380 }}>
-                  <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
-                    歌詞を特徴づけるワード
-                  </div>
-                  <div
-                    style={{
-                      height: "300px",
-                      border: "solid 0.1px",
-                      borderColor: "#bbbbbb",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div> 表示するデータがありません</div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </Grid>
+
+      <Grid container>
+        <Grid item xs={7}>
+          <div className={style.raderchart}>
+            {songData.music_feature && (
+              <RadarChart feature={songData.music_feature} />
+            )}
+          </div>
         </Grid>
-      </div>
-      <div style={{ padding: "1rem" }}>
+        <Grid item xs={5}>
+          <div className={style.wordcloud}>
+            {songData.lyrics_feature?.word_cloud_data &&
+            Object.keys(songData.lyrics_feature?.word_cloud_data).length > 0 ? (
+              <WordCloudChart
+                feature={songData.lyrics_feature?.word_cloud_data}
+              />
+            ) : (
+              <div style={{ width: 380 }}>
+                <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
+                  歌詞を特徴づけるワード
+                </div>
+                <div
+                  style={{
+                    height: "300px",
+                    border: "solid 0.1px",
+                    borderColor: "#bbbbbb",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div> 表示するデータがありません</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </Grid>
+      </Grid>
+
+      <div style={{ paddingTop: "1rem" }}>
         {songData.lyrics_feature ? (
           <LyricsScoreChart feature={songData.lyrics_feature} />
         ) : (

@@ -15,7 +15,9 @@ function DefaultSizeHome() {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "1rem",
+          paddingTop: "1rem",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
         }}
       >
         <Grid container>
@@ -25,7 +27,7 @@ function DefaultSizeHome() {
               setSelectedSongId={setSelectedSongId}
             />
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={8}>
             <SongDetail
               songId={selectedSongId}
               hasData={true}

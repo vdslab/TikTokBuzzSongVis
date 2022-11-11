@@ -8,15 +8,16 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { IconButton } from "@mui/material";
 import { useRecoilState } from "recoil";
-import { bookmarkState } from "../atoms";
+import { bookmarkState, selectedSong } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 
-export default function BuzzSongs({ setSelectedSongId }) {
+export default function BuzzSongs() {
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
   const [priorityFeature, setPriorityFeature] = useState([]);
   const [selectedDateIdx, setselectedDateIdx] = useState(0);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -65,7 +66,7 @@ export default function BuzzSongs({ setSelectedSongId }) {
         setPriorityFeature(JSON.parse(featureData.feature));
       }
     })();
-  }, [selectedDateIdx, date]);
+  }, [selectedDateIdx, date, setSelectedSongId]);
 
   return (
     <Box component="main">
@@ -100,7 +101,6 @@ export default function BuzzSongs({ setSelectedSongId }) {
           return (
             <SongListCard
               songInfo={data}
-              setSelectedSongId={setSelectedSongId}
               key={idx}
               clickLikeList={() => {
                 const adjustedList = clickLikeList(likeList, data.id);

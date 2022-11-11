@@ -33,7 +33,6 @@ export default function SearchSongs(props) {
       if (inputSongName !== "") {
         const songListRes = await fetch("/api/spotify/search_songs", {
           method: "POST",
-          // TODO:ここの引数のdateをユーザーが変更できるように
           body: JSON.stringify(inputSongName),
         });
         const songListData = await songListRes.json();

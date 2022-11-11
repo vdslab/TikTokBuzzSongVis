@@ -24,7 +24,7 @@ function DefaultSizeHome() {
         </div>
         <div style={{ paddingLeft: "30px", width: "70%" }}>
           {/* MEMO:ローディングを出すためkeyをつけている */}
-          <SongDetail key={selectedSongId} />
+          <SongDetail key={selectedSongId} hasData={true} />
         </div>
       </div>
     </div>

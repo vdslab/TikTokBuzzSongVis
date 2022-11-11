@@ -21,7 +21,7 @@ export default function Header() {
         <AppBar position="static" style={{ backgroundColor: "black" }}>
           <Toolbar>
             <img
-              src="images/logo.png"
+              src="../../images/logo.png"
               height="40px"
               alt="ロゴ"
               style={{ padding: "8px", cursor: "pointer" }}

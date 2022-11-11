@@ -6,6 +6,7 @@ import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../components/atoms";
+import { Grid } from "@material-ui/core";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -16,16 +17,22 @@ function DefaultSizeHome() {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "1rem",
+          paddingTop: "1rem",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
         }}
       >
-        <div style={{ width: "30%" }}>
-          <BuzzSongs />
-        </div>
-        <div style={{ paddingLeft: "30px", width: "70%" }}>
-          {/* MEMO:ローディングを出すためkeyをつけている */}
-          <SongDetail key={selectedSongId} hasData={true} />
-        </div>
+        <Grid container>
+          <Grid item xs={4}>
+            <BuzzSongs
+              selectedSongId={selectedSongId}
+              setSelectedSongId={setSelectedSongId}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <SongDetail hasData={true} key={selectedSongId} />
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

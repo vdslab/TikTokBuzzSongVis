@@ -10,6 +10,7 @@ import { bookmarkState, selectedSong } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Grid } from "@material-ui/core";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -106,40 +107,46 @@ export default function SongDetail({ hasData }) {
         <audio controls src={songData.preview_url}></audio>
       </div>
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
-      <div className={style.charts}>
-        <div className={style.raderchart}>
-          {songData.music_feature && (
-            <RadarChart feature={songData.music_feature} />
-          )}
-        </div>
-        <div className={style.wordcloud}>
-          {songData.lyrics_feature?.word_cloud_data &&
-          Object.keys(songData.lyrics_feature?.word_cloud_data).length > 0 ? (
-            <WordCloudChart
-              feature={songData.lyrics_feature?.word_cloud_data}
-            />
-          ) : (
-            <div style={{ width: 380 }}>
-              <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
-                歌詞を特徴づけるワード
+
+      <Grid container>
+        <Grid item xs={7}>
+          <div className={style.raderchart}>
+            {songData.music_feature && (
+              <RadarChart feature={songData.music_feature} />
+            )}
+          </div>
+        </Grid>
+        <Grid item xs={5}>
+          <div className={style.wordcloud}>
+            {songData.lyrics_feature?.word_cloud_data &&
+            Object.keys(songData.lyrics_feature?.word_cloud_data).length > 0 ? (
+              <WordCloudChart
+                feature={songData.lyrics_feature?.word_cloud_data}
+              />
+            ) : (
+              <div style={{ width: 380 }}>
+                <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
+                  歌詞を特徴づけるワード
+                </div>
+                <div
+                  style={{
+                    height: "300px",
+                    border: "solid 0.1px",
+                    borderColor: "#bbbbbb",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div> 表示するデータがありません</div>
+                </div>
               </div>
-              <div
-                style={{
-                  height: "300px",
-                  border: "solid 0.1px",
-                  borderColor: "#bbbbbb",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <div> 表示するデータがありません</div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-      <div style={{ padding: "1rem" }}>
+            )}
+          </div>
+        </Grid>
+      </Grid>
+
+      <div style={{ paddingTop: "1rem" }}>
         {songData.lyrics_feature ? (
           <LyricsScoreChart feature={songData.lyrics_feature} />
         ) : (

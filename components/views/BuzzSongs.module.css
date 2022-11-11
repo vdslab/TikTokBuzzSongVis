@@ -15,8 +15,6 @@
 
 .listitem {
   display: inline;
-  /* flex-direction: column;
-  align-items: flex-start; */
   overflow-y: scroll;
 }
 
@@ -30,8 +28,6 @@
 
 .names {
   display: inline-block;
-  /* width: 268px; */
-  /* margin-left: 16px; */
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -72,3 +68,18 @@
  button img {
   display: block;
 } */
+
+@media (max-width: 700px) {
+  .title {
+    padding-top: 16px;
+    padding-left: 8px;
+  }
+  .upper {
+    overflow-y: hidden;
+    height: 480px;
+  }
+  .parallel {
+    height: 50%;
+    padding: 16px;
+  }
+}

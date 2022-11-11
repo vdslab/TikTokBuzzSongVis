@@ -108,14 +108,14 @@ export default function SongDetail({ songId, hasData }) {
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
 
       <Grid container>
-        <Grid item xs={7}>
+        <Grid item xs={12} md={7}>
           <div className={style.raderchart}>
             {songData.music_feature && (
               <RadarChart feature={songData.music_feature} />
             )}
           </div>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} md={5}>
           <div className={style.wordcloud}>
             {songData.lyrics_feature?.word_cloud_data &&
             Object.keys(songData.lyrics_feature?.word_cloud_data).length > 0 ? (

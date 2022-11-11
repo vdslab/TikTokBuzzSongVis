@@ -5,6 +5,7 @@ import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
 import { Grid } from "@material-ui/core";
+import { style } from "d3";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useState(null);

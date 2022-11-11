@@ -1,4 +1,4 @@
-import { ListItem, List } from "@material-ui/core";
+import { ListItem, List, Grid } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
@@ -31,47 +31,53 @@ export function SongListCard({
       <ListItem>
         <div className={style.listitem}>
           {/* TODO:Imageタグに置き換える */}
-          <div className={style.images_names}>
-            <img
-              src={img_url}
-              style={{ width: "50px", height: "50px" }}
-              alt=""
-              className={style.image}
-            ></img>
-            {/* <Image src={songInfo.detail.img_url} width={50} height={50} /> */}
-            <div
-              className={style.names}
-              onClick={() => {
-                if (width > MINI_DISPLAY_SIZE) {
-                  setSelectedSongId(songInfo.id);
-                } else {
-                  showSelectIdSong(songInfo.id);
-                }
-              }}
-            >
-              <div className={style.name}>{title}</div>
-              <div className={style.artist_score}>
-                <div>{artist}</div>
-                <div>{songInfo.rank}点</div>
-              </div>
-            </div>
-            <IconButton
-              className={style.button}
-              style={{
-                color: like ? "rgb(250, 58, 96)" : "white",
-                stroke: like ? "none" : "#aaa",
-                cursor: "pointer",
-                width: "40px",
-                height: "40px",
-              }}
-              onClick={() => {
-                clickLikeList(songInfo.id);
-              }}
-            >
-              <FavoriteIcon />
-            </IconButton>
+          <Grid container>
+            <div className={style.images_names}>
+              <Grid item xs={3}>
+                <img
+                  src={img_url}
+                  style={{ width: "50px", height: "50px" }}
+                  className={style.image}
+                />
+              </Grid>
+              {/* <Image src={songInfo.detail.img_url} width={50} height={50} /> */}
+              <Grid item xs={8}>
+                <div
+                  className={style.names}
+                  onClick={() => {
+                    if (width > MINI_DISPLAY_SIZE) {
+                      setSelectedSongId(songInfo.id);
+                    } else {
+                      showSelectIdSong(songInfo.id);
+                    }
+                  }}
+                >
+                  <div className={style.name}>{title}</div>
+                  <div className={style.artist_score}>
+                    <div>{artist}</div>
+                    <div>{songInfo.rank}点</div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  className={style.button}
+                  style={{
+                    color: like ? "rgb(250, 58, 96)" : "white",
+                    stroke: like ? "none" : "#aaa",
+                    cursor: "pointer",
+                    // width: "40px",
+                    // height: "40px",
+                  }}
+                  onClick={() => {
+                    clickLikeList(songInfo.id);
+                  }}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Grid>
 
-            {/* TODO:ボタンにする
+              {/* TODO:ボタンにする
               <IconButton
                 size="medium"
                 aria-label="show 4 new mails"
@@ -82,14 +88,14 @@ export function SongListCard({
               >
                 <SearchIcon />
               </IconButton> */}
-          </div>
+            </div>
 
-          {/* <audio
+            {/* <audio
             controls
             id="demo"
             src={songInfo.detail.preview_url}
           ></audio> */}
-          {/* <div class="container">
+            {/* <div class="container">
             <div>
               <button id="play" class="btn btn-primary">
                 再生
@@ -97,7 +103,8 @@ export function SongListCard({
             </div>
           </div> */}
 
-          <audio controls src={preview_url}></audio>
+            <audio controls src={preview_url}></audio>
+          </Grid>
         </div>
       </ListItem>
     </List>

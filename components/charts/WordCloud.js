@@ -68,7 +68,7 @@ export default function WordCloudChart({ feature }) {
   }, [cloudData]);
 
   return (
-    <div className={style.title_chart} style={{ width: 380 }}>
+    <div className={style.title_chart}>
       <div className={style.title}>歌詞を特徴づけるワード</div>
       <div className="chart">
         {" "}
@@ -77,7 +77,6 @@ export default function WordCloudChart({ feature }) {
           style={{
             border: "solid 0.1px",
             borderColor: "#BBBBBB",
-            height: "300px",
           }}
         >
           {legend.map((l, i) => {

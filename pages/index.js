@@ -4,6 +4,7 @@ import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
+import { Grid } from "@material-ui/core";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -14,22 +15,26 @@ function DefaultSizeHome() {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "1rem",
+          paddingTop: "1rem",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
         }}
       >
-        <div style={{ width: "30%" }}>
-          <BuzzSongs
-            selectedSongId={selectedSongId}
-            setSelectedSongId={setSelectedSongId}
-          />
-        </div>
-        <div style={{ paddingLeft: "30px", width: "70%" }}>
-          <SongDetail
-            songId={selectedSongId}
-            hasData={true}
-            key={selectedSongId}
-          />
-        </div>
+        <Grid container>
+          <Grid item xs={4}>
+            <BuzzSongs
+              selectedSongId={selectedSongId}
+              setSelectedSongId={setSelectedSongId}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <SongDetail
+              songId={selectedSongId}
+              hasData={true}
+              key={selectedSongId}
+            />
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

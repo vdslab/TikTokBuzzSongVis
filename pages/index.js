@@ -5,7 +5,7 @@ import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
 import { Grid } from "@material-ui/core";
-import { style } from "d3";
+// import { style } from "d3";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -19,9 +19,10 @@ function DefaultSizeHome() {
           paddingTop: "1rem",
           paddingLeft: "1.5rem",
           paddingRight: "1.5rem",
+          paddingBottom: "2rem",
         }}
       >
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={4}>
             <BuzzSongs
               selectedSongId={selectedSongId}

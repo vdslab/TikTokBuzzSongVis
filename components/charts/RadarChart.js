@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import style from "./RadarChart.module.css";
+import { Grid } from "@material-ui/core";
 
 const featureFeature = [
   "acousticness",

@@ -18,14 +18,6 @@
   overflow-y: scroll;
 }
 
-.images_names {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-items: flex-start;
-  padding-bottom: 16px;
-}
-
 .names {
   display: inline-block;
   -webkit-transition: all 0.3s ease;

@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { selectedSong } from "../components/atoms";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
+import { Grid } from "@material-ui/core";
 
 function MiniSizeDisplay() {
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -21,8 +22,24 @@ function DefaultSizeDisplay() {
   return (
     <div>
       <Header />
-      <BookmarkList />
-      <SongDetail key={selectedSongId} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          paddingTop: "1rem",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+        }}
+      >
+        <Grid container>
+          <Grid item xs={4}>
+            <BookmarkList />
+          </Grid>
+          <Grid item xs={8}>
+            <SongDetail key={selectedSongId} />
+          </Grid>
+        </Grid>
+      </div>
     </div>
   );
 }

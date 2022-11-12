@@ -11,13 +11,13 @@ const legend = [
 
 export default function WordCloudChart({ feature }) {
   const margin = {
-    left: 5,
+    left: 10,
     right: 55,
     top: 5,
     bottom: 5,
   };
-  const contentWidth = 380;
-  const contentHeight = 330;
+  const contentWidth = 280;
+  const contentHeight = 300;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
@@ -70,14 +70,9 @@ export default function WordCloudChart({ feature }) {
   return (
     <div className={style.title_chart}>
       <div className={style.title}>歌詞を特徴づけるワード</div>
-      <div className="chart">
-        {" "}
+      <div className={style.contents}>
         <svg
           viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-          style={{
-            border: "solid 0.1px",
-            borderColor: "#BBBBBB",
-          }}
         >
           {legend.map((l, i) => {
             return (

@@ -3,20 +3,6 @@
   padding-top: 300px;
 }
 
-.listitem {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 32px;
-}
-
-.charts {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
 @media (max-width: 700px) {
   .audiocontrol {
     margin: 0 auto;

@@ -11,6 +11,7 @@ import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Grid } from "@material-ui/core";
+import BuzzDate from "./BuzzDate";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -36,7 +37,7 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ hasData }) {
+export default function SongDetail({ hasData, showDate }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -106,6 +107,7 @@ export default function SongDetail({ hasData }) {
         )}
         <audio controls src={songData.preview_url}></audio>
       </div>
+      {showDate && <BuzzDate />}
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
 
       <Grid container>
@@ -172,3 +174,8 @@ export default function SongDetail({ hasData }) {
     </div>
   );
 }
+
+SongDetail.defaultProps = {
+  hasData: false,
+  showDate: false,
+};

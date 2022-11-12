@@ -32,7 +32,7 @@ function DefaultSizeHomge() {
       <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
         <div>{songData && <BuzzPossibility songData={songData} />}</div>
         <div style={{ paddingLeft: "32px", width: "80%" }}>
-          <SongDetail hasData={false} key={selectedSongId} />
+          <SongDetail key={selectedSongId} />
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@ function MiniSizeHome() {
     <div>
       <Header />
       {songData && <BuzzPossibility songData={songData} />}
-      <SongDetail hasData={false} key={selectedSongId} />
+      <SongDetail key={selectedSongId} />
     </div>
   );
 }

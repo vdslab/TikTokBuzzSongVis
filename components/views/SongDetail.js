@@ -37,7 +37,7 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ hasData, showDate }) {
+export default function SongDetail({ hasData }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -107,7 +107,7 @@ export default function SongDetail({ hasData, showDate }) {
         )}
         <audio controls src={songData.preview_url}></audio>
       </div>
-      {showDate && <BuzzDate />}
+      <BuzzDate />
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
 
       <Grid container>
@@ -177,5 +177,4 @@ export default function SongDetail({ hasData, showDate }) {
 
 SongDetail.defaultProps = {
   hasData: false,
-  showDate: false,
 };

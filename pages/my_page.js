@@ -22,7 +22,7 @@ function DefaultSizeDisplay() {
     <div>
       <Header />
       <BookmarkList />
-      <SongDetail showDate={true} key={selectedSongId} />
+      <SongDetail key={selectedSongId} />
     </div>
   );
 }

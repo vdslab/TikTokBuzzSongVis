@@ -8,7 +8,6 @@ import { MINI_DISPLAY_SIZE } from "../components/common";
 import { Grid } from "@material-ui/core";
 
 function MiniSizeDisplay() {
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
   return (
     <div>
       <Header />

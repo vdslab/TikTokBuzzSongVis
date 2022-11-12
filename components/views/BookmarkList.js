@@ -6,6 +6,8 @@ import { bookmarkState } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import listStyle from "./BuzzSongs.module.css";
+import { Box } from "@material-ui/core";
 
 async function getSongBasicInfo(songId) {
   try {
@@ -55,25 +57,27 @@ export default function BookmarkList() {
     );
   }
   return (
-    <div>
-      お気に入り
-      {likeSongInfoList.map((song) => {
-        return (
-          <SongListCard
-            songInfo={song}
-            key={song.id}
-            like={inList(likeIdList, song.id)}
-            clickLikeList={() => {
-              const adjustedIdList = clickLikeList(likeIdList, song.id);
-              setLikeIdList(adjustedIdList);
-              const adjustedSongList = likeSongInfoList.filter(
-                (like) => like.id !== song.id
-              );
-              setLikeSongInfoList(adjustedSongList);
-            }}
-          />
-        );
-      })}
-    </div>
+    <Box component="main">
+      <div className={listStyle.title}>お気に入り</div>
+      <div className={listStyle.upper}>
+        {likeSongInfoList.map((song) => {
+          return (
+            <SongListCard
+              songInfo={song}
+              key={song.id}
+              like={inList(likeIdList, song.id)}
+              clickLikeList={() => {
+                const adjustedIdList = clickLikeList(likeIdList, song.id);
+                setLikeIdList(adjustedIdList);
+                const adjustedSongList = likeSongInfoList.filter(
+                  (like) => like.id !== song.id
+                );
+                setLikeSongInfoList(adjustedSongList);
+              }}
+            />
+          );
+        })}
+      </div>
+    </Box>
   );
 }

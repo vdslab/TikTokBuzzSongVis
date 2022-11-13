@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import BuzzPossibility from "../../components/views/BuzzPossibility";
 import { useWindowSize } from "../../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../../components/common";
+import { Grid } from "@material-ui/core";
 
 function DefaultSizeHomge() {
   const [songData, setSongData] = useState(null);
@@ -27,23 +28,34 @@ function DefaultSizeHomge() {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
-        <div>
-          {songData && (
-            <BuzzPossibility
-              songData={songData}
-              setSelectedSongId={setSelectedSongId}
-              key={id}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          paddingTop: "1rem",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "2rem",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            {songData && (
+              <BuzzPossibility
+                songData={songData}
+                setSelectedSongId={setSelectedSongId}
+                key={id}
+              />
+            )}
+          </Grid>
+          <Grid item xs={8}>
+            <SongDetail
+              songId={selectedSongId}
+              hasData={false}
+              key={selectedSongId}
             />
-          )}
-        </div>
-        <div style={{ paddingLeft: "32px", width: "80%" }}>
-          <SongDetail
-            songId={selectedSongId}
-            hasData={false}
-            key={selectedSongId}
-          />
-        </div>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

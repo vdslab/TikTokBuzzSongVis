@@ -6,26 +6,6 @@
   font-size: 20px;
 }
 
-.songlist {
-  display: inline-block;
-}
-
-.listitem {
-  display: inline-block;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 40px;
-  width: 500px;
-}
-
-.images_names {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-items: flex-start;
-  padding-bottom: 16px;
-}
-
 .names {
   padding-left: 16px;
   cursor: pointer;

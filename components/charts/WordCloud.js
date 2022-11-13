@@ -17,7 +17,7 @@ export default function WordCloudChart({ feature }) {
     bottom: 5,
   };
   const contentWidth = 280;
-  const contentHeight = 300;
+  const contentHeight = 280;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;

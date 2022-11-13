@@ -99,7 +99,7 @@ function MiniSizeHome() {
 }
 
 export default function Home() {
-  const { height, width } = useWindowSize();
+  const { width } = useWindowSize();
   if (width > MINI_DISPLAY_SIZE) {
     return <DefaultSizeHomge />;
   } else {

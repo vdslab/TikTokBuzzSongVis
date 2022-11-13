@@ -12,7 +12,7 @@ export function SongListCard({
   clickLikeList,
   like,
 }) {
-  const { height, width } = useWindowSize();
+  const { width } = useWindowSize();
   const router = useRouter();
   //TODO:返ってくるデータの形を同じにしておきたい
   const title = songInfo.detail ? songInfo.detail.title : songInfo.title;

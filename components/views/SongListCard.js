@@ -11,7 +11,7 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 
-function getScoreIcon(score) {
+export function getScoreIcon(score) {
   if (score === 100) {
     return <RadioButtonCheckedIcon />;
   } else if (score === 66) {

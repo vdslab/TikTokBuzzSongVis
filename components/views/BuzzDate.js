@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../atoms";
+import { getScoreIcon } from "./SongListCard";
+import style from "./BuzzDate.module.css";
 
 async function getSongBuzzDate(songId) {
   const dateReq = await fetch("/api/song_buzz_date", {
@@ -24,14 +26,18 @@ export default function BuzzDate() {
 
   return (
     <div>
+      <div className={style.title}>ピックアップ履歴</div>
       {dateList.length > 0 ? (
-        dateList.map((data) => {
-          return (
-            <div key={data.date}>
-              {data.date} スコア：{data.rank}
-            </div>
-          );
-        })
+        <div className={style.date_rank_list}>
+          {dateList.map((data) => {
+            return (
+              <div key={data.date} className={style.date}>
+                {data.date}
+                <div className={style.rank}>{getScoreIcon(data.rank)}</div>
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div>この曲はピックアップされたことはありません</div>
       )}

@@ -93,67 +93,33 @@ export default function SearchSongs(props) {
               <List key={song.id} className={style.songlist}>
                 <ListItem>
                   <div className={style.listitem}>
-                    <Grid container>
-                      <Grid container spacing={2}>
-                        <Grid item xs={3} md={3}>
-                          <Player
-                            audioUrl={song.preview_url}
-                            id={song.id}
-                            imgUrl={song.album.images[0].url}
-                            size={60}
-                          />
-                        </Grid>
-                        <Grid item xs={9} md={9} container spacing={1}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={3} md={3}>
+                        <Player
+                          audioUrl={song.preview_url}
+                          id={song.id}
+                          imgUrl={song.album.images[0].url}
+                          size={60}
+                        />
+                      </Grid>
+                      <Grid item xs={9} md={9} container spacing={1}>
+                        <Grid item xs container direction="column" spacing={2}>
                           <Grid
                             item
                             xs
-                            container
-                            direction="column"
-                            spacing={2}
+                            onClick={() => {
+                              changeSelectId(song.id);
+                            }}
+                            className={style.names}
                           >
-                            <Grid
-                              item
-                              xs
-                              onClick={() => {
-                                changeSelectId(song.id);
-                              }}
-                              className={style.names}
-                            >
-                              <Typography variant="subtitle1" component="div">
-                                {song.name}
-                              </Typography>
-                              <Typography variant="subtitle2" gutterBottom>
-                                {song.artists[0].name}
-                              </Typography>
-                            </Grid>
+                            <Typography variant="subtitle1" component="div">
+                              {song.name}
+                            </Typography>
+                            <Typography variant="subtitle2" gutterBottom>
+                              {song.artists[0].name}
+                            </Typography>
                           </Grid>
                         </Grid>
-                        {/* <Grid item xs={2} md={2}>
-                      <IconButton
-                        style={{
-                          color: like ? "rgb(250, 58, 96)" : "white",
-                          stroke: like ? "none" : "#aaa",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          clickLikeList(songInfo.id);
-                        }}
-                      >
-                        <FavoriteIcon />
-                      </IconButton>
-                    </Grid> */}
-                      </Grid>
-
-                      <Grid item xs={12} md={12}>
-                        {/* <audio
-                          controls
-                          src={song.preview_url}
-                          style={{
-                            paddingTop: "12px",
-                            margin: "0 auto",
-                            width: "250px",
-                          }}
-                        ></audio> */}
                       </Grid>
                     </Grid>
                   </div>

@@ -11,6 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import style from "./SearchSongs.module.css";
+import { Player } from "../Player";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
@@ -95,19 +96,11 @@ export default function SearchSongs(props) {
                     <Grid container>
                       <Grid container spacing={2}>
                         <Grid item xs={3} md={3}>
-                          <img
-                            src={
-                              song.album.images[0].url
-                                ? song.album.images[0].url
-                                : "/images/no_image.png"
-                            }
-                            style={{
-                              margin: "auto",
-                              display: "block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                            }}
-                            alt=""
+                          <Player
+                            audioUrl={song.preview_url}
+                            id={song.id}
+                            imgUrl={song.album.images[0].url}
+                            size={60}
                           />
                         </Grid>
                         <Grid item xs={9} md={9} container spacing={1}>
@@ -152,7 +145,7 @@ export default function SearchSongs(props) {
                       </Grid>
 
                       <Grid item xs={12} md={12}>
-                        <audio
+                        {/* <audio
                           controls
                           src={song.preview_url}
                           style={{
@@ -160,7 +153,7 @@ export default function SearchSongs(props) {
                             margin: "0 auto",
                             width: "250px",
                           }}
-                        ></audio>
+                        ></audio> */}
                       </Grid>
                     </Grid>
                   </div>

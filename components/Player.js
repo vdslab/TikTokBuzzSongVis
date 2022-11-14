@@ -33,7 +33,7 @@ export function Player({ audioUrl, id, imgUrl, size }) {
       >
         <img
           src={imgUrl ? imgUrl : "/images/no_image.png"}
-          style={{ width: "100px" }}
+          style={{ width: `${size}px` }}
         />
         <div className={style.control}>
           <audio id={`bgm${id}`} src={audioUrl} />

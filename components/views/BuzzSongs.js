@@ -8,10 +8,11 @@ import { IconButton } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../atoms";
 import SongList from "./SongList";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function BuzzSongs() {
   const [date, setDate] = useState([]);
-  const [buzzSongList, setBuzzSongList] = useState([]);
+  const [buzzSongList, setBuzzSongList] = useState(null);
   const [priorityFeature, setPriorityFeature] = useState([]);
   const [selectedDateIdx, setselectedDateIdx] = useState(0);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -58,41 +59,45 @@ export default function BuzzSongs() {
 
   return (
     <Box component="main">
-      {buzzSongList.length > 0 && (
-        <div className={style.title}>ピックアップ</div>
-      )}
-      <div className={style.date_select}>
-        <IconButton
-          size="medium"
-          color="inherit"
-          onClick={() => {
-            setselectedDateIdx(selectedDateIdx + 1);
-          }}
-          disabled={selectedDateIdx === date.length - 1}
-        >
-          <ArrowLeftIcon />
-        </IconButton>
-        {date[selectedDateIdx]}
-        <IconButton
-          size="medium"
-          color="inherit"
-          onClick={() => {
-            setselectedDateIdx(selectedDateIdx - 1);
-          }}
-          disabled={selectedDateIdx === 0}
-        >
-          <ArrowRightIcon />
-        </IconButton>
-      </div>
+      <div className={style.title}>ピックアップ</div>
+      {buzzSongList ? (
+        <div>
+          <div className={style.date_select}>
+            <IconButton
+              size="medium"
+              color="inherit"
+              onClick={() => {
+                setselectedDateIdx(selectedDateIdx + 1);
+              }}
+              disabled={selectedDateIdx === date.length - 1}
+            >
+              <ArrowLeftIcon />
+            </IconButton>
+            {date[selectedDateIdx]}
+            <IconButton
+              size="medium"
+              color="inherit"
+              onClick={() => {
+                setselectedDateIdx(selectedDateIdx - 1);
+              }}
+              disabled={selectedDateIdx === 0}
+            >
+              <ArrowRightIcon />
+            </IconButton>
+          </div>
 
-      <SongList songList={buzzSongList} />
+          <SongList songList={buzzSongList} />
 
-      {buzzSongList.length > 0 && (
-        <div className={style.parallel}>
-          <ParallelCoordinates
-            songList={buzzSongList}
-            priorityFeature={priorityFeature}
-          />
+          <div className={style.parallel}>
+            <ParallelCoordinates
+              songList={buzzSongList}
+              priorityFeature={priorityFeature}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className={style.loading}>
+          <CircularProgress />
         </div>
       )}
     </Box>

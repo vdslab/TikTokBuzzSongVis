@@ -65,8 +65,11 @@ export default function BookmarkList() {
 
   if (likeSongInfoList === null) {
     return (
-      <div className={style.loading}>
-        <CircularProgress />
+      <div>
+        <div className={listStyle.title}>お気に入り</div>
+        <div className={style.loading}>
+          <CircularProgress />
+        </div>
       </div>
     );
   }

@@ -5,14 +5,12 @@ import { useWindowSize } from "../hooks/getWindwSize";
 import { useRouter } from "next/router";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { selectedSong } from "../atoms";
+import { useRecoilState } from "recoil";
 
-export function SongListCard({
-  songInfo,
-  setSelectedSongId,
-  clickLikeList,
-  like,
-}) {
-  const { width } = useWindowSize();
+export function SongListCard({ songInfo, clickLikeList, like }) {
+  const { height, width } = useWindowSize();
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
   const router = useRouter();
   //TODO:返ってくるデータの形を同じにしておきたい
   const title = songInfo.detail ? songInfo.detail.title : songInfo.title;

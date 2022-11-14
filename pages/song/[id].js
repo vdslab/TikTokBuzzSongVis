@@ -6,12 +6,14 @@ import BuzzPossibility from "../../components/views/BuzzPossibility";
 import { useWindowSize } from "../../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../../components/common";
 import { Grid } from "@material-ui/core";
+import { useRecoilState } from "recoil";
+import { selectedSong } from "../../components/atoms";
 
 function DefaultSizeHomge() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();
   const id = router.query.id;
-  const [selectedSongId, setSelectedSongId] = useState(null);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -40,20 +42,10 @@ function DefaultSizeHomge() {
       >
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            {songData && (
-              <BuzzPossibility
-                songData={songData}
-                setSelectedSongId={setSelectedSongId}
-                key={id}
-              />
-            )}
+            {songData && <BuzzPossibility songData={songData} />}
           </Grid>
           <Grid item xs={8}>
-            <SongDetail
-              songId={selectedSongId}
-              hasData={false}
-              key={selectedSongId}
-            />
+            <SongDetail key={selectedSongId} />
           </Grid>
         </Grid>
       </div>
@@ -65,7 +57,7 @@ function MiniSizeHome() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();
   const id = router.query.id;
-  const [selectedSongId, setSelectedSongId] = useState(null);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -82,18 +74,8 @@ function MiniSizeHome() {
   return (
     <div>
       <Header />
-      {songData && (
-        <BuzzPossibility
-          songData={songData}
-          setSelectedSongId={setSelectedSongId}
-          key={id}
-        />
-      )}
-      <SongDetail
-        songId={selectedSongId}
-        hasData={false}
-        key={selectedSongId}
-      />
+      {songData && <BuzzPossibility songData={songData} />}
+      <SongDetail key={selectedSongId} />
     </div>
   );
 }

@@ -6,11 +6,12 @@ import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
-import { bookmarkState } from "../atoms";
+import { bookmarkState, selectedSong } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Grid, Typography } from "@material-ui/core";
+import BuzzDate from "./BuzzDate";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -36,23 +37,24 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ songId, hasData }) {
-  const [songData, setSongData] = useState();
+export default function SongDetail({ hasData }) {
+  const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
-      if (songId) {
+      if (selectedSongId) {
         if (hasData) {
-          const data = await getDbSongData(songId);
+          const data = await getDbSongData(selectedSongId);
           setSongData(data);
         } else {
-          const data = await getSongData(songId);
+          const data = await getSongData(selectedSongId);
           setSongData(data);
         }
       }
     })();
-  }, [songId, hasData]);
+  }, [selectedSongId, hasData]);
 
   useEffect(() => {
     const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
@@ -123,6 +125,7 @@ export default function SongDetail({ songId, hasData }) {
             src={songData.preview_url}
             className={style.audiocontrol}
           ></audio>
+          <BuzzDate />
         </Grid>
       )}
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
@@ -191,3 +194,7 @@ export default function SongDetail({ songId, hasData }) {
     </div>
   );
 }
+
+SongDetail.defaultProps = {
+  hasData: false,
+};

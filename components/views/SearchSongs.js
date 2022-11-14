@@ -89,7 +89,7 @@ export default function SearchSongs(props) {
         {songList.map((song) => {
           return (
             // TODO:SongListCartと共通化
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} key={song.id}>
               <List key={song.id} className={style.songlist}>
                 <ListItem>
                   <div className={style.listitem}>

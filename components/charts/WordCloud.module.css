@@ -4,8 +4,19 @@
 }
 
 .contents {
-  height: 300px;
+  padding:2px;
   position: relative;
   width: 100%;
   border: 0.1px solid rgb(187, 187, 187);
+}
+
+.wordcloud{
+  height:100%;
+}
+
+
+@media (max-width: 700px) {
+  .contents {
+    height: 200px;
+  }
 }

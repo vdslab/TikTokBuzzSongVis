@@ -84,7 +84,7 @@ export default function WordCloudChart({ feature }) {
   }, [cloudData, size]);
 
   return (
-    <div className={style.title_chart} ref={wrapperRef}>
+    <div className={style.wordcloud} ref={wrapperRef}>
       <div className={style.title}>歌詞を特徴づけるワード</div>
       <div className={style.contents}>
         <svg

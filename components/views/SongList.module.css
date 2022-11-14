@@ -1,0 +1,15 @@
+.song_list {
+    overflow-y: auto;
+    height: 480px;
+}
+
+
+@media (max-width: 700px) {
+    .song_list {
+        overflow: hidden;   
+        height:initial;    
+    }
+    .show_list{
+        text-align: center;
+    }
+}

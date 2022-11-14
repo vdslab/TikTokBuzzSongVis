@@ -57,9 +57,9 @@ export default function BookmarkList() {
           const song = await getSongBasicInfo(id);
           songInfoList.push(song);
         }
+        setSelectedSongId(songInfoList[0].id);
       }
       setLikeSongInfoList(songInfoList);
-      setSelectedSongId(songInfoList[0].id);
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 
@@ -76,24 +76,28 @@ export default function BookmarkList() {
       <div className={listStyle.title}>お気に入り</div>
       <div className={songListStyle.song_list}>
         {/* TODO:SongListと共通化 */}
-        {getShowList(likeSongInfoList, isShortList).map((song) => {
-          return (
-            <SongListCard
-              songInfo={song}
-              key={song.id}
-              like={inList(likeIdList, song.id)}
-              showScore={false}
-              clickLikeList={() => {
-                const adjustedIdList = clickLikeList(likeIdList, song.id);
-                setLikeIdList(adjustedIdList);
-                const adjustedSongList = likeSongInfoList.filter(
-                  (like) => like.id !== song.id
-                );
-                setLikeSongInfoList(adjustedSongList);
-              }}
-            />
-          );
-        })}
+        {likeSongInfoList.length === 0 ? (
+          <div>登録されていません。</div>
+        ) : (
+          getShowList(likeSongInfoList, isShortList).map((song) => {
+            return (
+              <SongListCard
+                songInfo={song}
+                key={song.id}
+                like={inList(likeIdList, song.id)}
+                showScore={false}
+                clickLikeList={() => {
+                  const adjustedIdList = clickLikeList(likeIdList, song.id);
+                  setLikeIdList(adjustedIdList);
+                  const adjustedSongList = likeSongInfoList.filter(
+                    (like) => like.id !== song.id
+                  );
+                  setLikeSongInfoList(adjustedSongList);
+                }}
+              />
+            );
+          })
+        )}
         {width <= MINI_DISPLAY_SIZE && (
           <div
             className={songListStyle.show_list}

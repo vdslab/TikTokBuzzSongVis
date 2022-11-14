@@ -14,6 +14,7 @@ import { Grid, Typography } from "@material-ui/core";
 import BuzzDate from "./BuzzDate";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
+import { Player } from "../Player";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -99,6 +100,12 @@ export default function SongDetail({ hasData }) {
                   }}
                   alt=""
                 />
+                <Player
+                  audioUrl={songData.preview_url}
+                  id={songData.id}
+                  imgUrl={songData.img_url}
+                />
+
                 <div style={{ paddingLeft: "10px" }}>
                   <Grid xs container direction="column">
                     <Grid item xs>

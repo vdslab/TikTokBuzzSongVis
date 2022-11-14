@@ -35,7 +35,7 @@ function DefaultSizeDisplay() {
             <BookmarkList />
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={selectedSongId} />
+            {selectedSongId && <SongDetail key={selectedSongId} />}
           </Grid>
         </Grid>
       </div>

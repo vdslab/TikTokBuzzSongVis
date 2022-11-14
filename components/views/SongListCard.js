@@ -7,18 +7,18 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { selectedSong } from "../atoms";
 import { useRecoilState } from "recoil";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 import { Player } from "../Player";
+import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
+import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 
 export function getScoreIcon(score) {
   if (score === 100) {
-    return <RadioButtonCheckedIcon />;
+    return <SentimentVerySatisfiedOutlinedIcon />;
   } else if (score === 66) {
-    return <RadioButtonUncheckedIcon />;
+    return <SentimentSatisfiedOutlinedIcon />;
   }
-  return <ChangeHistoryIcon />;
+  return <SentimentSatisfiedIcon />;
 }
 
 export function SongListCard({ songInfo, clickLikeList, like, showScore }) {

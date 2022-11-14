@@ -86,7 +86,9 @@ export default function SongDetail({ hasData }) {
           >
             <Grid item xs={3} md={1}>
               <img
-                src={songData.img_url}
+                src={
+                  songData.img_url ? songData.img_url : "/images/no_image.png"
+                }
                 style={{
                   margin: "auto",
                   display: "block",
@@ -134,7 +136,7 @@ export default function SongDetail({ hasData }) {
             ></audio>
           </Grid>
           <Grid item xs={12} md={3}>
-            <BuzzDate />
+            {/* <BuzzDate /> */}
           </Grid>
         </Grid>
       )}

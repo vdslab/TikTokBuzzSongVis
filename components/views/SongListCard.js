@@ -45,7 +45,7 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
             <Grid container spacing={2}>
               <Grid item xs={2} md={2}>
                 <img
-                  src={img_url}
+                  src={img_url ? img_url : "/images/no_image.png"}
                   style={{
                     margin: "auto",
                     display: "block",

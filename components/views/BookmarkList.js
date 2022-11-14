@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SongListCard } from "./SongListCard";
 import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
-import { bookmarkState } from "../atoms";
+import { bookmarkState, selectedSong } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -31,6 +31,7 @@ async function getSongBasicInfo(songId) {
 export default function BookmarkList() {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
+  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -46,6 +47,7 @@ export default function BookmarkList() {
         }
       }
       setLikeSongInfoList(songInfoList);
+      setSelectedSongId(songInfoList[0].id);
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 

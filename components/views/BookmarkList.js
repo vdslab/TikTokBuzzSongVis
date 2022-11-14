@@ -62,6 +62,7 @@ export default function BookmarkList() {
     <Box component="main">
       <div className={listStyle.title}>お気に入り</div>
       <div className={listStyle.upper}>
+        {/* TODO:SongListと共通化 */}
         {likeSongInfoList.map((song) => {
           return (
             <SongListCard

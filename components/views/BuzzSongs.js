@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import { Box } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import { ParallelCoordinates } from "../charts/ParallelCoordinates";
-import { SongListCard } from "./SongListCard";
-import { localStorageKey } from "../common";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { IconButton } from "@mui/material";
 import { useRecoilState } from "recoil";
-import { bookmarkState, selectedSong } from "../atoms";
-import { clickLikeList, inList } from "../hooks/bookMarkHook";
+import { selectedSong } from "../atoms";
+import SongList from "./SongList";
 
 export default function BuzzSongs() {
-  const [likeList, setLikeList] = useRecoilState(bookmarkState);
+  // const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
   const [priorityFeature, setPriorityFeature] = useState([]);
@@ -26,15 +24,6 @@ export default function BuzzSongs() {
       setDate(data);
     })();
   }, []);
-
-  //TODO:ここも共通化したい
-  useEffect(() => {
-    const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
-    if (list) {
-      const parsedList = JSON.parse(list);
-      setLikeList(parsedList);
-    }
-  }, [setLikeList]);
 
   useEffect(() => {
     (async () => {
@@ -97,19 +86,7 @@ export default function BuzzSongs() {
         </IconButton>
       </div>
       <div className={style.upper}>
-        {buzzSongList.map((data, idx) => {
-          return (
-            <SongListCard
-              songInfo={data}
-              key={idx}
-              clickLikeList={() => {
-                const adjustedList = clickLikeList(likeList, data.id);
-                setLikeList(adjustedList);
-              }}
-              like={inList(likeList, data.id)}
-            />
-          );
-        })}
+        <SongList songList={buzzSongList} />
       </div>
 
       {buzzSongList.length > 0 && (

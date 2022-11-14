@@ -5,7 +5,6 @@ export function useResize(wrapperRef) {
     width: 0,
     height: 0,
   });
-  console.log("wrapperRef", wrapperRef);
   useEffect(() => {
     const element = wrapperRef.current;
     const observer = new ResizeObserver(() => {

@@ -14,6 +14,12 @@
   height:100%;
 }
 
+@media (max-width: 960px) {
+  .contents {
+    height: 300px;
+  }
+}
+
 
 @media (max-width: 700px) {
   .contents {

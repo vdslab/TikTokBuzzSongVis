@@ -41,7 +41,6 @@ export default function WordCloudChart({ feature }) {
 
   const chart = useMemo(() => {
     const { width: displayWidth, height: displayHeight } = size;
-    console.log(displayWidth, displayHeight);
 
     const contentWidth = displayWidth;
     const contentHeight = displayHeight;

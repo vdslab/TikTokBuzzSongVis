@@ -136,7 +136,7 @@ export default function SongDetail({ hasData }) {
             ></audio>
           </Grid>
           <Grid item xs={12} md={3}>
-            {/* <BuzzDate /> */}
+            <BuzzDate />
           </Grid>
         </Grid>
       )}

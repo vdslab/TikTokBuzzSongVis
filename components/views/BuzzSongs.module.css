@@ -13,10 +13,10 @@
   overflow-y: scroll;
 }
 
-.listitem {
-  display: inline;
-  overflow-y: scroll;
-}
+/* .listitem {
+   display: inline; 
+   overflow-y: scroll; 
+} */
 
 .names {
   display: inline-block;

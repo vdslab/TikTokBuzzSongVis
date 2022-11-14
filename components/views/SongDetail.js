@@ -75,57 +75,67 @@ export default function SongDetail({ hasData }) {
   return (
     <div style={{ padding: "1rem" }}>
       {songData && (
-        //アイコン、曲名、アーティスト名、いいねボタン、オーディオコントロール
-        <Grid container spacing={2} style={{ paddingBottom: "16px" }}>
-          <Grid item xs={3} md={1}>
-            <img
-              src={songData.img_url}
-              style={{
-                margin: "auto",
-                display: "block",
-                maxWidth: "100%",
-                maxHeight: "100%",
-              }}
-              alt=""
-            />
-          </Grid>
-          <Grid item xs={7} md={9} container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography variant="h6" component="div">
-                  {songData.title}
-                </Typography>
-                <Typography variant="subtitle" gutterBottom>
-                  {songData.artist}
-                </Typography>
+        <Grid container>
+          <Grid
+            container
+            item
+            spacing={2}
+            style={{ paddingBottom: "16px" }}
+            xs={12}
+            md={9}
+          >
+            <Grid item xs={3} md={1}>
+              <img
+                src={songData.img_url}
+                style={{
+                  margin: "auto",
+                  display: "block",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                }}
+                alt=""
+              />
+            </Grid>
+            <Grid item xs={7} md={9} container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography variant="h6" component="div">
+                    {songData.title}
+                  </Typography>
+                  <Typography variant="subtitle" gutterBottom>
+                    {songData.artist}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={2} md={2}>
+              <Typography variant="subtitle1" component="div">
+                <IconButton
+                  style={{
+                    color: inList(likeList, songData.id)
+                      ? "rgb(250, 58, 96)"
+                      : "white",
+                    stroke: inList(likeList, songData.id) ? "none" : "#aaa",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    const adjustedList = clickLikeList(likeList, songData.id);
+                    setLikeList(adjustedList);
+                  }}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Typography>
+            </Grid>
+            <audio
+              controls
+              src={songData.preview_url}
+              className={style.audiocontrol}
+            ></audio>
           </Grid>
-          <Grid item xs={2} md={2}>
-            <Typography variant="subtitle1" component="div">
-              <IconButton
-                style={{
-                  color: inList(likeList, songData.id)
-                    ? "rgb(250, 58, 96)"
-                    : "white",
-                  stroke: inList(likeList, songData.id) ? "none" : "#aaa",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  const adjustedList = clickLikeList(likeList, songData.id);
-                  setLikeList(adjustedList);
-                }}
-              >
-                <FavoriteIcon />
-              </IconButton>
-            </Typography>
+          <Grid item xs={12} md={3}>
+            <BuzzDate />
           </Grid>
-          <audio
-            controls
-            src={songData.preview_url}
-            className={style.audiocontrol}
-          ></audio>
-          <BuzzDate />
         </Grid>
       )}
       {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}

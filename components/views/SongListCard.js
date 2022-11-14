@@ -7,8 +7,20 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { selectedSong } from "../atoms";
 import { useRecoilState } from "recoil";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 
-export function SongListCard({ songInfo, clickLikeList, like }) {
+export function getScoreIcon(score) {
+  if (score === 100) {
+    return <RadioButtonCheckedIcon />;
+  } else if (score === 66) {
+    return <RadioButtonUncheckedIcon />;
+  }
+  return <ChangeHistoryIcon />;
+}
+
+export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
   const { height, width } = useWindowSize();
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
   const router = useRouter();
@@ -79,6 +91,11 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
                 >
                   <FavoriteIcon />
                 </IconButton>
+                {showScore && (
+                  <div style={{ paddingLeft: "8px" }}>
+                    {getScoreIcon(songInfo.rank)}
+                  </div>
+                )}
               </Grid>
             </Grid>
 
@@ -118,3 +135,7 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
     </List>
   );
 }
+
+SongListCard.defaultProps = {
+  showScore: true,
+};

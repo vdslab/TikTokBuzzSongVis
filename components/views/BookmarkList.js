@@ -66,6 +66,7 @@ export default function BookmarkList() {
               songInfo={song}
               key={song.id}
               like={inList(likeIdList, song.id)}
+              showScore={false}
               clickLikeList={() => {
                 const adjustedIdList = clickLikeList(likeIdList, song.id);
                 setLikeIdList(adjustedIdList);

@@ -51,15 +51,14 @@
 .date_select {
   text-align: center;
 }
-/* .buttons {
-  padding: 0;
-  border: none;
-  background: transparent;
-}
 
- button img {
-  display: block;
-} */
+.loading{
+  height:500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (max-width: 700px) {
   .title {

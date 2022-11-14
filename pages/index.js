@@ -7,7 +7,6 @@ import { MINI_DISPLAY_SIZE } from "../components/common";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../components/atoms";
 import { Grid } from "@material-ui/core";
-// import { style } from "d3";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);

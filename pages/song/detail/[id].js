@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <SongDetail hasData={false} key={id} />
+      <SongDetail key={id} />
     </div>
   );
 }

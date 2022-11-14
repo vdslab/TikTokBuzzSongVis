@@ -7,8 +7,5 @@ export const bookmarkState = atom({
 
 export const selectedSong = atom({
   key: "selectedSong",
-  default: {
-    id: null,
-    info: null,
-  },
+  default: null,
 });

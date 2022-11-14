@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
+import { Player } from "../Player";
 
 export function getScoreIcon(score) {
   if (score === 100) {
@@ -45,13 +46,11 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
             <Grid item container>
               <Grid item xs={10} md={10}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={img_url ? img_url : "/images/no_image.png"}
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                    }}
-                    alt=""
+                  <Player
+                    audioUrl={preview_url}
+                    id={songInfo.id}
+                    imgUrl={img_url}
+                    size={70}
                   />
                   <div style={{ paddingLeft: "16px" }}>
                     <Grid xs container direction="column">
@@ -103,12 +102,6 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                 {showScore && <div>{getScoreIcon(songInfo.rank)}</div>}
               </Grid>
             </Grid>
-
-            <audio
-              controls
-              src={preview_url}
-              style={{ paddingTop: "12px", margin: "0 auto" }}
-            ></audio>
           </Grid>
         </div>
       </ListItem>

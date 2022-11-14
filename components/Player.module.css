@@ -1,0 +1,21 @@
+.control{
+    position: absolute;
+    height: 100%;
+    width:100%;
+    left: 0px;
+    top: 0px
+}
+
+.button{
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.button:hover{
+    background-color: #d9d9d9a5;
+}

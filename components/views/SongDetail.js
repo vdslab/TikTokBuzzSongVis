@@ -14,6 +14,7 @@ import { Grid, Typography } from "@material-ui/core";
 import BuzzDate from "./BuzzDate";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
+import { Player } from "../Player";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -89,16 +90,13 @@ export default function SongDetail({ hasData }) {
           >
             <Grid item xs={10} md={10}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src={
-                    songData.img_url ? songData.img_url : "/images/no_image.png"
-                  }
-                  style={{
-                    width: width < MINI_DISPLAY_SIZE ? "85px" : "100px",
-                    height: width < MINI_DISPLAY_SIZE ? "85px" : "100px",
-                  }}
-                  alt=""
+                <Player
+                  audioUrl={songData.preview_url}
+                  id={songData.id}
+                  imgUrl={songData.img_url}
+                  size={width < MINI_DISPLAY_SIZE ? 85 : 100}
                 />
+
                 <div style={{ paddingLeft: "10px" }}>
                   <Grid xs container direction="column">
                     <Grid item xs>
@@ -132,18 +130,12 @@ export default function SongDetail({ hasData }) {
                 </IconButton>
               </Typography>
             </Grid>
-            <audio
-              controls
-              src={songData.preview_url}
-              className={style.audiocontrol}
-            ></audio>
           </Grid>
           <Grid item xs={12} md={3}>
             <BuzzDate />
           </Grid>
         </Grid>
       )}
-      {/**TODO:ぬまけいお願いします：pc iphoneによって、縦横並びの調整 */}
 
       <Grid container>
         <Grid item xs={12} md={7}>

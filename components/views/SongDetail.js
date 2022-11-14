@@ -12,6 +12,8 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Grid, Typography } from "@material-ui/core";
 import BuzzDate from "./BuzzDate";
+import { MINI_DISPLAY_SIZE } from "../common";
+import { useWindowSize } from "../hooks/getWindwSize";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -41,6 +43,7 @@ export default function SongDetail({ hasData }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const { width } = useWindowSize();
 
   useEffect(() => {
     (async () => {
@@ -84,31 +87,31 @@ export default function SongDetail({ hasData }) {
             xs={12}
             md={9}
           >
-            <Grid item xs={3} md={1}>
-              <img
-                src={
-                  songData.img_url ? songData.img_url : "/images/no_image.png"
-                }
-                style={{
-                  margin: "auto",
-                  display: "block",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                }}
-                alt=""
-              />
-            </Grid>
-            <Grid item xs={7} md={9} container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <Typography variant="h6" component="div">
-                    {songData.title}
-                  </Typography>
-                  <Typography variant="subtitle" gutterBottom>
-                    {songData.artist}
-                  </Typography>
-                </Grid>
-              </Grid>
+            <Grid item xs={10} md={10}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src={
+                    songData.img_url ? songData.img_url : "/images/no_image.png"
+                  }
+                  style={{
+                    width: width < MINI_DISPLAY_SIZE ? "85px" : "100px",
+                    height: width < MINI_DISPLAY_SIZE ? "85px" : "100px",
+                  }}
+                  alt=""
+                />
+                <div style={{ paddingLeft: "10px" }}>
+                  <Grid xs container direction="column">
+                    <Grid item xs>
+                      <Typography variant="h6" component="div">
+                        {songData.title}
+                      </Typography>
+                      <Typography variant="subtitle" gutterBottom>
+                        {songData.artist}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </div>
+              </div>
             </Grid>
             <Grid item xs={2} md={2}>
               <Typography variant="subtitle1" component="div">

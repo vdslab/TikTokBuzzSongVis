@@ -41,42 +41,42 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
       <ListItem>
         <div className={style.listitem}>
           {/* TODO:Imageタグに置き換える */}
-          <Grid container>
-            <Grid container spacing={2}>
-              <Grid item xs={2} md={2}>
-                <img
-                  src={img_url ? img_url : "/images/no_image.png"}
-                  style={{
-                    margin: "auto",
-                    display: "block",
-                    maxWidth: "100%",
-                    maxHeight: "100%",
-                  }}
-                  alt=""
-                />
-              </Grid>
-              <Grid item xs={7} md={8} container>
-                <Grid item xs container direction="column" spacing={2}>
-                  <Grid
-                    item
-                    xs
-                    onClick={() => {
-                      if (width > MINI_DISPLAY_SIZE) {
-                        setSelectedSongId(songInfo.id);
-                      } else {
-                        showSelectIdSong(songInfo.id);
-                      }
+          <Grid container spacing={2}>
+            <Grid container>
+              <Grid item xs={10}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={img_url ? img_url : "/images/no_image.png"}
+                    style={{
+                      width: "70px",
+                      height: "70px",
                     }}
-                    className={style.names}
-                  >
-                    <Typography variant="subtitle1" component="div">
-                      {title}
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
-                      {artist}
-                    </Typography>
-                  </Grid>
-                </Grid>
+                    alt=""
+                  />
+                  <div style={{ paddingLeft: "10px" }}>
+                    <Grid xs container direction="column">
+                      <Grid
+                        item
+                        xs
+                        onClick={() => {
+                          if (width > MINI_DISPLAY_SIZE) {
+                            setSelectedSongId(songInfo.id);
+                          } else {
+                            showSelectIdSong(songInfo.id);
+                          }
+                        }}
+                        className={style.names}
+                      >
+                        <Typography variant="subtitle1" component="div">
+                          {title}
+                        </Typography>
+                        <Typography variant="subtitle2" gutterBottom>
+                          {artist}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </div>
               </Grid>
               <Grid item xs={2} md={2}>
                 <IconButton
@@ -98,31 +98,6 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                 )}
               </Grid>
             </Grid>
-
-            {/* TODO:ボタンにする
-              <IconButton
-                size="medium"
-                aria-label="show 4 new mails"
-                color="inherit"
-                onClick={() => {
-                  setIsOpenPopup(true);
-                }}
-              >
-                <SearchIcon />
-              </IconButton> */}
-
-            {/* <audio
-            controls
-            id="demo"
-            src={songInfo.detail.preview_url}
-          ></audio> */}
-            {/* <div class="container">
-            <div>
-              <button id="play" class="btn btn-primary">
-                再生
-              </button>
-            </div>
-          </div> */}
 
             <audio
               controls

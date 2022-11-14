@@ -2,7 +2,10 @@ import { SongListCard } from "./SongListCard";
 import { useRecoilState } from "recoil";
 import { bookmarkState } from "../atoms";
 import { localStorageKey } from "../common";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useWindowSize } from "../hooks/getWindwSize";
+import { MINI_DISPLAY_SIZE } from "../common";
+import style from "./SongList.module.css";
 
 export function clickLikeList(likeList, selectedId) {
   let adjustedList;
@@ -24,9 +27,20 @@ export function inList(list, id) {
   return list?.includes(id);
 }
 
-export default function SongList({ songList, showScore, clickLike }) {
+function getShowList(list, isShort) {
+  if (isShort) {
+    if (list.length <= 3) {
+      return list;
+    }
+    return list.slice(0, 3);
+  }
+  return list;
+}
+
+export default function SongList({ songList, showScore }) {
+  const { width } = useWindowSize();
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
-  const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
+  const [showMore, setShowMore] = useState(true);
 
   useEffect(() => {
     const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
@@ -37,8 +51,8 @@ export default function SongList({ songList, showScore, clickLike }) {
   }, [setLikeList]);
 
   return (
-    <div>
-      {songList.map((song) => {
+    <div className={style.song_list}>
+      {getShowList(songList, showMore).map((song) => {
         return (
           <SongListCard
             songInfo={song}
@@ -52,6 +66,11 @@ export default function SongList({ songList, showScore, clickLike }) {
           />
         );
       })}
+      {width <= MINI_DISPLAY_SIZE && (
+        <div className={style.show_list} onClick={() => setShowMore(!showMore)}>
+          {showMore ? "一部を表示 ▲" : "もっと見る ▼"}{" "}
+        </div>
+      )}
     </div>
   );
 }

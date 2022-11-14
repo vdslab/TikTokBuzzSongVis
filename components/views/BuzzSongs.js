@@ -10,7 +10,6 @@ import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 
 export default function BuzzSongs() {
-  // const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState([]);
   const [priorityFeature, setPriorityFeature] = useState([]);
@@ -85,9 +84,8 @@ export default function BuzzSongs() {
           <ArrowRightIcon />
         </IconButton>
       </div>
-      <div className={style.upper}>
-        <SongList songList={buzzSongList} />
-      </div>
+
+      <SongList songList={buzzSongList} />
 
       {buzzSongList.length > 0 && (
         <div className={style.parallel}>

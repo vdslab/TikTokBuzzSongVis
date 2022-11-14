@@ -8,6 +8,10 @@ import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import listStyle from "./BuzzSongs.module.css";
 import { Box } from "@material-ui/core";
+import { getShowList } from "./SongList";
+import { MINI_DISPLAY_SIZE } from "../common";
+import { useWindowSize } from "../hooks/getWindwSize";
+import songListStyle from "./SongList.module.css";
 
 async function getSongBasicInfo(songId) {
   try {
@@ -32,6 +36,14 @@ export default function BookmarkList() {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const [isShortList, setIsShortList] = useState(true);
+  const { width } = useWindowSize();
+
+  useEffect(() => {
+    if (width > MINI_DISPLAY_SIZE) {
+      setIsShortList(false);
+    }
+  }, [width]);
 
   useEffect(() => {
     (async () => {
@@ -58,12 +70,13 @@ export default function BookmarkList() {
       </div>
     );
   }
+
   return (
     <Box component="main">
       <div className={listStyle.title}>お気に入り</div>
-      <div className={listStyle.upper}>
+      <div className={songListStyle.song_list}>
         {/* TODO:SongListと共通化 */}
-        {likeSongInfoList.map((song) => {
+        {getShowList(likeSongInfoList, isShortList).map((song) => {
           return (
             <SongListCard
               songInfo={song}
@@ -81,6 +94,14 @@ export default function BookmarkList() {
             />
           );
         })}
+        {width <= MINI_DISPLAY_SIZE && (
+          <div
+            className={songListStyle.show_list}
+            onClick={() => setIsShortList(!isShortList)}
+          >
+            {isShortList ? "もっと見る ▼" : "一部を表示 ▲"}
+          </div>
+        )}
       </div>
     </Box>
   );

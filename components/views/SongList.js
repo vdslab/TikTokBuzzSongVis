@@ -27,12 +27,13 @@ export function inList(list, id) {
   return list?.includes(id);
 }
 
-function getShowList(list, isShort) {
+export function getShowList(list, isShort) {
+  const len = 4;
   if (isShort) {
-    if (list.length <= 3) {
+    if (list.length <= len) {
       return list;
     }
-    return list.slice(0, 3);
+    return list.slice(0, len);
   }
   return list;
 }
@@ -40,7 +41,13 @@ function getShowList(list, isShort) {
 export default function SongList({ songList, showScore }) {
   const { width } = useWindowSize();
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
-  const [showMore, setShowMore] = useState(true);
+  const [isShortList, setIsShortList] = useState(true);
+
+  useEffect(() => {
+    if (width > MINI_DISPLAY_SIZE) {
+      setIsShortList(false);
+    }
+  }, [width]);
 
   useEffect(() => {
     const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
@@ -52,7 +59,7 @@ export default function SongList({ songList, showScore }) {
 
   return (
     <div className={style.song_list}>
-      {getShowList(songList, showMore).map((song) => {
+      {getShowList(songList, isShortList).map((song) => {
         return (
           <SongListCard
             songInfo={song}
@@ -67,8 +74,11 @@ export default function SongList({ songList, showScore }) {
         );
       })}
       {width <= MINI_DISPLAY_SIZE && (
-        <div className={style.show_list} onClick={() => setShowMore(!showMore)}>
-          {showMore ? "一部を表示 ▲" : "もっと見る ▼"}{" "}
+        <div
+          className={style.show_list}
+          onClick={() => setIsShortList(!isShortList)}
+        >
+          {isShortList ? "もっと見る ▼" : "一部を表示 ▲"}
         </div>
       )}
     </div>

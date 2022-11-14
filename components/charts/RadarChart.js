@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import style from "./RadarChart.module.css";
+import { Grid } from "@material-ui/core";
 
 const featureFeature = [
   "acousticness",
@@ -36,13 +37,14 @@ function RaderChart({ feature }) {
   const r = 50;
 
   const margin = {
-    left: 50,
-    right: 10,
-    top: 30,
-    bottom: 10,
+    left: 55,
+    right: 0,
+    top: 25,
+    bottom: 5,
   };
-  const contentWidth = 300;
-  const contentHeight = 300;
+  //ここいじる
+  const contentWidth = 280;
+  const contentHeight = 230;
 
   const svgWidth = margin.left + margin.right + contentWidth;
   const svgHeight = margin.top + margin.bottom + contentHeight;
@@ -130,185 +132,190 @@ function RaderChart({ feature }) {
   }
 
   return (
-    <div className={style.title_chart}>
+    <div>
       <div className={style.title}>音楽特徴量</div>
       <div className={style.contents}>
-        <div className={style.detail}>
-          <div style={{ paddingRight: "0.75rem" }}>
-            テンポ：{Math.floor(feature.tempo)}
-          </div>
-          <div style={{ paddingRight: "0.75rem" }}>
-            拍子：{feature.time_signature}
-          </div>
-          <div>
-            調：{keyDictEng[feature.key]}
-            {feature?.mode == 0 ? "minor" : "major"}
-          </div>
-        </div>
-        <svg
-          viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
-        >
-          <g transform={`scale(1.9)`}>
-            {chart.perimeters.map((d, i) => {
-              return (
-                <g key={i}>
-                  <path
-                    fill="none"
-                    stroke="lightgray"
-                    d={d}
-                    strokeWidth="0.5"
-                  />
-                </g>
-              );
-            })}
-
-            {chart.perimetersPoint.map((p, i) => {
-              return (
-                <g key={i}>
-                  {!p.legend ? (
-                    <line
-                      x1={posX}
-                      y1={posY}
-                      x2={p.x}
-                      y2={p.y}
-                      id={p.name + " " + p.value}
-                      stroke="lightgray"
-                      strokeWidth="0.5"
-                      onMouseMove={(e) => {
-                        onHover(e);
-                      }}
-                      onMouseLeave={() => {
-                        setShow(false);
-                      }}
-                    />
-                  ) : (
-                    <g>
-                      {p.name !== "speechiness" ? (
-                        <text
-                          x={p.x}
-                          y={p.y}
-                          textAnchor="middle"
-                          dominantBaseline="central"
-                          fontSize="5"
-                          style={{ userSelect: "none" }}
-                        >
-                          {p.name}
-                        </text>
-                      ) : (
-                        <g>
-                          {p.name !== "speechiness" ? (
-                            <text
-                              x={p.x}
-                              y={p.y}
-                              textAnchor="middle"
-                              dominantBaseline="central"
-                              fontSize="5"
-                              style={{ userSelect: "none" }}
-                            >
-                              {p.name}
-                            </text>
-                          ) : (
-                            <text
-                              x={p.x + 10}
-                              y={p.y}
-                              textAnchor="middle"
-                              dominantBaseline="central"
-                              fontSize="5"
-                              style={{ userSelect: "none" }}
-                            >
-                              {p.name}
-                            </text>
-                          )}
-                        </g>
-                      )}
-                    </g>
-                  )}
-                </g>
-              );
-            })}
-            {chart.tick.map((t, i) => {
-              return (
-                <g key={i}>
-                  <text
-                    x={t.x}
-                    y={t.y}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fontSize="5"
-                    style={{ userSelect: "none" }}
-                  >
-                    {t.value}
-                  </text>
-                </g>
-              );
-            })}
-
-            <path
-              fill="#fed52c"
-              fillOpacity="0.5"
-              stroke="#fed52c"
-              strokeWidth="0.5"
-              d={chart.score}
-            />
-            {chart.scorePoint.map((p, i) => {
-              return (
-                <g key={i}>
-                  <circle
-                    className="test"
-                    id={p.name + " " + p.value}
-                    cx={p.x}
-                    cy={p.y}
-                    r={1.8}
-                    fill="white"
-                    fillOpacity={0.6}
-                    stroke="#fe932c"
-                    strokeWidth={0.5}
-                    onMouseMove={(e) => {
-                      onHover(e);
-                      changeInfo(p.name, p.value);
-                    }}
-                    onMouseLeave={() => {
-                      setShow(false);
-                    }}
-                  />
-                </g>
-              );
-            })}
-            <g>
-              {chart.scorePoint.map((p, i) => {
-                return (
-                  <g key={i}>
-                    {show && info.feature === p.name && (
-                      <g>
-                        <rect
-                          x={p.x - 23 / 2}
-                          y={p.y - 15}
-                          width="23"
-                          height="10"
-                          fill="#fffcf9"
-                          stroke="#fe932c"
-                          strokeWidth={0.5}
-                          fillOpacity={0.8}
+        <Grid container>
+          {/* レジェンド */}
+          <Grid item xs={2}>
+            <Grid item>テンポ：{Math.floor(feature.tempo)}</Grid>
+            <Grid item>拍子：{feature.time_signature}</Grid>
+            <Grid item>
+              調：{keyDictEng[feature.key]}
+              {feature?.mode == 0 ? "minor" : "major"}
+            </Grid>
+          </Grid>
+          {/* チャート */}
+          <Grid item xs={10}>
+            <div className={style.chart}>
+              <svg
+                viewBox={`${-margin.left} ${-margin.top} ${svgWidth} ${svgHeight}`}
+                className={style.content}
+              >
+                <g transform={`scale(2)`}>
+                  {chart.perimeters.map((d, i) => {
+                    return (
+                      <g key={i}>
+                        <path
+                          fill="none"
+                          stroke="lightgray"
+                          d={d}
+                          strokeWidth="0.5"
                         />
+                      </g>
+                    );
+                  })}
+
+                  {chart.perimetersPoint.map((p, i) => {
+                    return (
+                      <g key={i}>
+                        {!p.legend ? (
+                          <line
+                            x1={posX}
+                            y1={posY}
+                            x2={p.x}
+                            y2={p.y}
+                            id={p.name + " " + p.value}
+                            stroke="lightgray"
+                            strokeWidth="0.5"
+                            onMouseMove={(e) => {
+                              onHover(e);
+                            }}
+                            onMouseLeave={() => {
+                              setShow(false);
+                            }}
+                          />
+                        ) : (
+                          <g>
+                            {p.name !== "speechiness" ? (
+                              <text
+                                x={p.x}
+                                y={p.y}
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                fontSize="5"
+                                style={{ userSelect: "none" }}
+                              >
+                                {p.name}
+                              </text>
+                            ) : (
+                              <g>
+                                {p.name !== "speechiness" ? (
+                                  <text
+                                    x={p.x}
+                                    y={p.y}
+                                    textAnchor="middle"
+                                    dominantBaseline="central"
+                                    fontSize="5"
+                                    style={{ userSelect: "none" }}
+                                  >
+                                    {p.name}
+                                  </text>
+                                ) : (
+                                  <text
+                                    x={p.x + 10}
+                                    y={p.y}
+                                    textAnchor="middle"
+                                    dominantBaseline="central"
+                                    fontSize="5"
+                                    style={{ userSelect: "none" }}
+                                  >
+                                    {p.name}
+                                  </text>
+                                )}
+                              </g>
+                            )}
+                          </g>
+                        )}
+                      </g>
+                    );
+                  })}
+                  {chart.tick.map((t, i) => {
+                    return (
+                      <g key={i}>
                         <text
-                          id={p.name + " " + p.value}
-                          x={p.x}
-                          y={p.y - 10}
+                          x={t.x}
+                          y={t.y}
                           textAnchor="middle"
                           dominantBaseline="central"
                           fontSize="5"
                           style={{ userSelect: "none" }}
                         >
-                          {p.value}
+                          {t.value}
                         </text>
                       </g>
-                    )}
+                    );
+                  })}
+
+                  <path
+                    fill="#fed52c"
+                    fillOpacity="0.5"
+                    stroke="#fed52c"
+                    strokeWidth="0.5"
+                    d={chart.score}
+                  />
+                  {chart.scorePoint.map((p, i) => {
+                    return (
+                      <g key={i}>
+                        <circle
+                          className="test"
+                          id={p.name + " " + p.value}
+                          cx={p.x}
+                          cy={p.y}
+                          r={1.8}
+                          fill="white"
+                          fillOpacity={0.6}
+                          stroke="#fe932c"
+                          strokeWidth={0.5}
+                          onMouseMove={(e) => {
+                            onHover(e);
+                            changeInfo(p.name, p.value);
+                          }}
+                          onMouseLeave={() => {
+                            setShow(false);
+                          }}
+                        />
+                      </g>
+                    );
+                  })}
+                  <g>
+                    {chart.scorePoint.map((p, i) => {
+                      return (
+                        <g key={i}>
+                          {show && info.feature === p.name && (
+                            <g>
+                              <rect
+                                x={p.x - 23 / 2}
+                                y={p.y - 15}
+                                width="23"
+                                height="10"
+                                fill="#fffcf9"
+                                stroke="#fe932c"
+                                strokeWidth={0.5}
+                                fillOpacity={0.8}
+                              />
+                              <text
+                                id={p.name + " " + p.value}
+                                x={p.x}
+                                y={p.y - 10}
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                fontSize="5"
+                                style={{ userSelect: "none" }}
+                              >
+                                {p.value}
+                              </text>
+                            </g>
+                          )}
+                        </g>
+                      );
+                    })}
                   </g>
-                );
-              })}
-            </g>
-          </g>
-        </svg>
+                </g>
+              </svg>
+            </div>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

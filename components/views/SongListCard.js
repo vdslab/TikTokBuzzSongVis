@@ -1,4 +1,4 @@
-import { ListItem, List, Grid } from "@material-ui/core";
+import { ListItem, List, Grid, Typography } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
@@ -30,42 +30,48 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
         <div className={style.listitem}>
           {/* TODO:Imageタグに置き換える */}
           <Grid container>
-            <div className={style.images_names}>
-              <Grid item xs={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={2} md={2}>
                 <img
                   src={img_url}
-                  style={{ width: "50px", height: "50px" }}
-                  className={style.image}
+                  style={{
+                    margin: "auto",
+                    display: "block",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                  }}
+                  alt=""
                 />
               </Grid>
-              {/* <Image src={songInfo.detail.img_url} width={50} height={50} /> */}
-              <Grid item xs={8}>
-                <div
-                  className={style.names}
-                  onClick={() => {
-                    if (width > MINI_DISPLAY_SIZE) {
-                      setSelectedSongId(songInfo.id);
-                    } else {
-                      showSelectIdSong(songInfo.id);
-                    }
-                  }}
-                >
-                  <div className={style.name}>{title}</div>
-                  <div className={style.artist_score}>
-                    <div>{artist}</div>
-                    <div>{songInfo.rank}点</div>
-                  </div>
-                </div>
+              <Grid item xs={7} md={8} container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid
+                    item
+                    xs
+                    onClick={() => {
+                      if (width > MINI_DISPLAY_SIZE) {
+                        setSelectedSongId(songInfo.id);
+                      } else {
+                        showSelectIdSong(songInfo.id);
+                      }
+                    }}
+                    className={style.names}
+                  >
+                    <Typography variant="subtitle1" component="div">
+                      {title}
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>
+                      {artist}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2} md={2}>
                 <IconButton
-                  className={style.button}
                   style={{
                     color: like ? "rgb(250, 58, 96)" : "white",
                     stroke: like ? "none" : "#aaa",
                     cursor: "pointer",
-                    // width: "40px",
-                    // height: "40px",
                   }}
                   onClick={() => {
                     clickLikeList(songInfo.id);
@@ -74,8 +80,9 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
                   <FavoriteIcon />
                 </IconButton>
               </Grid>
+            </Grid>
 
-              {/* TODO:ボタンにする
+            {/* TODO:ボタンにする
               <IconButton
                 size="medium"
                 aria-label="show 4 new mails"
@@ -86,7 +93,6 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
               >
                 <SearchIcon />
               </IconButton> */}
-            </div>
 
             {/* <audio
             controls
@@ -101,7 +107,11 @@ export function SongListCard({ songInfo, clickLikeList, like }) {
             </div>
           </div> */}
 
-            <audio controls src={preview_url}></audio>
+            <audio
+              controls
+              src={preview_url}
+              style={{ paddingTop: "12px", margin: "0 auto" }}
+            ></audio>
           </Grid>
         </div>
       </ListItem>

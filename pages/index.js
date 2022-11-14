@@ -7,6 +7,7 @@ import { MINI_DISPLAY_SIZE } from "../components/common";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../components/atoms";
 import { Grid } from "@material-ui/core";
+// import { style } from "d3";
 
 function DefaultSizeHome() {
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -20,9 +21,10 @@ function DefaultSizeHome() {
           paddingTop: "1rem",
           paddingLeft: "1.5rem",
           paddingRight: "1.5rem",
+          paddingBottom: "2rem",
         }}
       >
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={4}>
             <BuzzSongs
               selectedSongId={selectedSongId}

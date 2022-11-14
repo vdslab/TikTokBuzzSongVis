@@ -1,51 +1,10 @@
-/* .listitem {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 64px;
-}
-
-.images_names {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-items: flex-start;
-  padding-bottom: 16px;
-} */
-
-/* .names {
-  padding-left: 16px;
-} */
-
 .loading {
   text-align: center;
   padding-top: 300px;
 }
 
-.listitem {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 32px;
-}
-
-.images_names {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-bottom: 16px;
-}
-
-.names {
-  display: flex;
-  font-size: 24px;
-  padding-left: 16px;
-}
-
-.charts {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+@media (max-width: 700px) {
+  .audiocontrol {
+    margin: 0 auto;
+  }
 }

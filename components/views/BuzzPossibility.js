@@ -45,7 +45,7 @@ export default function BuzzPossibility({ songData }) {
         </div>
       </div>
       <div style={{ paddingTop: "16px" }}>
-        <div>{songData.title}の類似曲</div>
+        <div style={{ paddingBottom: "16px" }}>{songData.title}の類似曲</div>
         <div className={style.upper}>
           {similarSongList.length > 0 ? (
             similarSongList.map((song, idx) => {

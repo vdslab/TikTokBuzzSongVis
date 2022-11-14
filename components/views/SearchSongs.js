@@ -96,7 +96,11 @@ export default function SearchSongs(props) {
                       <Grid container spacing={2}>
                         <Grid item xs={3} md={3}>
                           <img
-                            src={song.album.images[0].url}
+                            src={
+                              song.album.images[0].url
+                                ? song.album.images[0].url
+                                : "/images/no_image.png"
+                            }
                             style={{
                               margin: "auto",
                               display: "block",

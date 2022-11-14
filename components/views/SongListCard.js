@@ -38,12 +38,12 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
 
   return (
     <List>
-      <ListItem>
+      <ListItem style={{ display: "inherit" }}>
         <div className={style.listitem}>
           {/* TODO:Imageタグに置き換える */}
           <Grid container spacing={2}>
-            <Grid container>
-              <Grid item xs={10}>
+            <Grid item container>
+              <Grid item xs={10} md={10}>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
                     src={img_url ? img_url : "/images/no_image.png"}
@@ -53,7 +53,7 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                     }}
                     alt=""
                   />
-                  <div style={{ paddingLeft: "10px" }}>
+                  <div style={{ paddingLeft: "16px" }}>
                     <Grid xs container direction="column">
                       <Grid
                         item
@@ -78,7 +78,16 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                   </div>
                 </div>
               </Grid>
-              <Grid item xs={2} md={2}>
+              <Grid
+                item
+                xs={2}
+                md={2}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <IconButton
                   style={{
                     color: like ? "rgb(250, 58, 96)" : "white",
@@ -91,11 +100,7 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                 >
                   <FavoriteIcon />
                 </IconButton>
-                {showScore && (
-                  <div style={{ paddingLeft: "8px" }}>
-                    {getScoreIcon(songInfo.rank)}
-                  </div>
-                )}
+                {showScore && <div>{getScoreIcon(songInfo.rank)}</div>}
               </Grid>
             </Grid>
 

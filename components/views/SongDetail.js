@@ -90,7 +90,7 @@ export default function SongDetail({ hasData }) {
           >
             <Grid item xs={10} md={10}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <img
+                {/* <img
                   src={
                     songData.img_url ? songData.img_url : "/images/no_image.png"
                   }
@@ -99,7 +99,7 @@ export default function SongDetail({ hasData }) {
                     height: width < MINI_DISPLAY_SIZE ? "85px" : "100px",
                   }}
                   alt=""
-                />
+                /> */}
                 <Player
                   audioUrl={songData.preview_url}
                   id={songData.id}
@@ -139,11 +139,11 @@ export default function SongDetail({ hasData }) {
                 </IconButton>
               </Typography>
             </Grid>
-            <audio
+            {/* <audio
               controls
               src={songData.preview_url}
               className={style.audiocontrol}
-            ></audio>
+            ></audio> */}
           </Grid>
           <Grid item xs={12} md={3}>
             <BuzzDate />

@@ -82,7 +82,7 @@ export default function BookmarkList() {
         {likeSongInfoList.length === 0 ? (
           <div>登録されていません。</div>
         ) : (
-          getShowList(likeSongInfoList, isShortList).map((song) => {
+          getShowList(likeSongInfoList, isShortList, 6).map((song) => {
             return (
               <SongListCard
                 songInfo={song}

@@ -27,7 +27,7 @@ function DefaultSizeHome() {
             <BuzzSongs />
           </Grid>
           <Grid item xs={8}>
-            <SongDetail hasData={true} key={selectedSongId} />
+            <SongDetail key={selectedSongId} />
           </Grid>
         </Grid>
       </div>
@@ -46,7 +46,6 @@ function MiniSizeHome() {
 
 export default function Home() {
   const { width } = useWindowSize();
-  console.log(width);
   return (
     <div>
       {width > MINI_DISPLAY_SIZE ? <DefaultSizeHome /> : <MiniSizeHome />}

@@ -30,7 +30,7 @@ export default function SearchPopup(props) {
               曲名 または アーティスト名で検索
             </Typography>
           </Grid>
-          <Grid xs={2} md={2}>
+          <Grid item xs={2} md={2}>
             <DialogActions>
               <IconButton
                 size="small"

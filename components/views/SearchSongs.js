@@ -44,6 +44,8 @@ export default function SearchSongs(props) {
     })();
   }, [inputSongName]);
 
+  console.log("songList", songList);
+
   return (
     <div>
       <Grid container>

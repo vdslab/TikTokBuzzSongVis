@@ -98,12 +98,12 @@ export default function SongDetail({ hasData }) {
                 />
 
                 <div style={{ paddingLeft: "10px" }}>
-                  <Grid xs container direction="column">
+                  <Grid container direction="column">
                     <Grid item xs>
                       <Typography variant="h6" component="div">
                         {songData.title}
                       </Typography>
-                      <Typography variant="subtitle" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom>
                         {songData.artist}
                       </Typography>
                     </Grid>

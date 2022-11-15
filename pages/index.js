@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "../components/layouts/Header";
 import BuzzSongs from "../components/views/BuzzSongs";
 import SongDetail from "../components/views/SongDetail";
@@ -25,10 +24,7 @@ function DefaultSizeHome() {
       >
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <BuzzSongs
-              selectedSongId={selectedSongId}
-              setSelectedSongId={setSelectedSongId}
-            />
+            <BuzzSongs />
           </Grid>
           <Grid item xs={8}>
             <SongDetail hasData={true} key={selectedSongId} />
@@ -40,8 +36,6 @@ function DefaultSizeHome() {
 }
 
 function MiniSizeHome() {
-  const [selectedSongId, setSelectedSongId] = useState(null);
-  // TODO:ぬまけいよろしく
   return (
     <div>
       <Header />
@@ -51,7 +45,8 @@ function MiniSizeHome() {
 }
 
 export default function Home() {
-  const { height, width } = useWindowSize();
+  const { width } = useWindowSize();
+  console.log(width);
   return (
     <div>
       {width > MINI_DISPLAY_SIZE ? <DefaultSizeHome /> : <MiniSizeHome />}

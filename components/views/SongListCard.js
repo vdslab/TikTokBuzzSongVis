@@ -53,7 +53,7 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                     size={70}
                   />
                   <div style={{ paddingLeft: "16px" }}>
-                    <Grid xs container direction="column">
+                    <Grid container direction="column">
                       <Grid
                         item
                         xs

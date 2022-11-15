@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRecoilState } from "recoil";
 import { selectedSong } from "../atoms";
 import SongList from "./SongList";
+import { getScoreIcon } from "./SongListCard";
 
 export default function BuzzPossibility({ songData }) {
   const [similarSongList, setSimilarSongList] = useState(null);
@@ -30,7 +31,10 @@ export default function BuzzPossibility({ songData }) {
             console.log("clicked");
           }}
         >
-          {songData.title} バズり度 <span>{songData.rank}点</span>
+          {songData.title} バズり度&ensp;
+          <div style={{ display: "flex", alineItems: "center" }}>
+            {getScoreIcon(songData.rank)}
+          </div>
         </div>
       </div>
       <div style={{ paddingTop: "16px" }}>

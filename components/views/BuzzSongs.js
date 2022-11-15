@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box } from "@material-ui/core";
+import Box from "@mui/material/Box";
 import style from "./BuzzSongs.module.css";
 import { ParallelCoordinates } from "../charts/ParallelCoordinates";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";

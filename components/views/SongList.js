@@ -56,6 +56,10 @@ export default function SongList({ songList, showScore }) {
     }
   }, [setLikeList]);
 
+  if (songList.length === 0) {
+    return <div style={{ fontSize: "0.9rem" }}>該当する曲はありません</div>;
+  }
+
   return (
     <div className={style.song_list}>
       {getShowList(songList, isShortList).map((song) => {

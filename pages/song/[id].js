@@ -42,7 +42,9 @@ function DefaultSizeHomge() {
       >
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            {songData && <BuzzPossibility songData={songData} />}
+            {songData && (
+              <BuzzPossibility songData={songData} showHeader={true} />
+            )}
           </Grid>
           <Grid item xs={8}>
             <SongDetail key={selectedSongId} />
@@ -74,8 +76,12 @@ function MiniSizeHome() {
   return (
     <div>
       <Header />
-      {songData && <BuzzPossibility songData={songData} />}
-      <SongDetail key={selectedSongId} />
+      <SongDetail key={selectedSongId} showScore={true} />
+      {songData && (
+        <div style={{ padding: "0 1rem" }}>
+          <BuzzPossibility songData={songData} showHeader={false} />
+        </div>
+      )}
     </div>
   );
 }

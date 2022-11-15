@@ -35,21 +35,27 @@ export function Player({ audioUrl, id, imgUrl, size }) {
           src={imgUrl ? imgUrl : "/images/no_image.png"}
           style={{ width: `${size}px` }}
         />
-        <div className={style.control}>
-          <audio id={`bgm${id}`} src={audioUrl} />
-          <div
-            className={style.button}
-            onClick={() => {
-              Playing();
-            }}
-          >
-            {play ? (
-              <PlayArrowIcon fontSize="large" />
-            ) : (
-              <PauseOutlinedIcon fontSize="large" />
-            )}
+        {audioUrl ? (
+          <div className={style.control}>
+            <audio id={`bgm${id}`} src={audioUrl} />
+            <div
+              className={style.button}
+              onClick={() => {
+                Playing();
+              }}
+            >
+              {play ? (
+                <PlayArrowIcon fontSize="large" />
+              ) : (
+                <PauseOutlinedIcon fontSize="large" />
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={style.no_audio}>
+            <div className={style.no_audio_text}>再生できません</div>
+          </div>
+        )}
       </div>
     </div>
   );

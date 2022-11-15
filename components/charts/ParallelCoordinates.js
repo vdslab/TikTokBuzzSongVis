@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { useMemo, useState } from "react";
 import style from "./ParallelCoordinates.module.css";
+import { getScoreIcon } from "../views/SongListCard";
 
 function isFullWidthChar(str) {
   return str.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/);
@@ -37,9 +38,13 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
     );
     const aveScore = (scoreMinMax[0] + scoreMinMax[1]) / 2;
 
+    // const colorScale = d3
+    //   .scaleLinear()
+    //   .domain([scoreMinMax[0], aveScore, scoreMinMax[1]]) // FIXME
+    //   .range(["#24F4EE", "#640bf5", "#FE2C55"]);
     const colorScale = d3
       .scaleLinear()
-      .domain([scoreMinMax[0], aveScore, scoreMinMax[1]]) // FIXME
+      .domain([33, 66, 100])
       .range(["#24F4EE", "#640bf5", "#FE2C55"]);
 
     const feature = Object.entries(priorityFeature.slice(0, 8)).map(
@@ -165,56 +170,27 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
             >
               score
             </text>
-            <text
-              x={50}
-              y={15}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fontSize="10"
-              style={{ userSelect: "none" }}
-            >
-              0
-            </text>
-            <text
-              x={150}
-              y={15}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fontSize="10"
-              style={{ userSelect: "none" }}
-            >
-              100
-            </text>
-            <linearGradient id="gradient">
-              <stop offset="0%" stopColor={chart.colorScale(0)} />
-              <stop offset="5%" stopColor={chart.colorScale(5)} />
-              <stop offset="10%" stopColor={chart.colorScale(10)} />
-              <stop offset="15%" stopColor={chart.colorScale(15)} />
-              <stop offset="20%" stopColor={chart.colorScale(20)} />
-              <stop offset="25%" stopColor={chart.colorScale(25)} />
-              <stop offset="30%" stopColor={chart.colorScale(30)} />
-              <stop offset="35%" stopColor={chart.colorScale(35)} />
-              <stop offset="40%" stopColor={chart.colorScale(40)} />
-              <stop offset="45%" stopColor={chart.colorScale(45)} />
-              <stop offset="50%" stopColor={chart.colorScale(50)} />
-              <stop offset="55%" stopColor={chart.colorScale(55)} />
-              <stop offset="60%" stopColor={chart.colorScale(60)} />
-              <stop offset="65%" stopColor={chart.colorScale(65)} />
-              <stop offset="70%" stopColor={chart.colorScale(70)} />
-              <stop offset="75%" stopColor={chart.colorScale(75)} />
-              <stop offset="80%" stopColor={chart.colorScale(80)} />
-              <stop offset="85%" stopColor={chart.colorScale(85)} />
-              <stop offset="90%" stopColor={chart.colorScale(90)} />
-              <stop offset="95%" stopColor={chart.colorScale(95)} />
-              <stop offset="100%" stopColor={chart.colorScale(100)} />
-            </linearGradient>
-            <rect
-              x={50}
-              y={0 - 15 / 2}
-              width="100"
-              height="15"
-              fill="url('#gradient')"
-            />
+            {[33, 66, 100].map((value, index) => {
+              return (
+                <g key={value}>
+                  <rect
+                    x={50 + (100 / 3) * index}
+                    y={0 - 15 / 2}
+                    width={100 / 3}
+                    opacity={0.5}
+                    height="18"
+                    fill={chart.colorScale(value)}
+                  />
+                  <g
+                    transform={`translate(${
+                      52.5 + 34 * index
+                    },-8.5) scale(0.045)`}
+                  >
+                    {getScoreIcon(value)}
+                  </g>
+                </g>
+              );
+            })}
           </g>
           {/** 軸 */}
           <g>

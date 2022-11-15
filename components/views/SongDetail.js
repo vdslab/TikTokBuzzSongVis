@@ -103,7 +103,7 @@ export default function SongDetail({ hasData }) {
                       <Typography variant="h6" component="div">
                         {songData.title}
                       </Typography>
-                      <Typography variant="subtitle" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom>
                         {songData.artist}
                       </Typography>
                     </Grid>

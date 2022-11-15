@@ -18,3 +18,8 @@
 .names:hover {
   color: #ff6b2b;
 }
+
+.listitem{
+  display: flex;
+  width:100%
+}

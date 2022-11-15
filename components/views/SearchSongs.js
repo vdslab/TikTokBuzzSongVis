@@ -101,7 +101,7 @@ export default function SearchSongs(props) {
                       imgUrl={song.album.images[0].url}
                       size={60}
                     />
-                    <Grid container direction="column" spacing={2}>
+                    <Grid container direction="column">
                       <Grid
                         item
                         xs

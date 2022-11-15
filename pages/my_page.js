@@ -11,7 +11,9 @@ function MiniSizeDisplay() {
   return (
     <div>
       <Header />
-      <BookmarkList />
+      <div style={{ padding: "0 1rem" }}>
+        <BookmarkList />
+      </div>
     </div>
   );
 }

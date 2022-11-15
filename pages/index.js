@@ -46,7 +46,6 @@ function MiniSizeHome() {
 
 export default function Home() {
   const { width } = useWindowSize();
-  console.log(width);
   return (
     <div>
       {width > MINI_DISPLAY_SIZE ? <DefaultSizeHome /> : <MiniSizeHome />}

@@ -153,20 +153,17 @@ export default function SongDetail({ hasData }) {
                 feature={songData.lyrics_feature?.word_cloud_data}
               />
             ) : (
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                }}
+              >
                 <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
                   歌詞を特徴づけるワード
                 </div>
-                <div
-                  style={{
-                    height: "300px",
-                    border: "solid 0.1px",
-                    borderColor: "#bbbbbb",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <div className={style.no_data}>
                   <div> 表示するデータがありません</div>
                 </div>
               </div>

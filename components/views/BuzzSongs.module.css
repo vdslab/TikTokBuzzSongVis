@@ -52,8 +52,8 @@
   text-align: center;
 }
 
-.loading{
-  height:500px;
+.loading {
+  height: 500px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -64,8 +64,9 @@
   .title {
     padding-top: 16px;
     padding-left: 8px;
+    padding-bottom: 8px;
   }
-  
+
   .parallel {
     height: 50%;
     padding: 16px;

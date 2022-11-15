@@ -27,8 +27,7 @@ export function inList(list, id) {
   return list?.includes(id);
 }
 
-export function getShowList(list, isShort) {
-  const len = 4;
+export function getShowList(list, isShort, len = 4) {
   if (isShort) {
     if (list.length <= len) {
       return list;

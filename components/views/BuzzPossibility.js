@@ -38,7 +38,7 @@ export default function BuzzPossibility({ songData }) {
         </div>
       </div>
       <div style={{ paddingTop: "16px" }}>
-        <div style={{ paddingBottom: "16px" }}>{songData.title}の類似曲</div>
+        <div style={{ paddingBottom: "8px" }}>類似曲でバズり度が高いもの</div>
         <div className={style.upper}>
           {similarSongList ? (
             <SongList songList={similarSongList} />

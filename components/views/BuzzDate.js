@@ -39,7 +39,7 @@ export default function BuzzDate() {
           })}
         </div>
       ) : (
-        <div>この曲はピックアップされたことはありません</div>
+        <div>なし</div>
       )}
     </div>
   );

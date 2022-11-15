@@ -72,7 +72,7 @@ export default function SongList({ songList, showScore }) {
           />
         );
       })}
-      {width <= MINI_DISPLAY_SIZE && (
+      {width <= MINI_DISPLAY_SIZE && songList.length >= 4 && (
         <div
           className={style.show_list}
           onClick={() => setIsShortList(!isShortList)}

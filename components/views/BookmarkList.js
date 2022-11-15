@@ -101,7 +101,7 @@ export default function BookmarkList() {
             );
           })
         )}
-        {width <= MINI_DISPLAY_SIZE && (
+        {width <= MINI_DISPLAY_SIZE && likeSongInfoList.length >= 6 && (
           <div
             className={songListStyle.show_list}
             onClick={() => setIsShortList(!isShortList)}

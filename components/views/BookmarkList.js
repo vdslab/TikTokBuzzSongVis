@@ -76,37 +76,39 @@ export default function BookmarkList() {
 
   return (
     <Box component="main">
-      <div className={listStyle.title}>お気に入り</div>
-      <div className={songListStyle.song_list}>
+      <div className={listStyle.bookmark_title}>お気に入り</div>
+      <div>
         {/* TODO:SongListと共通化 */}
         {likeSongInfoList.length === 0 ? (
-          <div>登録されていません。</div>
+          <div style={{ padding: "0 0px" }}>登録されていません。</div>
         ) : (
-          getShowList(likeSongInfoList, isShortList, 6).map((song) => {
-            return (
-              <SongListCard
-                songInfo={song}
-                key={song.id}
-                like={inList(likeIdList, song.id)}
-                showScore={false}
-                clickLikeList={() => {
-                  const adjustedIdList = clickLikeList(likeIdList, song.id);
-                  setLikeIdList(adjustedIdList);
-                  const adjustedSongList = likeSongInfoList.filter(
-                    (like) => like.id !== song.id
-                  );
-                  setLikeSongInfoList(adjustedSongList);
-                }}
-              />
-            );
-          })
-        )}
-        {width <= MINI_DISPLAY_SIZE && (
-          <div
-            className={songListStyle.show_list}
-            onClick={() => setIsShortList(!isShortList)}
-          >
-            {isShortList ? "もっと見る ▼" : "一部を表示 ▲"}
+          <div className={songListStyle.song_list}>
+            {getShowList(likeSongInfoList, isShortList, 6).map((song) => {
+              return (
+                <SongListCard
+                  songInfo={song}
+                  key={song.id}
+                  like={inList(likeIdList, song.id)}
+                  showScore={false}
+                  clickLikeList={() => {
+                    const adjustedIdList = clickLikeList(likeIdList, song.id);
+                    setLikeIdList(adjustedIdList);
+                    const adjustedSongList = likeSongInfoList.filter(
+                      (like) => like.id !== song.id
+                    );
+                    setLikeSongInfoList(adjustedSongList);
+                  }}
+                />
+              );
+            })}
+            {width <= MINI_DISPLAY_SIZE && likeSongInfoList.length >= 6 && (
+              <div
+                className={songListStyle.show_list}
+                onClick={() => setIsShortList(!isShortList)}
+              >
+                {isShortList ? "もっと見る ▼" : "一部を表示 ▲"}
+              </div>
+            )}
           </div>
         )}
       </div>

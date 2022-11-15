@@ -6,7 +6,7 @@ import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import { getScoreIcon } from "./SongListCard";
 
-export default function BuzzPossibility({ songData }) {
+export default function BuzzPossibility({ songData, showHeader }) {
   const [similarSongList, setSimilarSongList] = useState(null);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
@@ -23,22 +23,23 @@ export default function BuzzPossibility({ songData }) {
 
   return (
     <div>
-      <div>
-        <div
-          className={style.buzz_title}
-          onClick={() => {
-            setSelectedSongId(songData.id);
-            console.log("clicked");
-          }}
-        >
-          {songData.title} バズり度&ensp;
-          <div style={{ display: "flex", alineItems: "center" }}>
-            {getScoreIcon(songData.rank)}
+      {showHeader && (
+        <div>
+          <div
+            className={style.buzz_title}
+            onClick={() => {
+              setSelectedSongId(songData.id);
+            }}
+          >
+            {songData.title} バズり度&ensp;
+            <div style={{ display: "flex", alineItems: "center" }}>
+              {getScoreIcon(songData.rank)}
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div style={{ paddingTop: "16px" }}>
-        <div style={{ paddingBottom: "16px" }}>{songData.title}の類似曲</div>
+        <div style={{ paddingBottom: "8px" }}>類似曲でバズり度が高いもの</div>
         <div className={style.upper}>
           {similarSongList ? (
             <SongList songList={similarSongList} />

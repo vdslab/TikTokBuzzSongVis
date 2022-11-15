@@ -15,6 +15,7 @@ import BuzzDate from "./BuzzDate";
 import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 import { Player } from "../Player";
+import { getScoreIcon } from "./SongListCard";
 
 async function getDbSongData(songId) {
   const songRes = await fetch("/api/db_song", {
@@ -40,7 +41,7 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ hasData }) {
+export default function SongDetail({ hasData, showScore }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -112,7 +113,11 @@ export default function SongDetail({ hasData }) {
               </div>
             </Grid>
             <Grid item xs={2} md={2}>
-              <Typography variant="subtitle1" component="div">
+              <Typography
+                variant="subtitle1"
+                component="div"
+                style={{ textAlign: "center" }}
+              >
                 <IconButton
                   style={{
                     color: inList(likeList, songData.id)
@@ -129,6 +134,11 @@ export default function SongDetail({ hasData }) {
                   <FavoriteIcon />
                 </IconButton>
               </Typography>
+              {showScore && (
+                <div style={{ textAlign: "center" }}>
+                  {getScoreIcon(songData.rank)}
+                </div>
+              )}
             </Grid>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -201,4 +211,5 @@ export default function SongDetail({ hasData }) {
 
 SongDetail.defaultProps = {
   hasData: false,
+  showScore: false,
 };

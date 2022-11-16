@@ -1,7 +1,6 @@
 import {
   InputBase,
   Paper,
-  IconButton,
   List,
   ListItem,
   Grid,
@@ -12,6 +11,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import style from "./SearchSongs.module.css";
 import { Player } from "../Player";
+import IconButton from "@mui/material/IconButton";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
@@ -47,84 +47,82 @@ export default function SearchSongs(props) {
   console.log("songList", songList);
 
   return (
-    <div>
-      <Grid container>
-        <Grid item xs={12} md={12}>
-          <Paper
-            variant="outlined"
-            sx={{
-              p: "4px 4px",
-              display: "flex",
-              alignItems: "center",
-              overflowY: "clip",
-            }}
-          >
-            <form onSubmit={changeInputSongName}>
-              <div className={style.searchbar}>
-                <InputBase
-                  style={{ padding: "4px 8px 4px 15px", fontSize: "12px" }}
-                  placeholder="曲名 または アーティスト名を入力"
-                  inputProps={{ "aria-label": "SchoolName" }}
-                  inputRef={inputEl}
-                  fullWidth={true}
-                  onChange={(e) => {
-                    if (e.target.value === "") {
-                      setInputSongName("");
-                    }
-                  }}
-                  sx={{ m: 1 }}
-                />
-                <IconButton
-                  style={{ padding: "4px 8px 4px 8px" }}
-                  type="text"
-                  size="small"
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </div>
-            </form>
-          </Paper>
-        </Grid>
-
-        {songList.map((song) => {
-          return (
-            // TODO:SongListCartと共通化
-            <Grid item xs={12} md={4} key={song.id}>
-              <List key={song.id} className={style.songlist}>
-                <ListItem>
-                  <div className={style.listitem}>
-                    <Player
-                      audioUrl={song.preview_url}
-                      id={song.id}
-                      imgUrl={song.album.images[0].url}
-                      size={60}
-                    />
-                    <Grid container direction="column">
-                      <Grid
-                        item
-                        xs
-                        onClick={() => {
-                          changeSelectId(song.id);
-                        }}
-                        className={style.names}
-                      >
-                        <Typography variant="subtitle1" component="div">
-                          {song.name}
-                        </Typography>
-                        <Typography variant="subtitle2" gutterBottom>
-                          {song.artists[0].name}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </ListItem>
-              </List>
-            </Grid>
-          );
-        })}
+    <Grid container>
+      <Grid item xs={12} md={12}>
+        <Paper
+          variant="outlined"
+          sx={{
+            p: "4px 4px",
+            display: "flex",
+            alignItems: "center",
+            overflowY: "clip",
+          }}
+        >
+          <form onSubmit={changeInputSongName}>
+            <div className={style.searchbar}>
+              <InputBase
+                style={{ padding: "4px 8px 4px 15px", fontSize: "12px" }}
+                placeholder="曲名 または アーティスト名を入力"
+                inputProps={{ "aria-label": "SchoolName" }}
+                inputRef={inputEl}
+                fullWidth={true}
+                onChange={(e) => {
+                  if (e.target.value === "") {
+                    setInputSongName("");
+                  }
+                }}
+                sx={{ m: 1 }}
+              />
+              <IconButton
+                style={{ padding: "4px 8px 4px 8px" }}
+                type="text"
+                size="small"
+                sx={{ p: "10px" }}
+                aria-label="search"
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </form>
+        </Paper>
       </Grid>
-    </div>
+
+      {songList.map((song) => {
+        return (
+          // TODO:SongListCartと共通化
+          <Grid item xs={12} md={4} key={song.id}>
+            <List key={song.id} className={style.songlist}>
+              <ListItem>
+                <div className={style.listitem}>
+                  <Player
+                    audioUrl={song.preview_url}
+                    id={song.id}
+                    imgUrl={song.album.images[0].url}
+                    size={60}
+                  />
+                  <Grid container direction="column">
+                    <Grid
+                      item
+                      xs
+                      onClick={() => {
+                        changeSelectId(song.id);
+                      }}
+                      className={style.names}
+                    >
+                      <Typography variant="subtitle1" component="div">
+                        {song.name}
+                      </Typography>
+                      <Typography variant="subtitle2" gutterBottom>
+                        {song.artists[0].name}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </div>
+              </ListItem>
+            </List>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }

@@ -168,7 +168,7 @@ export function ParallelCoordinates({ songList, priorityFeature }) {
               fontSize="12.5"
               style={{ userSelect: "none" }}
             >
-              score
+              流行度
             </text>
             {[33, 66, 100].map((value, index) => {
               return (

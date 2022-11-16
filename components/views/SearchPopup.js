@@ -1,69 +1,44 @@
-import {
-  Dialog,
-  DialogContent,
-  IconButton,
-  DialogActions,
-  Grid,
-  Typography,
-} from "@mui/material";
-import { CloseOutlined } from "@mui/icons-material";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
 import SearchSongs from "./SearchSongs";
+import DialogTitle from "@mui/material/DialogTitle";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function SearchPopup(props) {
   return (
-    <div>
-      <Dialog
-        open={props.isOpen}
-        onClose={props.handleClose}
-        fullWidth={true}
-        maxWidth={"lg"}
-        PaperProps={{
-          style: {
-            height: "70vh",
-            padding: "20px",
-          },
+    <Dialog
+      open={props.isOpen}
+      onClose={props.handleClose}
+      fullWidth={true}
+      maxWidth={"lg"}
+      PaperProps={{
+        style: {
+          height: "70vh",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{ m: 0, p: 2 }}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        <Grid container>
-          <Grid item xs={10} md={10}>
-            <Typography
-              style={{
-                fontWeight: "bolder",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              曲名 または アーティスト名で検索
-            </Typography>
-          </Grid>
-          <Grid item xs={2} md={2}>
-            <DialogActions style={{ padding: "0px" }}>
-              <IconButton
-                size="small"
-                onClick={props.handleClose}
-                aria-label="close"
-                sx={{
-                  position: "absolute",
-                  color: (theme) => theme.palette.grey[500],
-                }}
-              >
-                <CloseOutlined />
-              </IconButton>
-            </DialogActions>
-          </Grid>
-        </Grid>
-        <DialogContent
-          style={{
-            paddingTop: "12px",
-            paddingLeft: "0px",
-            paddingRight: "0px",
-            paddingBottom: "0px",
+        <div>曲名 または アーティスト名で検索</div>
+        <IconButton
+          size="small"
+          onClick={props.handleClose}
+          aria-label="close"
+          sx={{
+            position: "absolute",
+            color: (theme) => theme.palette.grey[500],
           }}
         >
-          <SearchSongs clickAndClose={true} handleClose={props.handleClose} />
-        </DialogContent>
-      </Dialog>
-    </div>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>
+        <SearchSongs clickAndClose={true} handleClose={props.handleClose} />
+      </DialogContent>
+    </Dialog>
   );
 }

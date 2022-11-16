@@ -7,14 +7,22 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import InfoPopup from "../views/InfoPopup";
 
 export default function Header() {
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [isOpenSearchPopup, setIsOpenSearchPopup] = useState(false);
+  const [isOpenInfoPopup, setIsOpenInfoPopup] = useState(false);
   const router = useRouter();
 
-  function handleClose() {
-    setIsOpenPopup(false);
+  function handleSearchPopupClose() {
+    setIsOpenSearchPopup(false);
   }
+
+  function handleInfoPopupClose() {
+    setIsOpenInfoPopup(false);
+  }
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -33,7 +41,17 @@ export default function Header() {
               aria-label="show 4 new mails"
               color="inherit"
               onClick={() => {
-                setIsOpenPopup(true);
+                setIsOpenInfoPopup(true);
+              }}
+            >
+              <InfoOutlinedIcon />
+            </IconButton>
+            <IconButton
+              size="medium"
+              aria-label="show 4 new mails"
+              color="inherit"
+              onClick={() => {
+                setIsOpenSearchPopup(true);
               }}
             >
               <SearchIcon />
@@ -49,7 +67,11 @@ export default function Header() {
           </Toolbar>
         </AppBar>
       </Box>
-      <SearchPopup isOpen={isOpenPopup} handleClose={handleClose} />
+      <SearchPopup
+        isOpen={isOpenSearchPopup}
+        handleClose={handleSearchPopupClose}
+      />
+      <InfoPopup isOpen={isOpenInfoPopup} handleClose={handleInfoPopupClose} />
     </div>
   );
 }

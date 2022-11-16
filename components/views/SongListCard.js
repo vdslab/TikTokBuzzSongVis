@@ -11,14 +11,17 @@ import { Player } from "../Player";
 import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 export function getScoreIcon(score) {
   if (score === 100) {
     return <SentimentVerySatisfiedOutlinedIcon />;
   } else if (score === 66) {
     return <SentimentSatisfiedOutlinedIcon />;
+  } else if (score === 33) {
+    return <SentimentSatisfiedIcon />;
   }
-  return <SentimentSatisfiedIcon />;
+  return <SentimentVeryDissatisfiedIcon />;
 }
 
 export function SongListCard({ songInfo, clickLikeList, like, showScore }) {

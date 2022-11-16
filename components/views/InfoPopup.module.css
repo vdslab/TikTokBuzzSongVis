@@ -1,0 +1,14 @@
+.subtitle{
+    font-weight: bold;
+}
+
+.buzz_score_txt{
+    font-size: 0.9rem;
+    padding: 0 4px;
+}
+
+.buzz_score_icon_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

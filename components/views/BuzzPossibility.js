@@ -31,7 +31,7 @@ export default function BuzzPossibility({ songData, showHeader }) {
               setSelectedSongId(songData.id);
             }}
           >
-            {songData.title} バズり度&ensp;
+            {songData.title} 流行度&ensp;
             <div style={{ display: "flex", alineItems: "center" }}>
               {getScoreIcon(songData.rank)}
             </div>
@@ -39,7 +39,7 @@ export default function BuzzPossibility({ songData, showHeader }) {
         </div>
       )}
       <div style={{ paddingTop: "16px" }}>
-        <div style={{ paddingBottom: "8px" }}>類似曲でバズり度が高いもの</div>
+        <div style={{ paddingBottom: "8px" }}>類似曲で流行度が高いもの</div>
         <div className={style.upper}>
           {similarSongList ? (
             <SongList songList={similarSongList} />

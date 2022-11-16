@@ -26,12 +26,19 @@ export default function SearchPopup(props) {
       >
         <Grid container>
           <Grid item xs={10} md={10}>
-            <Typography style={{ fontWeight: "bolder" }}>
+            <Typography
+              style={{
+                fontWeight: "bolder",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               曲名 または アーティスト名で検索
             </Typography>
           </Grid>
           <Grid item xs={2} md={2}>
-            <DialogActions>
+            <DialogActions style={{ padding: "0px" }}>
               <IconButton
                 size="small"
                 onClick={props.handleClose}

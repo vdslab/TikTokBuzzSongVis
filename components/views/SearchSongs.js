@@ -1,7 +1,6 @@
 import {
   InputBase,
   Paper,
-  IconButton,
   List,
   ListItem,
   Grid,
@@ -12,6 +11,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import style from "./SearchSongs.module.css";
 import { Player } from "../Player";
+import IconButton from "@mui/material/IconButton";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");

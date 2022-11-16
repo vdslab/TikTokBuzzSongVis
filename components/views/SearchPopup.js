@@ -1,7 +1,8 @@
-import { Dialog, DialogContent, IconButton } from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import SearchSongs from "./SearchSongs";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 export default function SearchPopup(props) {
   return (
@@ -29,7 +30,6 @@ export default function SearchPopup(props) {
           onClick={props.handleClose}
           aria-label="close"
           sx={{
-            position: "absolute",
             color: (theme) => theme.palette.grey[500],
           }}
         >

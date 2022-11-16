@@ -68,7 +68,7 @@ export default function InfoPopup(props) {
           <Typography gutterBottom>
             このアプリではTikTokでの流行のしやすさを流行度と呼んでいます。
             流行度は以下のアイコンで示しています。
-            <div style={{ padding: "1rem" }}>
+            <div style={{ paddingTop: "1rem" }}>
               <div className={style.buzz_score_icon_wrapper}>
                 <div className={style.buzz_score_txt}>低</div>
                 {[0, 33, 66, 100].map((value) => {
@@ -158,6 +158,35 @@ export default function InfoPopup(props) {
               低いほどよりネガティブに聞こえる（例：悲しい、落ち込んだ、怒っている）。
             </Typography>
           </Paper>
+        </Box>
+        <Box sx={{ p: 1 }}>
+          <div className={style.subtitle}>データについて</div>
+          <Typography gutterBottom>
+            以下のサイトのデータをもとに流行度の算出をしています。
+          </Typography>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <a
+              href="https://www.billboard-japan.com/charts/detail?a=tiktok"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TikTok Weekly Top 20 | Charts - Billboard JAPAN
+            </a>
+            <a
+              href="https://charts.spotify.com/charts/view/regional-jp-weekly/latest"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Spotify Chart Weekly Top Songs Japan
+            </a>
+            <a
+              href="https://developer.spotify.com/documentation/web-api/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Spotify API
+            </a>
+          </div>
         </Box>
       </DialogContent>
     </BootstrapDialog>

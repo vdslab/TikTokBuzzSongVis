@@ -31,4 +31,10 @@
   .no_data{
     height: 200px;
   }
+  
+  /* TODO:応急処置 */
+  .loading {
+   height: 550px;
+  }
+  
 }

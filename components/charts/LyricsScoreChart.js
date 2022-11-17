@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import style from "./LyricsScoreChart.module.css";
 
 function Tooltip({ show, idx, feature, closeLyricsShow }) {
@@ -51,24 +51,11 @@ export default function LyricsScoreChart({ feature }) {
     .x(({ x }) => x)
     .y(({ y }) => y);
 
-  const Xscale = d3
-    .scaleLinear()
-    .domain([0, feature.lyrics_list.length - 1])
-    .range([0, contentWidth])
-    .nice();
-
   const Yscale = d3
     .scaleLinear()
     .domain([0, 100])
     .range([contentHeight, 0])
     .nice();
-
-  const xTicks = Xscale.ticks(feature.lyrics_list.length - 1).map((d) => {
-    return {
-      label: "section" + (d + 1),
-      x: Xscale(d),
-    };
-  });
 
   const yTicks = Yscale.ticks(5).map((d) => {
     return {
@@ -76,47 +63,6 @@ export default function LyricsScoreChart({ feature }) {
       y: Yscale(d),
     };
   });
-
-  // FIXME:スコアが振り切る時があるのでバックエンドで修正する
-  const positiveLine = {
-    label: "ポジティブ度",
-    color: "rgb(255, 107, 43, 0.5)",
-    pointColor: "#FF6B2B",
-    pointFill: "#fff5f1",
-    points: feature.lyrics_list.map((section, idx) => {
-      return {
-        x: Xscale(idx),
-        y: Yscale(section.positive_score > 100 ? 100 : section.positive_score),
-      };
-    }),
-    scores: feature.lyrics_list.map((section) =>
-      section.positive_score > 100 ? 100 : section.positive_score
-    ),
-  };
-  const rhymeLine = {
-    label: "韻踏み度",
-    color: "rgb(255, 213, 43, 0.5)",
-    pointColor: "#FFD52B",
-    pointFill: "#fffcf1",
-    points: feature.lyrics_list.map((section, idx) => {
-      return {
-        x: Xscale(idx),
-        y: Yscale(section.rhyme_score > 100 ? 100 : section.rhyme_score),
-      };
-    }),
-    scores: feature.lyrics_list.map((section) =>
-      section.rhyme_score > 100 ? 100 : section.rhyme_score
-    ),
-  };
-  const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
-
-  if (rhymeLine.scores.indexOf(null) !== -1) {
-    lines2.pop();
-  }
-
-  if (positiveLine.scores.indexOf(null) !== -1) {
-    lines2.shift();
-  }
 
   function onHover(e) {
     setShow(true);
@@ -126,15 +72,93 @@ export default function LyricsScoreChart({ feature }) {
     setInfo({ labelName: labelName, index: index });
   }
 
+  const chart = useMemo(() => {
+    const Xscale = d3
+      .scaleLinear()
+      .domain([0, feature.lyrics_list.length - 1])
+      .range([0, contentWidth])
+      .nice();
+
+    const xTicks = Xscale.ticks(feature.lyrics_list.length - 1).map((d) => {
+      return {
+        label: "section" + (d + 1),
+        x: Xscale(d),
+      };
+    });
+
+    // FIXME:スコアが振り切る時があるのでバックエンドで修正する
+    const positiveLine = {
+      label: "ポジティブ度",
+      color: "rgb(255, 107, 43, 0.5)",
+      pointColor: "#FF6B2B",
+      pointFill: "#fff5f1",
+      points: feature.lyrics_list.map((section, idx) => {
+        return {
+          x: Xscale(idx),
+          y: Yscale(
+            section.positive_score > 100 ? 100 : section.positive_score
+          ),
+        };
+      }),
+      scores: feature.lyrics_list.map((section) =>
+        section.positive_score > 100 ? 100 : section.positive_score
+      ),
+    };
+    const rhymeLine = {
+      label: "韻踏み度",
+      color: "rgb(255, 213, 43, 0.5)",
+      pointColor: "#FFD52B",
+      pointFill: "#fffcf1",
+      points: feature.lyrics_list.map((section, idx) => {
+        return {
+          x: Xscale(idx),
+          y: Yscale(section.rhyme_score > 100 ? 100 : section.rhyme_score),
+        };
+      }),
+      scores: feature.lyrics_list.map((section) =>
+        section.rhyme_score > 100 ? 100 : section.rhyme_score
+      ),
+    };
+    const lines2 = [positiveLine, rhymeLine]; /* 0番目にポジ,1番目に韻 */
+
+    if (rhymeLine.scores.indexOf(null) !== -1) {
+      lines2.pop();
+    }
+
+    if (positiveLine.scores.indexOf(null) !== -1) {
+      lines2.shift();
+    }
+    return {
+      Xscale,
+      xTicks,
+      lines2,
+    };
+  }, [feature, Yscale]);
+
+  function hasData(name, list) {
+    return list.some((item) => {
+      if (item.label === name) {
+        return item.points.length > 0;
+      }
+      return false;
+    });
+  }
+
   return (
     <div>
       <div className={style.title}>ポジティブ度&韻踏み度</div>
       <div className={style.detail}>
         <div style={{ paddingRight: "0.75rem" }}>
-          ポジティブ度：{feature.total_positive_score}
+          ポジティブ度：
+          {hasData("ポジティブ度", chart.lines2)
+            ? feature.total_positive_score
+            : "不明"}
         </div>
         <div style={{ paddingRight: "0.75rem" }}>
-          韻踏み度：{feature.total_rhyme_score}
+          韻踏み度：
+          {hasData("韻踏み度：", chart.lines2)
+            ? feature.total_rhyme_score
+            : "不明"}
         </div>
       </div>
       <div className={style.relative}>
@@ -155,7 +179,7 @@ export default function LyricsScoreChart({ feature }) {
             ></line>
           </g>
           <g>
-            {xTicks.map((tick, i) => {
+            {chart.xTicks.map((tick, i) => {
               return (
                 <g key={tick.x}>
                   <line
@@ -212,7 +236,7 @@ export default function LyricsScoreChart({ feature }) {
             })}
           </g>
           <g>
-            {lines2.map((item, i) => {
+            {chart.lines2.map((item, i) => {
               return (
                 <g key={i}>
                   <path
@@ -269,38 +293,30 @@ export default function LyricsScoreChart({ feature }) {
                 </g>
               );
             })}
-            <circle
-              cx={contentWidth + 35}
-              cy="-3"
-              r="5"
-              fill="#FF6B2B"
-            ></circle>
-            <text
-              x={contentWidth + 43}
-              y="-3"
-              textAnchor="start"
-              dominantBaseline="central"
-              fontSize="9"
-              style={{ userSelect: "none" }}
-            >
-              ポジティブ度
-            </text>
-            <circle
-              cx={contentWidth + 35}
-              cy="13"
-              r="5"
-              fill="#FFD52B"
-            ></circle>
-            <text
-              x={contentWidth + 43}
-              y="13"
-              textAnchor="start"
-              dominantBaseline="central"
-              fontSize="9"
-              style={{ userSelect: "none" }}
-            >
-              韻踏み度
-            </text>
+            {chart.lines2.map((item, index) => {
+              if (hasData(item.label, chart.lines2)) {
+                return (
+                  <g key={item.label}>
+                    <circle
+                      cx={contentWidth + 35}
+                      cy={-3 + 15 * index}
+                      r="5"
+                      fill={item.pointColor}
+                    ></circle>
+                    <text
+                      x={contentWidth + 43}
+                      y={-3 + 15 * index}
+                      textAnchor="start"
+                      dominantBaseline="central"
+                      fontSize="9"
+                      style={{ userSelect: "none" }}
+                    >
+                      ポジティブ度
+                    </text>
+                  </g>
+                );
+              }
+            })}
           </g>
         </svg>
         <Tooltip

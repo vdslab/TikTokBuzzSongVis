@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import { getScoreIcon } from "./SongListCard";
+import { BuzzIconLegend } from "../common";
 
 export default function BuzzPossibility({ songData, showHeader }) {
   const [similarSongList, setSimilarSongList] = useState(null);
@@ -39,7 +40,21 @@ export default function BuzzPossibility({ songData, showHeader }) {
         </div>
       )}
       <div style={{ paddingTop: "16px" }}>
-        <div style={{ paddingBottom: "8px" }}>類似曲で流行度が高いもの</div>
+        <div style={{ paddingBottom: "8px", fontWeight: "bold" }}>
+          類似した流行度の高い曲
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "0.9rem",
+          }}
+        >
+          流行度
+          <BuzzIconLegend />
+        </div>
+
         <div className={style.upper}>
           {similarSongList ? (
             <SongList songList={similarSongList} />

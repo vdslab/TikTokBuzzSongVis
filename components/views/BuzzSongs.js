@@ -9,6 +9,7 @@ import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
+import { BuzzIconLegend } from "../common";
 
 export default function BuzzSongs() {
   const [date, setDate] = useState([]);
@@ -59,7 +60,20 @@ export default function BuzzSongs() {
 
   return (
     <Box component="main">
-      <div className={style.title}>ピックアップ</div>
+      <div>
+        <div className={style.title}>ピックアップ</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "0.9rem",
+          }}
+        >
+          流行度
+          <BuzzIconLegend />
+        </div>
+      </div>
       {buzzSongList ? (
         <div>
           <div className={style.date_select}>

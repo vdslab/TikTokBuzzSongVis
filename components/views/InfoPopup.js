@@ -81,13 +81,13 @@ export default function InfoPopup(props) {
           <div className={style.subtitle}>ポジティブ度</div>
           <Typography gutterBottom>
             歌詞がどれくらいポジティブかを表します。0がネガティブ, 50がノーマル,
-            100がポジティブとなります。
+            100がポジティブとなります。歌詞によっては計測できないものがあります。
           </Typography>
         </Box>
         <Box sx={{ p: 1 }}>
           <div className={style.subtitle}>韻踏み度</div>
           <Typography gutterBottom>
-            歌詞がどれくらい韻を踏んでいるかを表します。値が大きいほど韻を踏んでいます。
+            歌詞がどれくらい韻を踏んでいるかを表します。値が大きいほど韻を踏んでいます。歌詞によっては計測できないものがあります。
           </Typography>
         </Box>
         <Box sx={{ p: 1 }}>

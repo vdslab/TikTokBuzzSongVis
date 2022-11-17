@@ -60,22 +60,20 @@ export default function BuzzSongs() {
 
   return (
     <Box component="main">
-      <div>
-        <div className={style.title}>ピックアップ</div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "0.9rem",
-          }}
-        >
-          流行度
-          <BuzzIconLegend />
-        </div>
-      </div>
+      <div className={style.title}>ピックアップ</div>
       {buzzSongList ? (
         <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "0.9rem",
+            }}
+          >
+            流行度
+            <BuzzIconLegend />
+          </div>
           <div className={style.date_select}>
             <IconButton
               size="medium"

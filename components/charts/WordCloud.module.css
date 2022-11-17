@@ -18,11 +18,7 @@
   .contents {
     height: 300px;
   }
-}
-
-
-@media (max-width: 700px) {
-  .contents {
-    height: 200px;
+  .title{
+    padding-top:16px;
   }
 }

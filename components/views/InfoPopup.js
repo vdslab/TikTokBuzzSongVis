@@ -68,16 +68,14 @@ export default function InfoPopup(props) {
           <Typography gutterBottom>
             このアプリではTikTokでの流行のしやすさを流行度と呼んでいます。
             流行度は以下のアイコンで示しています。
-            <div style={{ paddingTop: "1rem" }}>
-              <div className={style.buzz_score_icon_wrapper}>
-                <div className={style.buzz_score_txt}>低</div>
-                {[0, 33, 66, 100].map((value) => {
-                  return <div key={value}>{getScoreIcon(value)}</div>;
-                })}
-                <div className={style.buzz_score_txt}>高</div>
-              </div>
-            </div>
           </Typography>
+          <div className={style.buzz_score_icon_wrapper}>
+            <div className={style.buzz_score_txt}>低</div>
+            {[0, 33, 66, 100].map((value) => {
+              return <div key={value}>{getScoreIcon(value)}</div>;
+            })}
+            <div className={style.buzz_score_txt}>高</div>
+          </div>
         </Box>
         <Box sx={{ p: 1 }}>
           <div className={style.subtitle}>ポジティブ度</div>

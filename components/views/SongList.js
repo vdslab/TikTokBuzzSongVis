@@ -14,7 +14,11 @@ export function clickLikeList(likeList, selectedId) {
     adjustedList = likeList.filter((id) => id !== selectedId);
   } else {
     // リストになければお気に入り登録
-    adjustedList = likeList.concat([selectedId]);
+    if (likeList) {
+      adjustedList = likeList.concat([selectedId]);
+    } else {
+      adjustedList = [selectedId];
+    }
   }
   localStorage.setItem(
     localStorageKey.BUZZLEAD_LIKE_LIST,

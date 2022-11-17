@@ -61,7 +61,11 @@ export default function SongList({ songList, showScore }) {
   }, [setLikeList]);
 
   if (songList.length === 0) {
-    return <div style={{ fontSize: "0.9rem" }}>該当する曲はありません</div>;
+    return (
+      <div style={{ fontSize: "0.9rem", padding: "0.5rem 0" }}>
+        該当する曲はありません
+      </div>
+    );
   }
 
   return (

@@ -43,21 +43,24 @@ export default function BuzzPossibility({ songData, showHeader }) {
         <div style={{ paddingBottom: "8px", fontWeight: "bold" }}>
           類似した流行度の高い曲
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "0.9rem",
-          }}
-        >
-          流行度
-          <BuzzIconLegend />
-        </div>
-
         <div className={style.upper}>
           {similarSongList ? (
-            <SongList songList={similarSongList} />
+            <div>
+              {similarSongList.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  流行度
+                  <BuzzIconLegend />
+                </div>
+              )}
+              <SongList songList={similarSongList} />
+            </div>
           ) : (
             <div style={{ textAlign: "center", paddingTop: "100px" }}>
               <CircularProgress />

@@ -38,12 +38,17 @@ export default function SearchSongs(props) {
   useEffect(() => {
     (async () => {
       if (inputSongName !== "") {
-        const songListRes = await fetch("/api/spotify/search_songs", {
-          method: "POST",
-          body: JSON.stringify(inputSongName),
-        });
-        const songListData = await songListRes.json();
-        setSongList(songListData);
+        //TODO:サーバーサイドでハンドリング
+        try {
+          const songListRes = await fetch("/api/spotify/search_songs", {
+            method: "POST",
+            body: JSON.stringify(inputSongName),
+          });
+          const songListData = await songListRes.json();
+          setSongList(songListData);
+        } catch {
+          setSongList([]);
+        }
       }
     })();
   }, [inputSongName]);

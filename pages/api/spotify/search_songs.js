@@ -49,12 +49,17 @@ export default async function playlists(req, res) {
       },
       json: true,
     }
-  );
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data.tracks.items;
+    })
+    .catch((error) => {
+      console.log("データの取得に失敗しました。", error);
+      return [];
+    });
 
-  const data = await response.json();
-  if (data.tracks?.items) {
-    res.status(200).json(data.tracks.items);
-  } else {
-    res.status(200).json([]);
-  }
+  res.status(200).json(data);
 }

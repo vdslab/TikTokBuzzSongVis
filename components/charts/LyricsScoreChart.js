@@ -204,6 +204,11 @@ export default function LyricsScoreChart({ feature }) {
                       setLyricShow(true);
                       setLyricsIdx(i);
                     }}
+                    onMouseLeave={() => {
+                      if (!lyricShow) {
+                        setLyricsIdx(-1);
+                      }
+                    }}
                   >
                     {tick.label}
                   </text>

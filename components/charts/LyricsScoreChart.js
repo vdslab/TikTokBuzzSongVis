@@ -156,7 +156,7 @@ export default function LyricsScoreChart({ feature }) {
         </div>
         <div style={{ paddingRight: "0.75rem" }}>
           韻踏み度：
-          {hasData("韻踏み度：", chart.lines2)
+          {hasData("韻踏み度", chart.lines2)
             ? feature.total_rhyme_score
             : "不明"}
         </div>

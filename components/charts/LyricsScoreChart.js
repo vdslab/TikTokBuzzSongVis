@@ -196,7 +196,7 @@ export default function LyricsScoreChart({ feature }) {
                     dominantBaseline="central"
                     fill={lyricsIdx === i ? "orange" : "black"}
                     fontSize="10"
-                    style={{ userSelect: "none" }}
+                    style={{ userSelect: "none", cursor: "pointer" }}
                     onMouseMove={(e) => {
                       setLyricsIdx(i);
                     }}

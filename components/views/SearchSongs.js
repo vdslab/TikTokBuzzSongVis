@@ -97,48 +97,51 @@ export default function SearchSongs(props) {
           {inputSongName !== "" && <CircularProgress />}
         </div>
       ) : (
-        <div>
+        <div style={{ width: "100%" }}>
           {songList.length === 0 ? (
             <div style={{ padding: "8px", fontSize: "0.8rem" }}>
               該当する曲はありません
             </div>
           ) : (
-            songList.map((song) => {
-              return (
-                // TODO:SongListCartと共通化
-                <Grid item xs={12} md={4} key={song.id}>
-                  <List key={song.id} className={style.songlist}>
-                    <ListItem>
-                      <div className={style.listitem}>
-                        <Player
-                          audioUrl={song.preview_url}
-                          id={song.id}
-                          imgUrl={song.album.images[0].url}
-                          size={60}
-                        />
-                        <Grid container direction="column">
-                          <Grid
-                            item
-                            xs
-                            onClick={() => {
-                              changeSelectId(song.id);
-                            }}
-                            className={style.names}
-                          >
-                            <Typography variant="subtitle1" component="div">
-                              {song.name}
-                            </Typography>
-                            <Typography variant="subtitle2" gutterBottom>
-                              {song.artists[0].name}
-                            </Typography>
+            <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+              {songList.map((song) => {
+                return (
+                  // TODO:SongListCartと共通化
+
+                  <Grid item xs={12} md={4} key={song.id}>
+                    <List key={song.id} className={style.songlist}>
+                      <ListItem>
+                        <div className={style.listitem}>
+                          <Player
+                            audioUrl={song.preview_url}
+                            id={song.id}
+                            imgUrl={song.album.images[0].url}
+                            size={60}
+                          />
+                          <Grid item direction="column">
+                            <Grid
+                              item
+                              xs
+                              onClick={() => {
+                                changeSelectId(song.id);
+                              }}
+                              className={style.names}
+                            >
+                              <Typography variant="subtitle1" component="div">
+                                {song.name}
+                              </Typography>
+                              <Typography variant="subtitle2" gutterBottom>
+                                {song.artists[0].name}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </div>
-                    </ListItem>
-                  </List>
-                </Grid>
-              );
-            })
+                        </div>
+                      </ListItem>
+                    </List>
+                  </Grid>
+                );
+              })}
+            </Grid>
           )}
         </div>
       )}

@@ -156,7 +156,7 @@ export default function LyricsScoreChart({ feature }) {
         </div>
         <div style={{ paddingRight: "0.75rem" }}>
           韻踏み度：
-          {hasData("韻踏み度：", chart.lines2)
+          {hasData("韻踏み度", chart.lines2)
             ? feature.total_rhyme_score
             : "不明"}
         </div>
@@ -196,13 +196,18 @@ export default function LyricsScoreChart({ feature }) {
                     dominantBaseline="central"
                     fill={lyricsIdx === i ? "orange" : "black"}
                     fontSize="10"
-                    style={{ userSelect: "none" }}
+                    style={{ userSelect: "none", cursor: "pointer" }}
                     onMouseMove={(e) => {
                       setLyricsIdx(i);
                     }}
                     onMouseUp={(e) => {
                       setLyricShow(true);
                       setLyricsIdx(i);
+                    }}
+                    onMouseLeave={() => {
+                      if (!lyricShow) {
+                        setLyricsIdx(-1);
+                      }
                     }}
                   >
                     {tick.label}
@@ -311,7 +316,7 @@ export default function LyricsScoreChart({ feature }) {
                       fontSize="9"
                       style={{ userSelect: "none" }}
                     >
-                      ポジティブ度
+                      {item.label}
                     </text>
                   </g>
                 );

@@ -311,7 +311,7 @@ export default function LyricsScoreChart({ feature }) {
                       fontSize="9"
                       style={{ userSelect: "none" }}
                     >
-                      ポジティブ度
+                      {item.label}
                     </text>
                   </g>
                 );

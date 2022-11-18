@@ -42,7 +42,6 @@ export default function SearchSongs(props) {
         });
         const songListData = await songListRes.json();
         setSongList(songListData);
-        setSongList([]);
       }
     })();
   }, [inputSongName]);

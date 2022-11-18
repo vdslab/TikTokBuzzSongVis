@@ -55,6 +55,6 @@ export default async function playlists(req, res) {
   if (data.tracks?.items) {
     res.status(200).json(data.tracks.items);
   } else {
-    res.status(200).json({});
+    res.status(200).json([]);
   }
 }

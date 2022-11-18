@@ -23,6 +23,7 @@ export default function SearchSongs(props) {
   function changeInputSongName(event) {
     setInputSongName(inputEl.current.value);
     event.preventDefault();
+    setSongList(null);
   }
 
   function changeSelectId(id) {
@@ -41,6 +42,7 @@ export default function SearchSongs(props) {
         });
         const songListData = await songListRes.json();
         setSongList(songListData);
+        setSongList([]);
       }
     })();
   }, [inputSongName]);

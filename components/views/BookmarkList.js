@@ -52,17 +52,16 @@ export default function BookmarkList() {
       setLikeIdList(parsedSongIdList);
 
       const songInfoList = [];
-      if (parsedSongIdList) {
+      if (parsedSongIdList?.length > 0) {
         for (const id of parsedSongIdList) {
           const song = await getSongBasicInfo(id);
           songInfoList.push(song);
         }
         setSelectedSongId(songInfoList[0].id);
-      }
-      setLikeSongInfoList(songInfoList);
-      if (songInfoList.length === 0) {
+      } else {
         setSelectedSongId(null);
       }
+      setLikeSongInfoList(songInfoList);
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 
@@ -100,6 +99,13 @@ export default function BookmarkList() {
                       (like) => like.id !== song.id
                     );
                     setLikeSongInfoList(adjustedSongList);
+                    if (adjustedIdList.length === 0) {
+                      // リストが空になったらselectedSongIdをリセット
+                      setSelectedSongId(null);
+                    } else if (!adjustedIdList.includes(selectedSongId)) {
+                      // selectedSongIdがリストに含まれていなければ先頭の曲をセット
+                      setSelectedSongId(adjustedIdList[0]);
+                    }
                   }}
                 />
               );

@@ -14,39 +14,39 @@ export default function WordCloudChart({ feature }) {
   const wrapperRef = useRef();
   const size = useResize(wrapperRef);
 
-  const margin = {
-    left: 10,
-    right: 55,
-    top: 5,
-    bottom: 5,
-  };
-
-  const sizeScale = d3
-    .scaleLinear()
-    .range([30, 90])
-    .domain([feature[feature.length - 1]["score"], feature[0]["score"]]);
-
-  const colorScale = d3
-    .scaleLinear()
-    .domain([-1, 0, 1])
-    .range(["#0CCCC7", "#a3a3a3", "#FE2C55"]);
-
-  const cloudData = feature.map((data) => {
-    return {
-      word: data.word,
-      size: sizeScale(data.score),
-      color: colorScale(data.negaposi),
-    };
-  });
-
   const chart = useMemo(() => {
     const { width: displayWidth, height: displayHeight } = size;
 
     const contentWidth = displayWidth;
     const contentHeight = displayHeight;
 
+    const margin = {
+      left: 10,
+      right: 55,
+      top: 5,
+      bottom: 5,
+    };
+
     const svgWidth = margin.left + margin.right + contentWidth;
     const svgHeight = margin.top + margin.bottom + contentHeight;
+
+    const sizeScale = d3
+      .scaleLinear()
+      .range([30, 90])
+      .domain([feature[feature.length - 1]["score"], feature[0]["score"]]);
+
+    const colorScale = d3
+      .scaleLinear()
+      .domain([-1, 0, 1])
+      .range(["#0CCCC7", "#a3a3a3", "#FE2C55"]);
+
+    const cloudData = feature.map((data) => {
+      return {
+        word: data.word,
+        size: sizeScale(data.score),
+        color: colorScale(data.negaposi),
+      };
+    });
 
     //HACK:これでええんか？
     if (typeof window === "object") {
@@ -71,6 +71,8 @@ export default function WordCloudChart({ feature }) {
         svgHeight,
         contentWidth,
         contentHeight,
+        colorScale,
+        margin,
       };
     }
     return {
@@ -79,17 +81,19 @@ export default function WordCloudChart({ feature }) {
       svgHeight,
       contentWidth,
       contentHeight,
+      colorScale,
+      margin,
     };
-  }, [cloudData, size]);
+  }, [feature, size]);
 
   return (
     <div className={style.wordcloud} ref={wrapperRef}>
       <div className={style.title}>歌詞を特徴づけるワード</div>
       <div className={style.contents}>
         <svg
-          viewBox={`${-margin.left} ${-margin.top} ${chart.svgWidth} ${
-            chart.svgHeight
-          }`}
+          viewBox={`${-chart.margin.left} ${-chart.margin.top} ${
+            chart.svgWidth
+          } ${chart.svgHeight}`}
         >
           {legend.map((l, i) => {
             return (
@@ -99,7 +103,7 @@ export default function WordCloudChart({ feature }) {
                   y={10 + 15 * i}
                   width="10"
                   height="10"
-                  fill={colorScale(l.value)}
+                  fill={chart.colorScale(l.value)}
                 />
                 <text
                   x={chart.contentWidth + 12.5}

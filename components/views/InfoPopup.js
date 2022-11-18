@@ -60,7 +60,7 @@ export default function InfoPopup(props) {
         <Box sx={{ p: 1 }}>
           <div className={style.subtitle}>BuzzLeadについて</div>
           <Typography gutterBottom>
-            BuzzLeadは過去にTiktokで流行した曲のデータをもとに次にTikTokで流行する曲を予測するアプリケーションです。
+            BuzzLeadは過去にTikTokで流行した曲のデータをもとに次にTikTokで流行する曲を予測するアプリケーションです。
           </Typography>
         </Box>
         <Box sx={{ p: 1 }}>
@@ -80,7 +80,8 @@ export default function InfoPopup(props) {
         <Box sx={{ p: 1 }}>
           <div className={style.subtitle}>ポジティブ度</div>
           <Typography gutterBottom>
-            歌詞がどれくらいポジティブかを表します。0がネガティブ, 50がノーマル,
+            歌詞がどれくらいポジティブかを表します。0がネガティブ、
+            50がノーマル、
             100がポジティブとなります。歌詞によっては計測できないものがあります。
           </Typography>
         </Box>

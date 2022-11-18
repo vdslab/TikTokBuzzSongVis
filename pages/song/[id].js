@@ -47,7 +47,7 @@ function DefaultSizeHomge() {
             )}
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={selectedSongId} />
+            <SongDetail key={selectedSongId} routeUrl={id} />
           </Grid>
         </Grid>
       </div>

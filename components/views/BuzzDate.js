@@ -19,8 +19,10 @@ export default function BuzzDate() {
 
   useEffect(() => {
     (async () => {
-      const date = await getSongBuzzDate(selectedSongId);
-      setDateList(date);
+      if (selectedSongId) {
+        const date = await getSongBuzzDate(selectedSongId);
+        setDateList(date);
+      }
     })();
   }, [selectedSongId]);
 

@@ -9,7 +9,8 @@ import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
-import { BuzzIconLegend } from "../common";
+import { BuzzIconLegend, MINI_DISPLAY_SIZE } from "../common";
+import { useWindowSize } from "../hooks/getWindwSize";
 
 export default function BuzzSongs() {
   const [date, setDate] = useState([]);
@@ -17,6 +18,7 @@ export default function BuzzSongs() {
   const [priorityFeature, setPriorityFeature] = useState([]);
   const [selectedDateIdx, setselectedDateIdx] = useState(0);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const { width } = useWindowSize();
 
   useEffect(() => {
     (async () => {
@@ -45,7 +47,10 @@ export default function BuzzSongs() {
           }
         }
         setBuzzSongList(data);
-        setSelectedSongId(data[0].id);
+
+        if (width > MINI_DISPLAY_SIZE) {
+          setSelectedSongId(data[0].id);
+        }
 
         const featureReq = await fetch("api/priority_feature", {
           method: "POST",

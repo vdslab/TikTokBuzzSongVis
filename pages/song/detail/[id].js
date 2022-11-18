@@ -17,11 +17,13 @@ export default function Home() {
     setSelectedSongId(id);
   });
 
+  //TODO:selectedSongId, idがずれて前のデータが残ってしまってる
+
   //TODO:ぬまけい調整お願いします
   return (
     <div>
       <Header />
-      <SongDetail key={id} />
+      <SongDetail key={id} routeUrl={id} />
     </div>
   );
 }

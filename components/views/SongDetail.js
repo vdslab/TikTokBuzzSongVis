@@ -36,12 +36,15 @@ async function getSongData(songId) {
     method: "POST",
     body: JSON.stringify(songId),
   });
-  const songInfo = await songInfoReq.json();
-  return songInfo;
+  if (songInfoReq) {
+    const songInfo = await songInfoReq.json();
+    return songInfo;
+  }
+  return {};
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ hasData, showScore }) {
+export default function SongDetail({ hasData, showScore, routeUrl }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
@@ -49,13 +52,25 @@ export default function SongDetail({ hasData, showScore }) {
 
   useEffect(() => {
     (async () => {
-      if (selectedSongId) {
-        if (hasData) {
-          const data = await getDbSongData(selectedSongId);
-          setSongData(data);
-        } else {
-          const data = await getSongData(selectedSongId);
-          setSongData(data);
+      if (routeUrl === "") {
+        if (selectedSongId) {
+          if (hasData) {
+            const data = await getDbSongData(selectedSongId);
+            setSongData(data);
+          } else {
+            const data = await getSongData(selectedSongId);
+            setSongData(data);
+          }
+        }
+      } else {
+        if (selectedSongId === routeUrl) {
+          if (hasData) {
+            const data = await getDbSongData(selectedSongId);
+            setSongData(data);
+          } else {
+            const data = await getSongData(selectedSongId);
+            setSongData(data);
+          }
         }
       }
     })();
@@ -76,6 +91,12 @@ export default function SongDetail({ hasData, showScore }) {
       </div>
     );
   }
+
+  if (Object.keys(songData).length === 0) {
+    return <div>データがありません</div>;
+  }
+
+  // console.log(songData);
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -212,4 +233,5 @@ export default function SongDetail({ hasData, showScore }) {
 SongDetail.defaultProps = {
   hasData: false,
   showScore: false,
+  routeUrl: "",
 };

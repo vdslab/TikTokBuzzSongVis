@@ -45,9 +45,12 @@ export function Player({ audioUrl, id, imgUrl, size }) {
               }}
             >
               {play ? (
-                <PlayArrowIcon fontSize="large" />
+                <PlayArrowIcon fontSize="large" style={{ color: "white" }} />
               ) : (
-                <PauseOutlinedIcon fontSize="large" />
+                <PauseOutlinedIcon
+                  fontSize="large"
+                  style={{ color: "white" }}
+                />
               )}
             </div>
           </div>

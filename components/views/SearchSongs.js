@@ -33,8 +33,6 @@ export default function SearchSongs(props) {
     }
   }
 
-  console.log("songList", songList);
-
   useEffect(() => {
     (async () => {
       if (inputSongName !== "") {

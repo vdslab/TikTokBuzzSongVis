@@ -60,6 +60,9 @@ export default function BookmarkList() {
         setSelectedSongId(songInfoList[0].id);
       }
       setLikeSongInfoList(songInfoList);
+      if (songInfoList.length === 0) {
+        setSelectedSongId(null);
+      }
     })();
   }, [setLikeSongInfoList, setLikeIdList]);
 

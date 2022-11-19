@@ -18,8 +18,6 @@ export default function Home() {
   });
 
   //TODO:selectedSongId, idがずれて前のデータが残ってしまってる
-
-  //TODO:ぬまけい調整お願いします
   return (
     <div>
       <Header />

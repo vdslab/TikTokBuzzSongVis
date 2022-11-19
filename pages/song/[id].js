@@ -47,7 +47,7 @@ function DefaultSizeHomge() {
             )}
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={selectedSongId} routeUrl={id} />
+            <SongDetail key={selectedSongId} />
           </Grid>
         </Grid>
       </div>
@@ -76,7 +76,7 @@ function MiniSizeHome() {
   return (
     <div>
       <Header />
-      <SongDetail key={selectedSongId} showScore={true} />
+      <SongDetail key={selectedSongId} showScore={true} routeUrl={id} />
       {songData && (
         <div style={{ padding: "0 1rem" }}>
           <BuzzPossibility songData={songData} showHeader={false} />

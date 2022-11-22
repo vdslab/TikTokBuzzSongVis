@@ -1,17 +1,15 @@
 import { ListItem, List, Grid, Typography } from "@material-ui/core";
 import style from "./BuzzSongs.module.css";
-import { MINI_DISPLAY_SIZE } from "../common";
-import { useWindowSize } from "../hooks/getWindwSize";
 import { useRouter } from "next/router";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { selectedSong } from "../atoms";
-import { useRecoilState } from "recoil";
 import { Player } from "../Player";
 import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { MINI_DISPLAY_SIZE } from "../common";
+import { useWindowSize } from "../hooks/getWindwSize";
 
 export function getScoreIcon(score) {
   if (score === 100) {
@@ -24,10 +22,15 @@ export function getScoreIcon(score) {
   return <SentimentVeryDissatisfiedIcon />;
 }
 
-export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
-  const { height, width } = useWindowSize();
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+export function SongListCard({
+  songInfo,
+  clickLikeList,
+  like,
+  showScore,
+  home,
+}) {
   const router = useRouter();
+  const { width } = useWindowSize();
   //TODO:返ってくるデータの形を同じにしておきたい
   const title = songInfo.detail ? songInfo.detail.title : songInfo.title;
   const img_url = songInfo.detail ? songInfo.detail.img_url : songInfo.img_url;
@@ -37,7 +40,16 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
     : songInfo.preview_url;
 
   function showSelectIdSong(id) {
-    router.push(`/song/detail/${id}`);
+    if (home) {
+      router.push(`/${id}`);
+    } else {
+      if (MINI_DISPLAY_SIZE < width) {
+        const searchedId = router.query.id;
+        router.push(`/search/${searchedId}/${id}`);
+      } else {
+        router.push(`/search_sp/${id}`);
+      }
+    }
   }
 
   return (
@@ -61,11 +73,7 @@ export function SongListCard({ songInfo, clickLikeList, like, showScore }) {
                         item
                         xs
                         onClick={() => {
-                          if (width > MINI_DISPLAY_SIZE) {
-                            setSelectedSongId(songInfo.id);
-                          } else {
-                            showSelectIdSong(songInfo.id);
-                          }
+                          showSelectIdSong(songInfo.id);
                         }}
                         className={style.names}
                       >

@@ -6,7 +6,7 @@ import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
-import { bookmarkState, selectedSong } from "../atoms";
+import { bookmarkState } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -44,37 +44,24 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ hasData, showScore, routeUrl }) {
+export default function SongDetail({ selectedId, hasData, showScore }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
   const { width } = useWindowSize();
 
   useEffect(() => {
     (async () => {
-      if (routeUrl === "") {
-        if (selectedSongId) {
-          if (hasData) {
-            const data = await getDbSongData(selectedSongId);
-            setSongData(data);
-          } else {
-            const data = await getSongData(selectedSongId);
-            setSongData(data);
-          }
-        }
-      } else {
-        if (selectedSongId === routeUrl) {
-          if (hasData) {
-            const data = await getDbSongData(selectedSongId);
-            setSongData(data);
-          } else {
-            const data = await getSongData(selectedSongId);
-            setSongData(data);
-          }
+      if (selectedId) {
+        if (hasData) {
+          const data = await getDbSongData(selectedId);
+          setSongData(data);
+        } else {
+          const data = await getSongData(selectedId);
+          setSongData(data);
         }
       }
     })();
-  }, [selectedSongId, hasData]);
+  }, [selectedId, hasData]);
 
   useEffect(() => {
     const list = localStorage.getItem(localStorageKey.BUZZLEAD_LIKE_LIST);
@@ -95,8 +82,6 @@ export default function SongDetail({ hasData, showScore, routeUrl }) {
   if (Object.keys(songData).length === 0) {
     return <div>データがありません</div>;
   }
-
-  // console.log(songData);
 
   return (
     <div style={{ padding: "1rem" }}>

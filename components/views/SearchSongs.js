@@ -13,12 +13,15 @@ import style from "./SearchSongs.module.css";
 import { Player } from "../Player";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useWindowSize } from "../hooks/getWindwSize";
+import { MINI_DISPLAY_SIZE } from "../common";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
   const [songList, setSongList] = useState(null);
   const inputEl = useRef("");
   const router = useRouter();
+  const { width } = useWindowSize();
 
   function changeInputSongName(event) {
     setInputSongName(inputEl.current.value);
@@ -27,7 +30,12 @@ export default function SearchSongs(props) {
   }
 
   function changeSelectId(id) {
-    router.push(`/song/${id}`);
+    if (MINI_DISPLAY_SIZE > width) {
+      router.push(`/search_sp/${id}`);
+    } else {
+      //TODO:id1つの指定だけにしたい
+      router.push(`/search/${id}/${id}`);
+    }
     if (props.clickAndClose) {
       props.handleClose();
     }

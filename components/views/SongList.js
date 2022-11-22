@@ -41,7 +41,7 @@ export function getShowList(list, isShort, len = 4) {
   return list;
 }
 
-export default function SongList({ songList, showScore }) {
+export default function SongList({ songList, showScore, home }) {
   const { width } = useWindowSize();
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [isShortList, setIsShortList] = useState(true);
@@ -81,6 +81,7 @@ export default function SongList({ songList, showScore }) {
             }}
             like={inList(likeList, song.id)}
             showScore={showScore}
+            home={home}
           />
         );
       })}
@@ -98,4 +99,5 @@ export default function SongList({ songList, showScore }) {
 
 SongList.defaultProps = {
   showScore: true,
+  home: true,
 };

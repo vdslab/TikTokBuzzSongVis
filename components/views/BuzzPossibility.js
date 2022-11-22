@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import style from "./BuzzSongs.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useRecoilState } from "recoil";
-import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import { getScoreIcon } from "./SongListCard";
 import { BuzzIconLegend } from "../common";
+import { useRouter } from "next/router";
 
-export default function BuzzPossibility({ songData, showHeader }) {
+export default function BuzzPossibility({ songData, showHeader, searchId }) {
   const [similarSongList, setSimilarSongList] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -29,7 +28,8 @@ export default function BuzzPossibility({ songData, showHeader }) {
           <div
             className={style.buzz_title}
             onClick={() => {
-              setSelectedSongId(songData.id);
+              const searchId = router.query.search_id;
+              router.push(`/search/${searchId}/${searchId}`);
             }}
           >
             {songData.title} 流行度&ensp;
@@ -59,7 +59,7 @@ export default function BuzzPossibility({ songData, showHeader }) {
                   <BuzzIconLegend />
                 </div>
               )}
-              <SongList songList={similarSongList} />
+              <SongList songList={similarSongList} home={false} />
             </div>
           ) : (
             <div style={{ textAlign: "center", paddingTop: "100px" }}>

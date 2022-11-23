@@ -1,36 +1,32 @@
 import Header from "../components/layouts/Header";
 import BuzzSongs from "../components/views/BuzzSongs";
-import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
-import { useRecoilState } from "recoil";
-import { selectedSong } from "../components/atoms";
-import { Grid } from "@material-ui/core";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function DefaultSizeHome() {
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const dateRes = await fetch("/api/date");
+      const date = await dateRes.json();
+      if (date.length > 0) {
+        const buzzSongsReq = await fetch("api/buzz_songs", {
+          method: "POST",
+          body: JSON.stringify(date[0]),
+        });
+
+        const data = await buzzSongsReq.json();
+        router.replace(`/${data[0].id}`);
+      }
+    })();
+  }, []);
+
   return (
     <div>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingTop: "1rem",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "2rem",
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <BuzzSongs />
-          </Grid>
-          <Grid item xs={8}>
-            <SongDetail key={selectedSongId} />
-          </Grid>
-        </Grid>
-      </div>
     </div>
   );
 }

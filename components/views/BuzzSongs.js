@@ -4,21 +4,20 @@ import style from "./BuzzSongs.module.css";
 import { ParallelCoordinates } from "../charts/ParallelCoordinates";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { useRecoilState } from "recoil";
-import { selectedSong } from "../atoms";
 import SongList from "./SongList";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import { BuzzIconLegend, MINI_DISPLAY_SIZE } from "../common";
+import { useRouter } from "next/router";
 import { useWindowSize } from "../hooks/getWindwSize";
 
 export default function BuzzSongs() {
+  const { width } = useWindowSize();
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState(null);
   const [priorityFeature, setPriorityFeature] = useState([]);
   const [selectedDateIdx, setselectedDateIdx] = useState(0);
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
-  const { width } = useWindowSize();
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -48,10 +47,6 @@ export default function BuzzSongs() {
         }
         setBuzzSongList(data);
 
-        if (width > MINI_DISPLAY_SIZE) {
-          setSelectedSongId(data[0].id);
-        }
-
         const featureReq = await fetch("api/priority_feature", {
           method: "POST",
           // TODO:ここの引数のdateをユーザーが変更できるように
@@ -59,9 +54,13 @@ export default function BuzzSongs() {
         });
         const featureData = await featureReq.json();
         setPriorityFeature(JSON.parse(featureData.feature));
+
+        if (MINI_DISPLAY_SIZE < width) {
+          router.push(`/${data[0].id}`);
+        }
       }
     })();
-  }, [selectedDateIdx, date, setSelectedSongId]);
+  }, [selectedDateIdx, date]);
 
   return (
     <Box component="main">

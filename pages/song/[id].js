@@ -6,14 +6,11 @@ import BuzzPossibility from "../../components/views/BuzzPossibility";
 import { useWindowSize } from "../../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../../components/common";
 import { Grid } from "@material-ui/core";
-import { useRecoilState } from "recoil";
-import { selectedSong } from "../../components/atoms";
 
 function DefaultSizeHomge() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();
   const id = router.query.id;
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -23,7 +20,6 @@ function DefaultSizeHomge() {
       });
       const data = await songReq.json();
       setSongData(data);
-      setSelectedSongId(id);
     })();
   }, [id]);
 
@@ -47,7 +43,7 @@ function DefaultSizeHomge() {
             )}
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={selectedSongId} />
+            <SongDetail key={id} />
           </Grid>
         </Grid>
       </div>
@@ -59,7 +55,6 @@ function MiniSizeHome() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();
   const id = router.query.id;
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
 
   useEffect(() => {
     (async () => {
@@ -69,14 +64,13 @@ function MiniSizeHome() {
       });
       const data = await songReq.json();
       setSongData(data);
-      setSelectedSongId(id);
     })();
   }, [id]);
 
   return (
     <div>
       <Header />
-      <SongDetail key={selectedSongId} showScore={true} routeUrl={id} />
+      <SongDetail key={id} showScore={true} routeUrl={id} />
       {songData && (
         <div style={{ padding: "0 1rem" }}>
           <BuzzPossibility songData={songData} showHeader={false} />

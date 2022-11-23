@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import listStyle from "./BuzzSongs.module.css";
 import { Box } from "@material-ui/core";
 import { getShowList } from "./SongList";
-import { MINI_DISPLAY_SIZE } from "../common";
+import { MINI_DISPLAY_SIZE, routeKey } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 import songListStyle from "./SongList.module.css";
 
@@ -92,6 +92,7 @@ export default function BookmarkList() {
                   key={song.id}
                   like={inList(likeIdList, song.id)}
                   showScore={false}
+                  route={routeKey.MY_PAGE}
                   clickLikeList={() => {
                     const adjustedIdList = clickLikeList(likeIdList, song.id);
                     setLikeIdList(adjustedIdList);

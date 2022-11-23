@@ -36,7 +36,6 @@ async function getSongBasicInfo(songId) {
 export default function BookmarkList() {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useState(null);
   const [isShortList, setIsShortList] = useState(true);
   const { width } = useWindowSize();
   const router = useRouter();
@@ -59,9 +58,9 @@ export default function BookmarkList() {
           const song = await getSongBasicInfo(id);
           songInfoList.push(song);
         }
-        setSelectedSongId(songInfoList[0].id);
+        // setSelectedSongId(songInfoList[0].id);
       } else {
-        setSelectedSongId(null);
+        // setSelectedSongId(null);
       }
       setLikeSongInfoList(songInfoList);
     })();

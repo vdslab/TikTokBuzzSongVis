@@ -5,7 +5,12 @@ import BuzzPossibility from "../../../components/views/BuzzPossibility";
 import { MINI_DISPLAY_SIZE } from "../../../components/common";
 
 //PC専用
-export default function DefaultSizeHomge({ id, songData }) {
+export default function DefaultSizeHomge({
+  id,
+  songData,
+  searchId,
+  searchSongData,
+}) {
   return (
     <div style={{ minWidth: `${MINI_DISPLAY_SIZE}px` }}>
       <Header />
@@ -21,9 +26,9 @@ export default function DefaultSizeHomge({ id, songData }) {
       >
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            {songData && (
+            {searchSongData && (
               <BuzzPossibility
-                songData={songData}
+                songData={searchSongData}
                 showHeader={true}
                 searchId={searchId}
                 key={searchId}
@@ -41,7 +46,7 @@ export default function DefaultSizeHomge({ id, songData }) {
 
 async function getSongData(id) {
   const songReq = await fetch(
-    "http://localhost:3000/api/bebebe/song_buzz_score",
+    `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_buzz_score`,
     {
       method: "POST",
       body: JSON.stringify(id),
@@ -52,11 +57,19 @@ async function getSongData(id) {
 }
 
 export async function getStaticProps(context) {
+  const searchId =
+    context.params.id === "favicon.ico" ? "" : context.params.search_id;
+  const searchSongData = await getSongData(searchId);
   const id = context.params.id === "favicon.ico" ? "" : context.params.id;
   const data = await getSongData(id);
 
   return {
-    props: { id: id, songData: data },
+    props: {
+      id: id,
+      songData: data,
+      searchId: searchId,
+      searchSongData: searchSongData,
+    },
     revalidate: 86400,
   };
 }

@@ -33,7 +33,7 @@ export default function DefaultSizeDisplay({ id, songData }) {
 //TODO:共通化
 async function getSongData(songId) {
   const songInfoReq = await fetch(
-    "http://localhost:3000/api/bebebe/song_info",
+    `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_info`,
     {
       method: "POST",
       body: JSON.stringify(songId),

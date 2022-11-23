@@ -25,7 +25,7 @@ export default function MiniSizeHome({ id, songData }) {
 
 async function getSongData(id) {
   const songReq = await fetch(
-    "http://localhost:3000/api/bebebe/song_buzz_score",
+    `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_buzz_score`,
     {
       method: "POST",
       body: JSON.stringify(id),

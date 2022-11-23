@@ -56,18 +56,20 @@ export default function Home(props) {
 }
 
 export async function getSongData(songId) {
-  const songInfoReq = await fetch(
-    "http://localhost:3000/api/bebebe/song_info",
-    {
-      method: "POST",
-      body: JSON.stringify(songId),
-    }
-  );
-  if (songInfoReq) {
+  try {
+    const songInfoReq = await fetch(
+      `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_info`,
+      {
+        method: "POST",
+        body: JSON.stringify(songId),
+      }
+    );
+
     const songInfo = await songInfoReq.json();
     return songInfo;
+  } catch {
+    return {};
   }
-  return {};
 }
 
 export async function getStaticProps(context) {

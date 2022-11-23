@@ -3,12 +3,13 @@ import BookmarkList from "../../components/views/BookmarkList";
 import SongDetail from "../../components/views/SongDetail";
 import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
+import { MINI_DISPLAY_SIZE } from "../../components/common";
 
 export default function DefaultSizeDisplay() {
   const router = useRouter();
   const selectedId = router.query.id;
   return (
-    <div>
+    <div style={{ minWidth: `${MINI_DISPLAY_SIZE}px` }}>
       <Header />
       <div
         style={{

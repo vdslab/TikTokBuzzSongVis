@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import Header from "../../../components/layouts/Header";
 import SongDetail from "../../../components/views/SongDetail";
 import BuzzPossibility from "../../../components/views/BuzzPossibility";
+import { MINI_DISPLAY_SIZE } from "../../../components/common";
 
 //PC専用
 export default function DefaultSizeHomge() {
@@ -24,7 +25,7 @@ export default function DefaultSizeHomge() {
   }, [searchId]);
 
   return (
-    <div>
+    <div style={{ minWidth: `${MINI_DISPLAY_SIZE}px` }}>
       <Header />
       <div
         style={{

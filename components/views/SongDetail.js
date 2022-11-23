@@ -44,14 +44,21 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ selectedId, hasData, showScore }) {
+export default function SongDetail({
+  songDataTest,
+  selectedId,
+  hasData,
+  showScore,
+}) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const { width } = useWindowSize();
 
   useEffect(() => {
     (async () => {
-      if (selectedId) {
+      if (songDataTest) {
+        setSongData(songDataTest);
+      } else if (selectedId) {
         if (hasData) {
           const data = await getDbSongData(selectedId);
           setSongData(data);
@@ -219,4 +226,5 @@ SongDetail.defaultProps = {
   hasData: false,
   showScore: false,
   routeUrl: "",
+  songDataTest: null,
 };

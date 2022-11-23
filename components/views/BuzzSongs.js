@@ -7,7 +7,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import SongList from "./SongList";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
-import { BuzzIconLegend, MINI_DISPLAY_SIZE } from "../common";
+import { BuzzIconLegend } from "../common";
 import { useRouter } from "next/router";
 import { useWindowSize } from "../hooks/getWindwSize";
 
@@ -54,10 +54,6 @@ export default function BuzzSongs() {
         });
         const featureData = await featureReq.json();
         setPriorityFeature(JSON.parse(featureData.feature));
-
-        if (MINI_DISPLAY_SIZE < width) {
-          router.push(`/${data[0].id}`);
-        }
       }
     })();
   }, [selectedDateIdx, date]);

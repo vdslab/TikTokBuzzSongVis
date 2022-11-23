@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { Grid } from "@material-ui/core";
 import Header from "../../../components/layouts/Header";
 import SongDetail from "../../../components/views/SongDetail";
@@ -7,23 +5,7 @@ import BuzzPossibility from "../../../components/views/BuzzPossibility";
 import { MINI_DISPLAY_SIZE } from "../../../components/common";
 
 //PC専用
-export default function DefaultSizeHomge() {
-  const [songData, setSongData] = useState(null);
-  const router = useRouter();
-  const id = router.query.id;
-  const searchId = router.query.search_id;
-
-  useEffect(() => {
-    (async () => {
-      const songReq = await fetch("/api/bebebe/song_buzz_score", {
-        method: "POST",
-        body: JSON.stringify(searchId),
-      });
-      const data = await songReq.json();
-      setSongData(data);
-    })();
-  }, [searchId]);
-
+export default function DefaultSizeHomge({ id, songData }) {
   return (
     <div style={{ minWidth: `${MINI_DISPLAY_SIZE}px` }}>
       <Header />
@@ -49,10 +31,39 @@ export default function DefaultSizeHomge() {
             )}
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={id} selectedId={id} />
+            <SongDetail key={id} selectedId={id} songDataTest={songData} />
           </Grid>
         </Grid>
       </div>
     </div>
   );
 }
+
+async function getSongData(id) {
+  const songReq = await fetch(
+    "http://localhost:3000/api/bebebe/song_buzz_score",
+    {
+      method: "POST",
+      body: JSON.stringify(id),
+    }
+  );
+  const data = await songReq.json();
+  return data;
+}
+
+export async function getStaticProps(context) {
+  const id = context.params.id === "favicon.ico" ? "" : context.params.id;
+  const data = await getSongData(id);
+
+  return {
+    props: { id: id, songData: data },
+    revalidate: 10,
+  };
+}
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};

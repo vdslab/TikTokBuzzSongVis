@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { selectedSong } from "../atoms";
 import { getScoreIcon } from "./SongListCard";
 import style from "./BuzzDate.module.css";
 
@@ -13,18 +11,17 @@ async function getSongBuzzDate(songId) {
   return date;
 }
 
-export default function BuzzDate() {
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+export default function BuzzDate({ selectedId }) {
   const [dateList, setDateList] = useState([]);
 
   useEffect(() => {
     (async () => {
-      if (selectedSongId) {
-        const date = await getSongBuzzDate(selectedSongId);
+      if (selectedId) {
+        const date = await getSongBuzzDate(selectedId);
         setDateList(date);
       }
     })();
-  }, [selectedSongId]);
+  }, [selectedId]);
 
   return (
     <div>

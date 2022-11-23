@@ -45,10 +45,10 @@ export function SongListCard({
       router.push(`/${id}`);
     } else {
       if (MINI_DISPLAY_SIZE < width) {
-        const searchedId = router.query.id;
+        const searchedId = router.query.search_id;
         router.push(`/search/${searchedId}/${id}`);
       } else {
-        router.push(`/search_sp/${id}`);
+        router.push(`/${id}`);
       }
     }
   }

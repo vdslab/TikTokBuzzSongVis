@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SongListCard } from "./SongListCard";
 import { localStorageKey } from "../common";
 import { useRecoilState } from "recoil";
-import { bookmarkState, selectedSong } from "../atoms";
+import { bookmarkState } from "../atoms";
 import { clickLikeList, inList } from "../hooks/bookMarkHook";
 import style from "./SongDetail.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -12,6 +12,7 @@ import { getShowList } from "./SongList";
 import { MINI_DISPLAY_SIZE, routeKey } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 import songListStyle from "./SongList.module.css";
+import { useRouter } from "next/router";
 
 async function getSongBasicInfo(songId) {
   try {
@@ -35,9 +36,10 @@ async function getSongBasicInfo(songId) {
 export default function BookmarkList() {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useRecoilState(selectedSong);
+  const [selectedSongId, setSelectedSongId] = useState(null);
   const [isShortList, setIsShortList] = useState(true);
   const { width } = useWindowSize();
+  const router = useRouter();
 
   useEffect(() => {
     if (width > MINI_DISPLAY_SIZE) {
@@ -100,12 +102,14 @@ export default function BookmarkList() {
                       (like) => like.id !== song.id
                     );
                     setLikeSongInfoList(adjustedSongList);
-                    if (adjustedIdList.length === 0) {
-                      // リストが空になったらselectedSongIdをリセット
-                      setSelectedSongId(null);
-                    } else if (!adjustedIdList.includes(selectedSongId)) {
-                      // selectedSongIdがリストに含まれていなければ先頭の曲をセット
-                      setSelectedSongId(adjustedIdList[0]);
+                    if (MINI_DISPLAY_SIZE < width) {
+                      if (adjustedIdList.length === 0) {
+                        // リストが空になったらselectedSongIdをリセット
+                        router.push(`/my_page`);
+                      } else if (!adjustedIdList.includes(selectedSongId)) {
+                        // selectedSongIdがリストに含まれていなければ先頭の曲をセット
+                        router.push(`/my_page/${adjustedIdList[0]}`);
+                      }
                     }
                   }}
                 />

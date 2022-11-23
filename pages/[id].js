@@ -71,13 +71,12 @@ export async function getSongData(songId) {
 }
 
 export async function getStaticProps(context) {
-  console.log("context", context);
   const id = context.params.id === "favicon.ico" ? "" : context.params.id;
   const data = await getSongData(id);
 
   return {
     props: { id: id, songData: data },
-    revalidate: 10,
+    revalidate: 86400,
   };
 }
 

@@ -57,7 +57,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { id: id, songData: data },
-    revalidate: 10,
+    revalidate: 86400,
   };
 }
 

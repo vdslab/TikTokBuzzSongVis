@@ -30,6 +30,7 @@ export default function DefaultSizeDisplay({ id, songData }) {
   );
 }
 
+//TODO:共通化
 async function getSongData(songId) {
   const songInfoReq = await fetch(
     "http://localhost:3000/api/bebebe/song_info",
@@ -51,7 +52,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { id: id, songData: data },
-    revalidate: 10,
+    revalidate: 86400,
   };
 }
 

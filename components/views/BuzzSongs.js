@@ -7,13 +7,17 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import SongList from "./SongList";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
-import { BuzzIconLegend } from "../common";
+import { BuzzIconLegend, MINI_DISPLAY_SIZE } from "../common";
+import { useRouter } from "next/router";
+import { useWindowSize } from "../hooks/getWindwSize";
 
 export default function BuzzSongs() {
+  const { width } = useWindowSize();
   const [date, setDate] = useState([]);
   const [buzzSongList, setBuzzSongList] = useState(null);
   const [priorityFeature, setPriorityFeature] = useState([]);
   const [selectedDateIdx, setselectedDateIdx] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -50,6 +54,10 @@ export default function BuzzSongs() {
         });
         const featureData = await featureReq.json();
         setPriorityFeature(JSON.parse(featureData.feature));
+
+        if (MINI_DISPLAY_SIZE < width) {
+          router.push(`/${data[0].id}`);
+        }
       }
     })();
   }, [selectedDateIdx, date]);

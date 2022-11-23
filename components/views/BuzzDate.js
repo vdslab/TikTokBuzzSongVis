@@ -3,12 +3,17 @@ import { getScoreIcon } from "./SongListCard";
 import style from "./BuzzDate.module.css";
 
 async function getSongBuzzDate(songId) {
-  const dateReq = await fetch("/api/song_buzz_date", {
-    method: "POST",
-    body: JSON.stringify(songId),
-  });
-  const date = await dateReq.json();
-  return date;
+  try {
+    const dateReq = await fetch("/api/song_buzz_date", {
+      method: "POST",
+      body: JSON.stringify(songId),
+    });
+
+    const date = await dateReq.json();
+    return date;
+  } catch {
+    return [];
+  }
 }
 
 export default function BuzzDate({ selectedId }) {

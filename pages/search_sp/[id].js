@@ -24,7 +24,13 @@ export default function MiniSizeHome() {
   return (
     <div>
       <Header />
-      <SongDetail key={id} showScore={true} routeUrl={id} selectedId={id} />
+      <SongDetail
+        key={id}
+        showScore={true}
+        routeUrl={id}
+        selectedId={id}
+        hasScore={songData?.rank}
+      />
       {songData && (
         <div style={{ padding: "0 1rem" }}>
           <BuzzPossibility songData={songData} showHeader={false} />

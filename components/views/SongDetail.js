@@ -44,7 +44,12 @@ async function getSongData(songId) {
 }
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
-export default function SongDetail({ selectedId, hasData, showScore }) {
+export default function SongDetail({
+  selectedId,
+  hasData,
+  showScore,
+  hasScore,
+}) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const { width } = useWindowSize();
@@ -142,7 +147,7 @@ export default function SongDetail({ selectedId, hasData, showScore }) {
               </Typography>
               {showScore && (
                 <div style={{ textAlign: "center" }}>
-                  {getScoreIcon(songData.rank)}
+                  {getScoreIcon(hasScore !== -1 ? hasScore : songData.rank)}
                 </div>
               )}
             </Grid>
@@ -218,5 +223,5 @@ export default function SongDetail({ selectedId, hasData, showScore }) {
 SongDetail.defaultProps = {
   hasData: false,
   showScore: false,
-  routeUrl: "",
+  hasScore: -1,
 };

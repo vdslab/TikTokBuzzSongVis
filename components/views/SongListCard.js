@@ -8,7 +8,7 @@ import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVer
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import { MINI_DISPLAY_SIZE } from "../common";
+import { MINI_DISPLAY_SIZE, routeKey } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 
 export function getScoreIcon(score) {
@@ -28,7 +28,7 @@ export function SongListCard({
   clickLikeList,
   like,
   showScore,
-  home,
+  route,
 }) {
   const router = useRouter();
   const { width } = useWindowSize();
@@ -41,15 +41,24 @@ export function SongListCard({
     : songInfo.preview_url;
 
   function showSelectIdSong(id) {
-    if (home) {
-      router.push(`/${id}`);
-    } else {
-      if (MINI_DISPLAY_SIZE < width) {
-        const searchedId = router.query.search_id;
-        router.push(`/search/${searchedId}/${id}`);
-      } else {
+    switch (route) {
+      case routeKey.SEARCH:
+        if (MINI_DISPLAY_SIZE < width) {
+          const searchedId = router.query.search_id;
+          router.push(`/search/${searchedId}/${id}`);
+        } else {
+          router.push(`/${id}`);
+        }
+        break;
+      case routeKey.MY_PAGE:
+        if (MINI_DISPLAY_SIZE < width) {
+          router.push(`/my_page/${id}`);
+        } else {
+          router.push(`/${id}`);
+        }
+        break;
+      default:
         router.push(`/${id}`);
-      }
     }
   }
 

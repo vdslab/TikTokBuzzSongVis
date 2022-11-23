@@ -27,7 +27,6 @@ function DefaultSizeHome() {
   return (
     <div>
       <Header />
-      loading...
     </div>
   );
 }

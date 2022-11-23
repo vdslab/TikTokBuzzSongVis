@@ -5,6 +5,7 @@ import Header from "../../../components/layouts/Header";
 import SongDetail from "../../../components/views/SongDetail";
 import BuzzPossibility from "../../../components/views/BuzzPossibility";
 
+//PC専用
 export default function DefaultSizeHomge() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();

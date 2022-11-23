@@ -4,6 +4,7 @@ import SongDetail from "../../components/views/SongDetail";
 import { useRouter } from "next/router";
 import BuzzPossibility from "../../components/views/BuzzPossibility";
 
+//スマホ専用
 export default function MiniSizeHome() {
   const [songData, setSongData] = useState(null);
   const router = useRouter();

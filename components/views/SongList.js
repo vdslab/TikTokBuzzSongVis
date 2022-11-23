@@ -1,7 +1,7 @@
 import { SongListCard } from "./SongListCard";
 import { useRecoilState } from "recoil";
 import { bookmarkState } from "../atoms";
-import { localStorageKey } from "../common";
+import { localStorageKey, routeKey } from "../common";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "../hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../common";
@@ -41,7 +41,7 @@ export function getShowList(list, isShort, len = 4) {
   return list;
 }
 
-export default function SongList({ songList, showScore, home }) {
+export default function SongList({ songList, showScore, route }) {
   const { width } = useWindowSize();
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
   const [isShortList, setIsShortList] = useState(true);
@@ -81,7 +81,7 @@ export default function SongList({ songList, showScore, home }) {
             }}
             like={inList(likeList, song.id)}
             showScore={showScore}
-            home={home}
+            route={route}
           />
         );
       })}
@@ -99,5 +99,5 @@ export default function SongList({ songList, showScore, home }) {
 
 SongList.defaultProps = {
   showScore: true,
-  home: true,
+  route: routeKey.HOME,
 };

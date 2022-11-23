@@ -5,6 +5,7 @@ import SongList from "./SongList";
 import { getScoreIcon } from "./SongListCard";
 import { BuzzIconLegend } from "../common";
 import { useRouter } from "next/router";
+import { routeKey } from "../common";
 
 export default function BuzzPossibility({ songData, showHeader, searchId }) {
   const [similarSongList, setSimilarSongList] = useState(null);
@@ -59,7 +60,7 @@ export default function BuzzPossibility({ songData, showHeader, searchId }) {
                   <BuzzIconLegend />
                 </div>
               )}
-              <SongList songList={similarSongList} home={false} />
+              <SongList songList={similarSongList} route={routeKey.SEARCH} />
             </div>
           ) : (
             <div style={{ textAlign: "center", paddingTop: "100px" }}>

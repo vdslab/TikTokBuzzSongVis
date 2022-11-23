@@ -12,11 +12,12 @@ import { MINI_DISPLAY_SIZE } from "../common";
 import { useWindowSize } from "../hooks/getWindwSize";
 
 export function getScoreIcon(score) {
-  if (score === 100) {
+  const numScore = Number(score);
+  if (numScore === 100) {
     return <SentimentVerySatisfiedOutlinedIcon />;
-  } else if (score === 66) {
+  } else if (numScore === 66) {
     return <SentimentSatisfiedOutlinedIcon />;
-  } else if (score === 33) {
+  } else if (numScore === 33) {
     return <SentimentSatisfiedIcon />;
   }
   return <SentimentVeryDissatisfiedIcon />;

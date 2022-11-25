@@ -4,6 +4,7 @@ import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function DefaultSizeHome() {
   const router = useRouter();
@@ -27,6 +28,11 @@ function DefaultSizeHome() {
   return (
     <div>
       <Header />
+      <div
+        style={{ display: "block", position: "fixed", top: "50%", left: "50%" }}
+      >
+        <CircularProgress />
+      </div>
     </div>
   );
 }

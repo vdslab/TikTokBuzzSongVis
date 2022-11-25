@@ -13,6 +13,7 @@ export default function MiniSizeHome({ id, songData }) {
         routeUrl={id}
         selectedId={id}
         songDataTest={songData}
+        hasScore={songData?.rank}
       />
       {songData && (
         <div style={{ padding: "0 1rem" }}>

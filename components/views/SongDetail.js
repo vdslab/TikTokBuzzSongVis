@@ -49,6 +49,7 @@ export default function SongDetail({
   selectedId,
   hasData,
   showScore,
+  hasScore,
 }) {
   const [songData, setSongData] = useState(null);
   const [likeList, setLikeList] = useRecoilState(bookmarkState);
@@ -149,7 +150,7 @@ export default function SongDetail({
               </Typography>
               {showScore && (
                 <div style={{ textAlign: "center" }}>
-                  {getScoreIcon(songData.rank)}
+                  {getScoreIcon(hasScore !== -1 ? hasScore : songData.rank)}
                 </div>
               )}
             </Grid>
@@ -225,6 +226,6 @@ export default function SongDetail({
 SongDetail.defaultProps = {
   hasData: false,
   showScore: false,
-  routeUrl: "",
   songDataTest: null,
+  hasScore: -1,
 };

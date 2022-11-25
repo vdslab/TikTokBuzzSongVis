@@ -4,11 +4,8 @@ import SongDetail from "../components/views/SongDetail";
 import { useWindowSize } from "../components/hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../components/common";
 import { Grid } from "@material-ui/core";
-import { useRouter } from "next/router";
 
-function DefaultSizeHome() {
-  const router = useRouter();
-  const id = router.query.id;
+function DefaultSizeHome({ songData, id }) {
   return (
     <div>
       <Header />
@@ -27,7 +24,7 @@ function DefaultSizeHome() {
             <BuzzSongs />
           </Grid>
           <Grid item xs={8}>
-            <SongDetail key={id} selectedId={id} />
+            <SongDetail key={id} selectedId={id} songDataTest={songData} />
           </Grid>
         </Grid>
       </div>
@@ -35,9 +32,7 @@ function DefaultSizeHome() {
   );
 }
 
-function MiniSizeHome() {
-  const router = useRouter();
-  const id = router.query.id;
+function MiniSizeHome({ id }) {
   return (
     <div>
       <Header />
@@ -46,12 +41,54 @@ function MiniSizeHome() {
   );
 }
 
-export default function Home() {
+export default function Home(props) {
   const { width } = useWindowSize();
 
   return (
     <div>
-      {width > MINI_DISPLAY_SIZE ? <DefaultSizeHome /> : <MiniSizeHome />}
+      {width > MINI_DISPLAY_SIZE ? (
+        <DefaultSizeHome songData={props.songData} id={props.id} />
+      ) : (
+        <MiniSizeHome id={props.id} />
+      )}
     </div>
   );
 }
+
+export async function getSongData(songId) {
+  if (songId === "") {
+    return {};
+  }
+  try {
+    const songInfoReq = await fetch(
+      `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_info`,
+      {
+        method: "POST",
+        body: JSON.stringify(songId),
+      }
+    );
+
+    const songInfo = await songInfoReq.json();
+    return songInfo;
+  } catch {
+    return {};
+  }
+}
+
+export async function getStaticProps(context) {
+  console.log("getStaticProps home");
+  const id = context.params.id === "favicon.ico" ? "" : context.params.id;
+  const data = await getSongData(id);
+
+  return {
+    props: { id: id, songData: data },
+    revalidate: 86400,
+  };
+}
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};

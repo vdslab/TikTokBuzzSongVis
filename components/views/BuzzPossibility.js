@@ -15,12 +15,12 @@ export default function BuzzPossibility({ songData, showHeader, searchId }) {
     (async () => {
       const songReq = await fetch("/api/bebebe/similar_songs", {
         method: "POST",
-        body: JSON.stringify(songData.id),
+        body: JSON.stringify(searchId),
       });
       const data = await songReq.json();
       setSimilarSongList(data);
     })();
-  }, [songData]);
+  }, [searchId]);
 
   return (
     <div>

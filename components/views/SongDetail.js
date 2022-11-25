@@ -45,6 +45,7 @@ async function getSongData(songId) {
 
 // HACK:親コンポーネントからdetail情報を渡した方がいい
 export default function SongDetail({
+  songDataTest,
   selectedId,
   hasData,
   showScore,
@@ -56,7 +57,9 @@ export default function SongDetail({
 
   useEffect(() => {
     (async () => {
-      if (selectedId) {
+      if (songDataTest) {
+        setSongData(songDataTest);
+      } else if (selectedId) {
         if (hasData) {
           const data = await getDbSongData(selectedId);
           setSongData(data);
@@ -223,5 +226,6 @@ export default function SongDetail({
 SongDetail.defaultProps = {
   hasData: false,
   showScore: false,
+  songDataTest: null,
   hasScore: -1,
 };

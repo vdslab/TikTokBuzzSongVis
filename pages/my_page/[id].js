@@ -2,12 +2,9 @@ import Header from "../../components/layouts/Header";
 import BookmarkList from "../../components/views/BookmarkList";
 import SongDetail from "../../components/views/SongDetail";
 import { Grid } from "@material-ui/core";
-import { useRouter } from "next/router";
 import { MINI_DISPLAY_SIZE } from "../../components/common";
 
-export default function DefaultSizeDisplay() {
-  const router = useRouter();
-  const selectedId = router.query.id;
+export default function DefaultSizeDisplay({ id, songData }) {
   return (
     <div style={{ minWidth: `${MINI_DISPLAY_SIZE}px` }}>
       <Header />
@@ -22,15 +19,46 @@ export default function DefaultSizeDisplay() {
       >
         <Grid container>
           <Grid item xs={4}>
-            <BookmarkList />
+            <BookmarkList selectedSongId={id} />
           </Grid>
           <Grid item xs={8}>
-            {selectedId && (
-              <SongDetail key={selectedId} selectedId={selectedId} />
-            )}
+            <SongDetail key={id} selectedId={id} songDataTest={songData} />
           </Grid>
         </Grid>
       </div>
     </div>
   );
 }
+
+//TODO:共通化
+async function getSongData(songId) {
+  const songInfoReq = await fetch(
+    `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_info`,
+    {
+      method: "POST",
+      body: JSON.stringify(songId),
+    }
+  );
+  if (songInfoReq) {
+    const songInfo = await songInfoReq.json();
+    return songInfo;
+  }
+  return {};
+}
+
+export async function getStaticProps(context) {
+  const id = context.params.id === "favicon.ico" ? "" : context.params.id;
+  const data = await getSongData(id);
+
+  return {
+    props: { id: id, songData: data },
+    revalidate: 86400,
+  };
+}
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};

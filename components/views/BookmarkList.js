@@ -33,10 +33,9 @@ async function getSongBasicInfo(songId) {
   }
 }
 
-export default function BookmarkList() {
+export default function BookmarkList({ selectedSongId }) {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
-  const [selectedSongId, setSelectedSongId] = useState(null);
   const [isShortList, setIsShortList] = useState(true);
   const { width } = useWindowSize();
   const router = useRouter();
@@ -59,9 +58,9 @@ export default function BookmarkList() {
           const song = await getSongBasicInfo(id);
           songInfoList.push(song);
         }
-        setSelectedSongId(songInfoList[0].id);
+        // setSelectedSongId(songInfoList[0].id);
       } else {
-        setSelectedSongId(null);
+        // setSelectedSongId(null);
       }
       setLikeSongInfoList(songInfoList);
     })();
@@ -104,7 +103,6 @@ export default function BookmarkList() {
                     setLikeSongInfoList(adjustedSongList);
                     if (MINI_DISPLAY_SIZE < width) {
                       if (adjustedIdList.length === 0) {
-                        // リストが空になったらselectedSongIdをリセット
                         router.push(`/my_page`);
                       } else if (!adjustedIdList.includes(selectedSongId)) {
                         // selectedSongIdがリストに含まれていなければ先頭の曲をセット

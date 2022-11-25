@@ -46,7 +46,6 @@ function DefaultSizeDisplay() {
               paddingBottom: "8px",
             }}
           >
-            {" "}
             お気に入り
           </div>
 

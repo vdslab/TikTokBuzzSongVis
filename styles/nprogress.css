@@ -1,7 +1,7 @@
 /* Make clicks pass-through */
 #nprogress {
     pointer-events: none;
-  }
+}
   
   #nprogress .bar {
     background: rgb(31, 121, 255);
@@ -31,31 +31,35 @@
   }
   
   /* Remove these to get rid of the spinner */
-  #nprogress .spinner {
-    /* display: block;
+  /* #nprogress .spinner {
+    pointer-events: none;
+    display: block;
     position: fixed;
+    height:100%;
+    width:100%;
     z-index: 1031;
-    top: 15px;
-    right: 15px;
-    */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-  }
+    top: 0%;
+    right: 0%;
+    background-color: rgba(154, 154, 154, 0.436);
+  } */
   
-  #nprogress .spinner-icon {
-    /* width: 50px;
+  /* #nprogress .spinner-icon {
+    position: fixed;
+    top: 50%;
+    right: 50%;
+
+    width: 50px;
     height: 50px;
     box-sizing: border-box;
   
-    border: solid 2px transparent;
-    border-top-color: rgb(0, 255, 81);
-    border-left-color: #29d;
+    border: solid 3px transparent;
+    border-top-color: rgb(34, 124, 221);
+    border-left-color: rgb(34, 124, 221);
     border-radius: 50%;
   
-    -webkit-animation: nprogress-spinner 400ms linear infinite;
-            animation: nprogress-spinner 400ms linear infinite; */
-  }
+    -webkit-animation: nprogress-spinner 600ms linear infinite;
+            animation: nprogress-spinner 600ms linear infinite;
+  } */
   
   .nprogress-custom-parent {
     overflow: hidden;

@@ -19,7 +19,7 @@ export default function DefaultSizeDisplay({ id, songData }) {
       >
         <Grid container>
           <Grid item xs={4}>
-            <BookmarkList />
+            <BookmarkList selectedSongId={id} />
           </Grid>
           <Grid item xs={8}>
             <SongDetail key={id} selectedId={id} songDataTest={songData} />

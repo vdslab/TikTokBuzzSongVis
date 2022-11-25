@@ -33,7 +33,7 @@ async function getSongBasicInfo(songId) {
   }
 }
 
-export default function BookmarkList() {
+export default function BookmarkList({ selectedSongId }) {
   const [likeIdList, setLikeIdList] = useRecoilState(bookmarkState);
   const [likeSongInfoList, setLikeSongInfoList] = useState(null);
   const [isShortList, setIsShortList] = useState(true);
@@ -103,7 +103,6 @@ export default function BookmarkList() {
                     setLikeSongInfoList(adjustedSongList);
                     if (MINI_DISPLAY_SIZE < width) {
                       if (adjustedIdList.length === 0) {
-                        // リストが空になったらselectedSongIdをリセット
                         router.push(`/my_page`);
                       } else if (!adjustedIdList.includes(selectedSongId)) {
                         // selectedSongIdがリストに含まれていなければ先頭の曲をセット

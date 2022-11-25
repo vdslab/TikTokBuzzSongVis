@@ -56,6 +56,9 @@ export default function Home(props) {
 }
 
 export async function getSongData(songId) {
+  if (songId === "") {
+    return {};
+  }
   try {
     const songInfoReq = await fetch(
       `${process.env.CLIENT_ENDPOINT}/api/bebebe/song_info`,
@@ -73,6 +76,7 @@ export async function getSongData(songId) {
 }
 
 export async function getStaticProps(context) {
+  console.log("getStaticProps home");
   const id = context.params.id === "favicon.ico" ? "" : context.params.id;
   const data = await getSongData(id);
 

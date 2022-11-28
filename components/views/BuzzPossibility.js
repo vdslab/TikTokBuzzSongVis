@@ -12,6 +12,7 @@ export default function BuzzPossibility({ songData, showHeader, searchId }) {
   const router = useRouter();
 
   useEffect(() => {
+    setSimilarSongList(null);
     (async () => {
       const songReq = await fetch("/api/bebebe/similar_songs", {
         method: "POST",

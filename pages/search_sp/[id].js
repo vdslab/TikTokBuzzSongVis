@@ -17,7 +17,11 @@ export default function MiniSizeHome({ id, songData }) {
       />
       {songData && (
         <div style={{ padding: "0 1rem" }}>
-          <BuzzPossibility songData={songData} showHeader={false} />
+          <BuzzPossibility
+            songData={songData}
+            showHeader={false}
+            searchId={id}
+          />
         </div>
       )}
     </div>
@@ -42,7 +46,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { id: id, songData: data },
-    revalidate: 86400,
+    revalidate: 10,
   };
 }
 

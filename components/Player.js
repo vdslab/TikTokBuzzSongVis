@@ -9,8 +9,12 @@ export function Player({ audioUrl, id, imgUrl, size }) {
 
   function stopPlayingMusic() {
     const playingBgm = document.querySelector(`#bgm${playingMusicId}`);
-    playingBgm.addEventListener("ended", function () {});
+    playingBgm.addEventListener("ended", function () {
+      setPlayingMusicId(null);
+    });
+
     playingBgm.pause();
+    playingBgm.currentTime = 0;
     setPlayingMusicId(null);
   }
 
@@ -21,12 +25,13 @@ export function Player({ audioUrl, id, imgUrl, size }) {
 
     const bgm1 = document.querySelector(`#bgm${id}`);
     // 何が丁度いい？
-    bgm1.volume = 0.1;
+    bgm1.volume = 0.2;
     bgm1.addEventListener("ended", function () {
-      setPlayingMusicId(id);
+      setPlayingMusicId(null);
     });
     if (bgm1?.paused !== true) {
       bgm1.pause();
+      bgm1.currentTime = 0;
       setPlayingMusicId(null);
     } else {
       bgm1.play();

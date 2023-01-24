@@ -149,7 +149,7 @@ export default function InfoPopup(props) {
               曲全体で見込まれる毎分時のビート（BPM）。
             </Typography>
             <div className={style.subtitle}>time_signature</div>
-            <Typography gutterBottom>曲の長さを示す。</Typography>
+            <Typography gutterBottom>拍子を示す。例：4/4, 3/4など</Typography>
             <div className={style.subtitle}>valence</div>
             <Typography gutterBottom>
               0.0から1.0までの値を用いてその曲の音楽的なポジティブさ（陽気さ）を示す。

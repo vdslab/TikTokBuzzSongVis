@@ -88,7 +88,7 @@ export default function WordCloudChart({ feature }) {
 
   return (
     <div className={style.wordcloud} ref={wrapperRef}>
-      <div className={style.title}>歌詞概要</div>
+      <div className={style.title}>歌詞に登場するワード</div>
       <div className={style.contents}>
         <svg
           viewBox={`${-chart.margin.left} ${-chart.margin.top} ${

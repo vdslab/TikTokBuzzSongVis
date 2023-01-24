@@ -185,7 +185,7 @@ export default function SongDetail({
                 }}
               >
                 <div style={{ fontSize: "20px", paddingBottom: "8px" }}>
-                  歌詞を特徴づけるワード
+                  歌詞に登場するワード
                 </div>
                 <div className={style.no_data}>
                   <div> 表示するデータがありません</div>
@@ -197,7 +197,8 @@ export default function SongDetail({
       </Grid>
 
       <div style={{ paddingTop: "1rem" }}>
-        {songData.lyrics_feature ? (
+        {songData.lyrics_feature &&
+        songData.lyrics_feature.lyrics_list.length !== 0 ? (
           <LyricsScoreChart feature={songData.lyrics_feature} />
         ) : (
           <div>

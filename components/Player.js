@@ -1,24 +1,36 @@
-import { useState } from "react";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import style from "./Player.module.css";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { playingMusicState } from "./atoms";
+import { useRecoilState } from "recoil";
 
 export function Player({ audioUrl, id, imgUrl, size }) {
-  const [play, setPlay] = useState(true);
+  const [playingMusicId, setPlayingMusicId] = useRecoilState(playingMusicState);
+
+  function stopPlayingMusic() {
+    const playingBgm = document.querySelector(`#bgm${playingMusicId}`);
+    playingBgm.addEventListener("ended", function () {});
+    playingBgm.pause();
+    setPlayingMusicId(null);
+  }
 
   function Playing() {
+    if (playingMusicId !== id && playingMusicId !== null) {
+      stopPlayingMusic();
+    }
+
     const bgm1 = document.querySelector(`#bgm${id}`);
     // 何が丁度いい？
     bgm1.volume = 0.1;
     bgm1.addEventListener("ended", function () {
-      setPlay(true);
+      setPlayingMusicId(id);
     });
     if (bgm1?.paused !== true) {
-      setPlay(true);
       bgm1.pause();
+      setPlayingMusicId(null);
     } else {
-      setPlay(false);
       bgm1.play();
+      setPlayingMusicId(id);
     }
   }
 
@@ -44,7 +56,7 @@ export function Player({ audioUrl, id, imgUrl, size }) {
                 Playing();
               }}
             >
-              {play ? (
+              {id !== playingMusicId ? (
                 <PlayArrowIcon fontSize="large" style={{ color: "white" }} />
               ) : (
                 <PauseOutlinedIcon

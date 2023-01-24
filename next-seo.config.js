@@ -13,7 +13,7 @@ export default {
       "BuzzLeadは過去にTiktokで流行した曲のデータをもとに次にTikTokで流行する曲を予測するアプリケーションです。",
     images: [
       {
-        url: `${process.env.CLIENT_ENDPOINT}/images/ogp.png`,
+        url: "https://buzzlead.vdslab.jp/images/ogp.png",
         width: 1200,
         height: 630,
         type: "image/png",

@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
           rel="icon"
           type="image/png"
           sizes="128x128"
-          href={`${process.env.CLIENT_ENDPOINT}/images/icon.png`}
+          href="https://buzzlead.vdslab.jp/images/icon.png"
         />
       </Head>
       <DefaultSeo {...SEO} />

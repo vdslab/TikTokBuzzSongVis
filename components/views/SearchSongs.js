@@ -15,6 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useWindowSize } from "../hooks/getWindwSize";
 import { MINI_DISPLAY_SIZE } from "../common";
+import jaconv from "jaconv";
 
 export default function SearchSongs(props) {
   const [inputSongName, setInputSongName] = useState("");
@@ -45,14 +46,27 @@ export default function SearchSongs(props) {
     (async () => {
       if (inputSongName !== "") {
         //TODO:サーバーサイドでハンドリング
-        try {
-          const songListRes = await fetch("/api/spotify/search_songs", {
+
+        let postName = inputSongName;
+        //英数字以外が含まれていた場合は英数字に直す
+        if (!inputSongName.match(/^[A-Za-z0-9]*$/)) {
+          const hiragana = await fetch("api/to_hiragana", {
             method: "POST",
             body: JSON.stringify(inputSongName),
           });
+          const hiraganaInput = await hiragana.json();
+          const romajiName = jaconv.toHebon(hiraganaInput.converted);
+          postName = romajiName;
+        }
+
+        try {
+          const songListRes = await fetch("/api/spotify/search_songs", {
+            method: "POST",
+            body: JSON.stringify(postName),
+          });
           const songListData = await songListRes.json();
           setSongList(songListData);
-        } catch {
+        } catch (e) {
           setSongList([]);
         }
       }
@@ -75,7 +89,7 @@ export default function SearchSongs(props) {
             <div className={style.searchbar}>
               <InputBase
                 style={{ padding: "4px 8px 4px 15px", fontSize: "12px" }}
-                placeholder="英語かローマ字で 入力"
+                placeholder="曲名またはアーティスト名を 入力"
                 inputProps={{ "aria-label": "SchoolName" }}
                 inputRef={inputEl}
                 fullWidth={true}

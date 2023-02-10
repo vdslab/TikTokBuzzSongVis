@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.8.4",
     "d3": "^7.6.1",
     "d3-cloud": "^1.2.5",
+    "jaconv": "^1.0.4",
     "next": "^12.0.7",
     "next-seo": "^5.0.0",
     "nprogress": "^0.2.0",

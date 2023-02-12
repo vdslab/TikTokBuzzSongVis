@@ -38,7 +38,6 @@ async function getSongData(songId) {
   });
   if (songInfoReq) {
     const songInfo = await songInfoReq.json();
-    console.log("songInfo", songInfo);
     return songInfo;
   }
   return {};

@@ -59,17 +59,14 @@ export default function SongDetail({
   useEffect(() => {
     (async () => {
       if (songDataTest) {
-        console.log("songDataTest", songDataTest);
         setSongData(songDataTest);
       } else if (selectedId) {
         if (hasData) {
           const data = await getDbSongData(selectedId);
           setSongData(data);
-          console.log("DB", data);
         } else {
           const data = await getSongData(selectedId);
           setSongData(data);
-          console.log("api", data);
         }
       }
     })();
